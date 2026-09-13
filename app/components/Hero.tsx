@@ -1,7 +1,24 @@
 "use client";
 
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+
+// -------------------------------------------------------------
+// Reduced-motion hook
+// -------------------------------------------------------------
+const usePrefersReducedMotion = () => {
+  const [prefersReduced, setPrefersReduced] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setPrefersReduced(mql.matches);
+    update();
+    mql.addEventListener("change", update);
+    return () => mql.removeEventListener("change", update);
+  }, []);
+
+  return prefersReduced;
+};
 
 // Navigation items
 const navigationItems = [
@@ -232,6 +249,68 @@ const Word = ({
 );
 
 // -------------------------------------------------------------
+// Hero Background Video
+// Plays through once, holds on last frame.
+// -------------------------------------------------------------
+const HeroBackgroundVideo = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
+
+  // When reduced motion is preferred, skip playback entirely and
+  // jump straight to the last frame (a static image, essentially).
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (prefersReducedMotion) {
+      const seekToEnd = () => {
+        // Guard against NaN duration on some browsers before metadata loads
+        if (Number.isFinite(video.duration) && video.duration > 0) {
+          video.currentTime = Math.max(0, video.duration - 0.001);
+        }
+        video.pause();
+      };
+
+      if (video.readyState >= 1) {
+        seekToEnd();
+      } else {
+        video.addEventListener("loadedmetadata", seekToEnd, { once: true });
+        return () => video.removeEventListener("loadedmetadata", seekToEnd);
+      }
+    }
+  }, [prefersReducedMotion]);
+
+  const handleEnded = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    // Some browsers reset to the first frame on 'ended'.
+    // Nudging currentTime to (duration - tiny epsilon) keeps the
+    // last frame rendered.
+    if (Number.isFinite(video.duration) && video.duration > 0) {
+      video.currentTime = Math.max(0, video.duration - 0.001);
+    }
+    video.pause();
+  };
+
+  return (
+    <div className="absolute inset-0 z-0">
+      <video
+        ref={videoRef}
+        className="h-full w-full object-cover object-center"
+        autoPlay={!prefersReducedMotion}
+        muted
+        playsInline
+        preload="auto"
+        onEnded={handleEnded}
+        aria-hidden="true"
+      >
+        <source src="/Hero/herobg3.mp4" type="video/mp4" />
+      </video>
+    </div>
+  );
+};
+
+// -------------------------------------------------------------
 // Hero Section
 // -------------------------------------------------------------
 export default function Hero() {
@@ -240,16 +319,7 @@ export default function Hero() {
       className="hero-section relative w-full min-h-screen overflow-x-clip"
       aria-labelledby="homecoming-heading"
     >
-      {/* Background image — static, no animation, no parallax */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="/Hero/herobg.png"
-          alt=""
-          fill
-          className="object-cover object-center"
-          priority
-        />
-      </div>
+      <HeroBackgroundVideo />
 
       <div
         className="relative z-10 mx-auto max-w-[1680px] px-5 sm:px-12 lg:px-16 xl:px-24 min-h-screen flex items-start
