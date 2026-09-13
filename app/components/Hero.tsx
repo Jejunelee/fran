@@ -343,7 +343,7 @@ const HeroBackgroundVideo = ({ onReady }: { onReady: () => void }) => {
         onEnded={handleEnded}
         aria-hidden="true"
       >
-        <source src="/Hero/herobg3.mp4" type="video/mp4" />
+        <source src="/Hero/herobg4.mp4" type="video/mp4" />
       </video>
     </div>
   );
