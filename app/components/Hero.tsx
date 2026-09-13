@@ -251,34 +251,73 @@ const Word = ({
 // -------------------------------------------------------------
 // Hero Background Video
 // Plays through once, holds on last frame.
+// Signals `onReady` once the browser can actually paint frames.
 // -------------------------------------------------------------
-const HeroBackgroundVideo = () => {
+const HeroBackgroundVideo = ({ onReady }: { onReady: () => void }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
+  const hasSignaledRef = useRef(false);
 
-  // When reduced motion is preferred, skip playback entirely and
-  // jump straight to the last frame (a static image, essentially).
+  // Wrap the signal so it only ever fires once per mount, no matter
+  // how many events race to call it.
+  const signalReady = () => {
+    if (hasSignaledRef.current) return;
+    hasSignaledRef.current = true;
+    onReady();
+  };
+
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
     if (prefersReducedMotion) {
+      // Reduced motion: no playback, so "ready" is metadata + seek
+      // to the final frame. Still must signal, or the hero stays
+      // hidden forever for these users.
       const seekToEnd = () => {
-        // Guard against NaN duration on some browsers before metadata loads
         if (Number.isFinite(video.duration) && video.duration > 0) {
           video.currentTime = Math.max(0, video.duration - 0.001);
         }
         video.pause();
+        signalReady();
       };
 
       if (video.readyState >= 1) {
         seekToEnd();
-      } else {
-        video.addEventListener("loadedmetadata", seekToEnd, { once: true });
-        return () => video.removeEventListener("loadedmetadata", seekToEnd);
+        return;
       }
+
+      video.addEventListener("loadedmetadata", seekToEnd, { once: true });
+      // Safety net in case metadata never arrives.
+      const rmTimeout = window.setTimeout(signalReady, 4000);
+      video.addEventListener("error", signalReady, { once: true });
+
+      return () => {
+        video.removeEventListener("loadedmetadata", seekToEnd);
+        video.removeEventListener("error", signalReady);
+        window.clearTimeout(rmTimeout);
+      };
     }
-  }, [prefersReducedMotion]);
+
+    // Normal path: wait until the browser can actually render frames.
+    if (video.readyState >= 3) {
+      signalReady();
+      return;
+    }
+
+    video.addEventListener("canplay", signalReady, { once: true });
+
+    // Safety net: if the video stalls or errors, never trap the user
+    // on a blank screen forever.
+    const timeout = window.setTimeout(signalReady, 4000);
+    video.addEventListener("error", signalReady, { once: true });
+
+    return () => {
+      video.removeEventListener("canplay", signalReady);
+      video.removeEventListener("error", signalReady);
+      window.clearTimeout(timeout);
+    };
+  }, [prefersReducedMotion, onReady]);
 
   const handleEnded = () => {
     const video = videoRef.current;
@@ -314,94 +353,107 @@ const HeroBackgroundVideo = () => {
 // Hero Section
 // -------------------------------------------------------------
 export default function Hero() {
+  const [videoReady, setVideoReady] = useState(false);
+
   return (
     <section
       className="hero-section relative w-full min-h-screen overflow-x-clip"
       aria-labelledby="homecoming-heading"
     >
-      <HeroBackgroundVideo />
+      <HeroBackgroundVideo onReady={() => setVideoReady(true)} />
 
-      <div
-        className="relative z-10 mx-auto max-w-[1680px] px-5 sm:px-12 lg:px-16 xl:px-24 min-h-screen flex items-start
-          pt-[68px] sm:pt-[76px] md:pt-0"
-      >
+      {/* Animated hero content is only mounted once the video can paint,
+          so every CSS animation starts from frame zero in sync with the
+          first visible video frame. */}
+      {videoReady && (
         <div
-          className="flex w-full max-w-3xl flex-col items-center gap-6 sm:gap-8 text-center mx-auto lg:mx-0 lg:ml-[-0.5rem] xl:ml-[-1rem]
-            pb-16 sm:pb-20 md:pb-24 lg:pb-28
-            pt-8 sm:pt-12 md:pt-16 lg:pt-24"
+          className="relative z-10 mx-auto max-w-[1680px] px-5 sm:px-12 lg:px-16 xl:px-24 min-h-screen flex items-start
+            pt-[68px] sm:pt-[76px] md:pt-0"
         >
-          <h1
-            id="homecoming-heading"
-            className="font-serif font-light leading-[0.85] md:leading-[0.7] text-[#750000] [text-wrap:balance] tracking-normal [font-stretch:extra-condensed] [transform:scaleX(1.00)]"
-            style={{
-              textShadow:
-                "0 2px 4px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2)",
-            }}
+          <div
+            className="flex w-full max-w-3xl flex-col items-center gap-6 sm:gap-8 text-center mx-auto lg:mx-0 lg:ml-[-0.5rem] xl:ml-[-1rem]
+              pb-16 sm:pb-20 md:pb-24 lg:pb-28
+              pt-8 sm:pt-12 md:pt-16 lg:pt-24"
           >
-            <span className="block text-[clamp(1.75rem,7.5vw,4.2rem)] md:text-[clamp(1.5rem,4.2vw,4.2rem)] -mt-1 md:-mt-3">
-              <Word delay={0} variant="script" className="font-script text-[clamp(1.8em,2.0em,2.0em)] leading-none pr-2 md:pr-3">
-                A
-              </Word>
-              <Word delay={80}>t</Word>{" "}
-              <Word delay={160}>some</Word>{" "}
-              <Word delay={240}>point,</Word>{" "}
-              <Word delay={330}>the</Word>{" "}
-              <Word delay={420}>life</Word>
-            </span>
-
-            <span className="block text-[clamp(1.75rem,7.5vw,4.2rem)] md:text-[clamp(1.5rem,4.2vw,4.2rem)] -mt-1 md:-mt-3">
-              <Word delay={520}>you</Word>{" "}
-              <Word delay={600}>built</Word>{" "}
-              <Word delay={680}>stops</Word>{" "}
-              <Word delay={770}>feeling</Word>
-            </span>
-
-            <span className="block text-[clamp(1.75rem,7.5vw,4.2rem)] md:text-[clamp(1.5rem,4.2vw,4.2rem)] -mt-5 md:-mt-8">
-              <Word delay={880}>like</Word>{" "}
-              <span className="hero-word-group" style={{ animationDelay: "980ms" }}>
-                <Word delay={980} variant="script" className="font-script align-[0.05em] text-[clamp(0.8em,2.0em,2.0em)] leading-none">
-                  y
+            <h1
+              id="homecoming-heading"
+              className="font-serif font-light leading-[0.85] md:leading-[0.7] text-[#750000] [text-wrap:balance] tracking-normal [font-stretch:extra-condensed] [transform:scaleX(1.00)]"
+              style={{
+                textShadow:
+                  "0 2px 4px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2)",
+              }}
+            >
+              <span className="block text-[clamp(1.75rem,7.5vw,4.2rem)] md:text-[clamp(1.5rem,4.2vw,4.2rem)] -mt-1 md:-mt-3">
+                <Word delay={0} variant="script" className="font-script text-[clamp(1.8em,2.0em,2.0em)] leading-none pr-2 md:pr-3">
+                  A
                 </Word>
-                <Word delay={1060}>ours</Word>
+                <Word delay={80}>t</Word>{" "}
+                <Word delay={160}>some</Word>{" "}
+                <Word delay={240}>point,</Word>{" "}
+                <Word delay={330}>the</Word>{" "}
+                <Word delay={420}>life</Word>
               </span>
-            </span>
-          </h1>
 
-          <p className="hero-fade-up max-w-[36ch] sm:max-w-xl font-josefin text-[clamp(0.95rem,1.8vw,1.25rem)] text-[#2b1210]/80 sm:text-xl text-center tracking-normal px-1 sm:px-0 leading-relaxed">
-            Not because you chose wrong. You wanted it. You meant it. You
-            just grew, and it didn&apos;t grow with you. Aren&apos;t you
-            exhausted? I help women let go of what no longer fits, shed the
-            roles they&apos;ve outgrown, and come back to the one thing
-            that&apos;s been there the whole time.
-          </p>
+              <span className="block text-[clamp(1.75rem,7.5vw,4.2rem)] md:text-[clamp(1.5rem,4.2vw,4.2rem)] -mt-1 md:-mt-3">
+                <Word delay={520}>you</Word>{" "}
+                <Word delay={600}>built</Word>{" "}
+                <Word delay={680}>stops</Word>{" "}
+                <Word delay={770}>feeling</Word>
+              </span>
 
-          <nav
-            aria-label="Hero calls to action"
-            className="hero-cta-row flex w-full max-w-sm sm:max-w-none flex-col items-stretch gap-3 pt-1 sm:flex-row sm:justify-center sm:items-center px-2 sm:px-0"
-          >
-            {heroActions.map((action, index) => (
-              <a
-                key={action.label}
-                href={action.href}
-                className={`hero-cta-item ${buttonVariants[action.variant]} w-full sm:w-auto text-[clamp(0.7rem,0.9vw,0.875rem)] px-5 sm:px-7 min-h-[48px] h-[48px] sm:h-[52px] lg:h-[58px]`}
-                style={{ animationDelay: `${1500 + index * 130}ms` }}
-              >
-                {action.label}
-              </a>
-            ))}
-          </nav>
+              <span className="block text-[clamp(1.75rem,7.5vw,4.2rem)] md:text-[clamp(1.5rem,4.2vw,4.2rem)] -mt-5 md:-mt-8">
+                <Word delay={880}>like</Word>{" "}
+                <span className="hero-word-group" style={{ animationDelay: "980ms" }}>
+                  <Word delay={980} variant="script" className="font-script align-[0.05em] text-[clamp(0.8em,2.0em,2.0em)] leading-none">
+                    y
+                  </Word>
+                  <Word delay={1060}>ours</Word>
+                </span>
+              </span>
+            </h1>
+
+            <p className="hero-fade-up max-w-[36ch] sm:max-w-xl font-josefin text-[clamp(0.95rem,1.8vw,1.25rem)] text-[#2b1210]/80 sm:text-xl text-center tracking-normal px-1 sm:px-0 leading-relaxed">
+              Not because you chose wrong. You wanted it. You meant it. You
+              just grew, and it didn&apos;t grow with you. Aren&apos;t you
+              exhausted? I help women let go of what no longer fits, shed the
+              roles they&apos;ve outgrown, and come back to the one thing
+              that&apos;s been there the whole time.
+            </p>
+
+            <nav
+              aria-label="Hero calls to action"
+              className="hero-cta-row flex w-full max-w-sm sm:max-w-none flex-col items-stretch gap-3 pt-1 sm:flex-row sm:justify-center sm:items-center px-2 sm:px-0"
+            >
+              {heroActions.map((action, index) => (
+                <a
+                  key={action.label}
+                  href={action.href}
+                  className={`hero-cta-item ${buttonVariants[action.variant]} w-full sm:w-auto text-[clamp(0.7rem,0.9vw,0.875rem)] px-5 sm:px-7 min-h-[48px] h-[48px] sm:h-[52px] lg:h-[58px]`}
+                  style={{ animationDelay: `${1500 + index * 130}ms` }}
+                >
+                  {action.label}
+                </a>
+              ))}
+            </nav>
+          </div>
         </div>
-      </div>
+      )}
 
+      {/* Decorative "Coming home" — mount with the rest of the hero
+          content so its entrance animation also plays in sync. */}
+      {videoReady && (
+        <div
+          aria-hidden="true"
+          className="hero-coming-home pointer-events-none absolute bottom-20 right-8 z-10 hidden lg:flex items-center gap-3 font-josefin text-xs uppercase tracking-[0.2em] text-[#fdd1db] [writing-mode:vertical-rl]"
+        >
+          <span className="h-10 w-px bg-[#fdd1db]/60" />
+          Coming home
+        </div>
+      )}
+
+      {/* Navigation stays mounted unconditionally so the page remains
+          usable even if the video never loads. */}
       <Navigation />
-
-      <div
-        aria-hidden="true"
-        className="hero-coming-home pointer-events-none absolute bottom-20 right-8 z-10 hidden lg:flex items-center gap-3 font-josefin text-xs uppercase tracking-[0.2em] text-[#fdd1db] [writing-mode:vertical-rl]"
-      >
-        <span className="h-10 w-px bg-[#fdd1db]/60" />
-        Coming home
-      </div>
 
       {/* ---------------- Animation layer ---------------- */}
       <style>{`
