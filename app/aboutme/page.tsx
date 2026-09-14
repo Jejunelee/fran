@@ -14,7 +14,7 @@ import Built from "./components/Built"
 export default function Home() {
   return (
     <div 
-      className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed"
+      className="min-h-screen bg-white bg-cover bg-center bg-no-repeat bg-fixed"
       style={{ backgroundImage: "url('/AboutMe/main/white.png')" }}
     >
       <Hero />
