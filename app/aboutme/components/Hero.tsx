@@ -435,7 +435,7 @@ export default function Hero() {
       <div
         id="hero-bg-parallax"
         className="hero-bg absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/AboutMe/Hero/hero.png')" }}
+        style={{ backgroundImage: "url('/AboutMe/hero/hero.png')" }}
         aria-hidden="true"
       />
 
