@@ -193,7 +193,7 @@ export const Navigation = (): React.ReactElement => {
 
             {/* Mobile brand - visible only on mobile */}
             <span className="hero-mobile-brand md:hidden font-josefin text-xs font-light text-[#f7f3ee] tracking-[0.2em] uppercase">
-              Homecoming
+              WORK WITH ME
             </span>
 
             {/* Mobile spacer to balance hamburger */}

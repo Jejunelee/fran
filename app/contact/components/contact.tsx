@@ -311,22 +311,46 @@ export default function Contact() {
           Mobile hamburger still comes in from the top (fixed). */}
       <Navigation variant="top" mobileBrandLabel="Contact" />
 
-      <div className="flex flex-col md:min-h-screen md:flex-row">
+      {/* 
+        MOBILE-FIRST LAYOUT:
+        - On mobile: the image is a shorter banner (40vh) that sits behind/above content,
+          and the content panel overlaps it with rounded top corners, creating an integrated
+          card-on-image feel.
+        - On md+: the original two-column sticky layout is restored.
+      */}
+      <div className="relative flex flex-col md:min-h-screen md:flex-row">
         {/* ===================== LEFT IMAGE PANEL ===================== */}
+        {/* 
+          Mobile: full-width, 40vh tall, image acts as a hero banner.
+          Desktop: 42vw wide, sticky full-height side panel.
+        */}
         <section className="relative w-full flex-shrink-0 md:w-[42vw]">
-          <div className="contact-image-panel relative h-[320px] w-full overflow-hidden md:sticky md:top-0 md:h-screen">
+          <div className="contact-image-panel relative h-[40vh] min-h-[260px] w-full overflow-hidden md:sticky md:top-0 md:h-screen md:min-h-0">
             <img
               src="/Contact/left.png"
               alt=""
-              className="contact-image absolute inset-0 h-full w-full object-cover object-center"
+              className="contact-image absolute inset-0 h-full w-full object-cover object-center md:object-center"
+            />
+            {/* Mobile: soft gradient at bottom so the overlapping content card
+                blends smoothly with the image. Hidden on md+. */}
+            <div
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-[#F7F1E7] md:hidden"
+              aria-hidden="true"
             />
           </div>
         </section>
 
         {/* ===================== RIGHT CONTENT PANEL ===================== */}
-        <section className="relative flex w-full flex-col md:w-[58vw]">
-          {/* pt-24 on md+ so the absolute nav doesn't cover the heading */}
-          <div className="mx-auto flex w-full max-w-[880px] flex-col px-6 py-10 sm:px-8 md:px-12 md:py-16 md:pt-24 lg:px-16">
+        {/* 
+          Mobile: pulled up with -mt-8 so it overlaps the image bottom,
+          rounded top corners, sits on the cream background, creating
+          an integrated card-on-image composition.
+          Desktop: normal flow, no overlap, full width of the right column.
+        */}
+        <section className="relative z-10 -mt-8 w-full flex flex-col rounded-t-[28px] bg-[#F7F1E7] md:mt-0 md:w-[58vw] md:rounded-none md:z-auto">
+          {/* pt-24 on md+ so the absolute nav doesn't cover the heading.
+              On mobile, pt-8 after the -mt-8 overlap gives comfortable spacing. */}
+          <div className="mx-auto flex w-full max-w-[880px] flex-col px-6 py-8 sm:px-8 md:px-12 md:py-16 md:pt-24 lg:px-16">
             {/* Eyebrow */}
             <p
               className={`contact-eyebrow ${josefin} text-[11px] font-semibold uppercase tracking-[0.32em] sm:text-[12px]`}
@@ -350,7 +374,7 @@ export default function Contact() {
             </p>
 
             {/* ===================== OPTIONS ===================== */}
-            <div className="mt-10 flex flex-col gap-10 md:mt-12 md:gap-12">
+            <div className="mt-8 flex flex-col gap-8 md:mt-12 md:gap-12">
               {/* -------- Option 1 -------- */}
               <div className="contact-option contact-option--1 flex flex-col" style={{ animationDelay: "620ms" }}>
                 <h2 className="font-serif text-[clamp(24px,2.2vw,32px)] font-normal leading-[1.1] tracking-[-0.02em] text-[#750100]">
@@ -527,9 +551,6 @@ export default function Contact() {
         .contact-section--visible .contact-eyebrow {
           opacity: 1;
           transform: translate3d(0, 0, 0);
-          /* Letter-spacing subtly opens from 0.12em to the class's
-             natural 0.32em — a small editorial flourish for an
-             uppercase eyebrow. */
           letter-spacing: 0.32em;
         }
 
@@ -548,10 +569,7 @@ export default function Contact() {
           filter: blur(0);
         }
 
-        /* ============ Script "talk." / "find me" — elastic settle ============
-           transform-origin near baseline. No clip-path. Because both
-           spans use the same .contact-heading-script class, they
-           share the same timing — subtle and clean. */
+        /* ============ Script "talk." / "find me" — elastic settle ============ */
         .contact-heading-script {
           transform-origin: 50% 70%;
           opacity: 0;
@@ -576,10 +594,7 @@ export default function Contact() {
           transform: translate3d(0, 0, 0);
         }
 
-        /* ============ Options + form fields — staggered cascade ============
-           Each option block and each form field rises in with a soft
-           de-blur, staggered so the whole panel assembles in reading
-           order. Delays are inline per element for finer control. */
+        /* ============ Options + form fields — staggered cascade ============ */
         .contact-option,
         .contact-field {
           opacity: 0;
@@ -610,9 +625,7 @@ export default function Contact() {
           }
         }
 
-        /* ============ Dividers — draw in from the left ============
-           Each hr grows from scaleX(0) to scaleX(1), origin at the
-           left edge. Staggered after their option block lands. */
+        /* ============ Dividers — draw in from the left ============ */
         .contact-divider {
           transform-origin: left center;
           transform: scaleX(0);
@@ -624,11 +637,7 @@ export default function Contact() {
         .contact-section--visible .contact-option--1 + .contact-divider { transition-delay: 780ms; }
         .contact-section--visible .contact-option--2 + .contact-divider { transition-delay: 1300ms; }
 
-        /* ============ CTA buttons + links — idle glow pulse ============
-           Once the entrance is done, the two "→" buttons pulse their
-           shadow very slowly. The pulse pauses on hover so
-           hover:opacity-90 wins cleanly. box-shadow only — no
-           transform conflicts. */
+        /* ============ CTA buttons + links — idle glow pulse ============ */
         .contact-section--visible .contact-cta {
           animation: contactCtaPulse 5s ease-in-out 1.8s infinite;
         }
