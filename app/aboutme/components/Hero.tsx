@@ -224,7 +224,7 @@ export const Navigation = (): React.ReactElement => {
             </div>
 
             <span className="hero-mobile-brand md:hidden font-josefin text-xs font-light text-[#f7f3ee] tracking-[0.2em] uppercase">
-              About
+              ABOUT ME
             </span>
 
             <div className="md:hidden w-11" aria-hidden="true"></div>
@@ -440,11 +440,11 @@ export default function Hero() {
       />
 
       <div className="relative z-10 mx-auto max-w-[1680px] px-5 sm:px-12 lg:px-16 xl:px-24 min-h-[100dvh] flex items-center justify-center">
-        <div className="mx-auto w-full max-w-[900px] text-center">
+        <div className="mx-auto w-full max-w-[900px] text-center min-w-0">
           {/* STRICT 3 LINES */}
           <h1
             id="about-heading"
-            className="font-serif font-normal text-[#750000] tracking-[-0.02em] [text-shadow:0_1px_2px_rgba(127,15,15,0.06)] m-0 overflow-visible
+            className="font-serif font-normal text-[#750000] tracking-[-0.02em] [text-shadow:0_1px_2px_rgba(127,15,15,0.06)] m-0 overflow-x-clip
               !text-[clamp(1.05rem,5.2vw,2rem)] !leading-[0.9]
               md:!text-[clamp(1.5rem,3.4vw,3.5rem)] md:!leading-[0.85]"
           >
