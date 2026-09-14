@@ -6,6 +6,7 @@ import { motion, useInView, Variants } from "framer-motion";
 
 export default function Explain() {
   const sectionRef = useRef(null);
+
   const isInView = useInView(sectionRef, {
     once: true,
     amount: 0.15,
@@ -158,30 +159,62 @@ export default function Explain() {
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={containerVariants}
-      className="w-full max-w-[1504px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-8 sm:py-10 md:py-8 lg:py-10
-        grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-8 sm:gap-10 md:gap-6 lg:gap-10
+      className="
+        w-full max-w-[1504px] mx-auto
+        px-4 sm:px-6 md:px-8 lg:px-12
+        py-6 sm:py-8 md:py-8 lg:py-10
+        grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]
+        gap-8 sm:gap-10 md:gap-6 lg:gap-10
         items-center justify-items-center
-        bg-[url('/Explain2/bg.png')] bg-cover bg-center bg-no-repeat
-        overflow-x-clip"
+        bg-[url('/Explain2/bg.png')]
+        bg-cover bg-center bg-no-repeat
+        overflow-x-clip
+      "
     >
       {/* ===================== LEFT SECTION ===================== */}
       <motion.section
         variants={itemVariants}
-        className="flex flex-col justify-center items-center min-w-0 w-full h-full order-1 md:order-none"
+        className="
+          flex flex-col justify-center items-center
+          min-w-0 w-full h-full
+          order-1 md:order-none
+        "
       >
         <div className="flex flex-col items-center w-full max-w-full">
+
+          {/* ===================== HEADLINE ===================== */}
           <motion.h1
             variants={itemVariants}
-            className="font-serif font-normal text-[clamp(24px,6vw,36px)] md:text-[clamp(26px,2.7vw,44px)]
-              leading-[0.6] md:leading-[0.55] tracking-[-0.03em] text-[#7f0f0f] uppercase-none
-              mb-4 sm:mb-3 md:mb-3 relative flex flex-col items-center text-center w-full
-              [font-stretch:extra-condensed] [transform:scaleX(1.00)]
-              [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]"
+            className="
+              font-serif font-normal
+
+              /* MOBILE */
+              !text-[28px]
+              sm:!text-[32px]
+              !leading-[0.75]
+
+              /* DESKTOP - UNCHANGED */
+              md:!text-[clamp(26px,2.7vw,44px)]
+              md:!leading-[0.55]
+
+              tracking-[-0.03em]
+              text-[#7f0f0f]
+              uppercase-none
+              mb-4 sm:mb-3 md:mb-3
+              relative
+              flex flex-col
+              items-center
+              text-center
+              w-full
+              [font-stretch:extra-condensed]
+              [transform:scaleX(1.00)]
+              [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]
+            "
           >
             <motion.span
               custom={0}
               variants={headlineLineVariants}
-              className="block leading-[0.6] md:leading-[0.55] mt-[0.1em] first:mt-0"
+              className="block !leading-[0.75] md:!leading-[0.55] mt-[0.1em] first:mt-0"
             >
               You already know
             </motion.span>
@@ -189,12 +222,19 @@ export default function Explain() {
             <motion.span
               custom={1}
               variants={headlineLineVariants}
-              className="block leading-[0.6] md:leading-[0.55] mt-[0.05em]"
+              className="block !leading-[0.75] md:!leading-[0.55] mt-[0.05em]"
             >
               what&apos;s not{" "}
               <motion.span
                 variants={scriptWordVariants}
-                className="inline-block font-script text-[2em] leading-[0.6] tracking-[0.02em] text-[#6d0e0e]"
+                className="
+                  inline-block
+                  font-script
+                  !text-[2em]
+                  !leading-[0.6]
+                  tracking-[0.02em]
+                  text-[#6d0e0e]
+                "
                 style={{ transformOrigin: "50% 70%" }}
               >
                 working
@@ -204,7 +244,7 @@ export default function Explain() {
             <motion.span
               custom={2}
               variants={headlineLineVariants}
-              className="block leading-[0.6] md:leading-[0.55] mt-[0.3em]"
+              className="block !leading-[0.75] md:!leading-[0.55] mt-[0.3em]"
             >
               You&apos;ve known for years
             </motion.span>
@@ -212,12 +252,19 @@ export default function Explain() {
             <motion.span
               custom={3}
               variants={headlineLineVariants}
-              className="block leading-[0.6] md:leading-[0.55] mt-[0.01em]"
+              className="block !leading-[0.75] md:!leading-[0.55] mt-[0.01em]"
             >
               That&apos;s the part that&apos;s{" "}
               <motion.span
                 variants={scriptWordVariants}
-                className="inline-block font-script text-[2em] leading-[0.6] tracking-[0.02em] text-[#6d0e0e]"
+                className="
+                  inline-block
+                  font-script
+                  !text-[2em]
+                  !leading-[0.6]
+                  tracking-[0.02em]
+                  text-[#6d0e0e]
+                "
                 style={{ transformOrigin: "50% 70%" }}
               >
                 exhausting
@@ -225,11 +272,37 @@ export default function Explain() {
             </motion.span>
           </motion.h1>
 
+          {/* ===================== BODY COPY ===================== */}
           <motion.p
             variants={itemVariants}
-            className="font-josefin text-[13px] sm:text-[14px] md:text-[clamp(12px,0.9vw,15px)]
-              font-normal leading-[1.6] md:leading-[1.5] tracking-[0.01em] text-[#5a0a0a]
-              max-w-[420px] text-center mt-3 px-1 sm:px-0"
+            className="
+              font-josefin
+
+              /* MOBILE */
+              !text-[17px]
+              sm:!text-[18px]
+              !leading-[1.5]
+
+              /* DESKTOP - UNCHANGED */
+              md:!text-[clamp(12px,0.9vw,15px)]
+              md:!leading-[1.5]
+
+              font-normal
+              tracking-[0.01em]
+              text-[#5a0a0a]
+
+              w-full
+              max-w-[620px]
+              md:max-w-[420px]
+
+              text-center
+              mt-4
+              md:mt-3
+
+              px-5
+              sm:px-4
+              md:px-0
+            "
           >
             You can name your patterns. You&apos;ve named them out loud, to friends,
             over drinks, more times than you can count. You&apos;ve read the books.
@@ -242,7 +315,13 @@ export default function Explain() {
       <motion.section
         variants={imageVariants}
         style={{ transformPerspective: 1200 }}
-        className="flex items-center justify-center w-full md:w-auto md:flex-shrink-0 h-full order-2 md:order-none"
+        className="
+          flex items-center justify-center
+          w-full md:w-auto
+          md:flex-shrink-0
+          h-full
+          order-2 md:order-none
+        "
       >
         <div className="flex items-center justify-center w-full md:w-auto">
           <motion.div
@@ -263,19 +342,32 @@ export default function Explain() {
             whileHover={{
               scale: 1.05,
               rotate: 2,
-              transition: { type: "spring" as const, damping: 15, stiffness: 100 },
+              transition: {
+                type: "spring" as const,
+                damping: 15,
+                stiffness: 100,
+              },
             }}
-            className="flex items-center justify-center w-full md:w-auto"
+            className="
+              flex items-center justify-center
+              w-full md:w-auto
+            "
           >
             <Image
               src="/Explain2/md2.png"
               alt="Ornate mirror with woman and chair – decorative golden artwork"
               width={400}
               height={488}
-              className="w-[min(60vw,260px)] sm:w-[min(45vw,320px)]
-                md:w-[clamp(200px,19vw,320px)] lg:w-[clamp(240px,22vw,380px)]
-                h-auto object-contain block
-                drop-shadow-[0_2px_6px_rgba(80,40,20,0.08)]"
+              className="
+                w-[min(60vw,260px)]
+                sm:w-[min(45vw,320px)]
+                md:w-[clamp(200px,19vw,320px)]
+                lg:w-[clamp(240px,22vw,380px)]
+                h-auto
+                object-contain
+                block
+                drop-shadow-[0_2px_6px_rgba(80,40,20,0.08)]
+              "
               priority
             />
           </motion.div>
@@ -285,23 +377,61 @@ export default function Explain() {
       {/* ===================== RIGHT SECTION ===================== */}
       <motion.section
         variants={itemVariants}
-        className="flex flex-col justify-center items-center min-w-0 w-full h-full order-3 md:order-none"
+        className="
+          flex flex-col justify-center items-center
+          min-w-0 w-full h-full
+          order-3 md:order-none
+        "
       >
         <motion.h2
           variants={itemVariants}
-          className="font-serif font-normal text-[clamp(24px,6vw,34px)] md:text-[clamp(26px,2.2vw,38px)]
-            leading-[0.6] md:leading-[0.55] tracking-[-0.02em] text-[#7f0f0f] text-center mb-2 md:mb-1
-            [font-stretch:extra-condensed] [transform:scaleX(1.00)]
-            [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]"
+          className="
+            font-serif font-normal
+
+            /* MOBILE */
+            !text-[28px]
+            sm:!text-[32px]
+            !leading-[0.75]
+
+            /* DESKTOP - UNCHANGED */
+            md:!text-[clamp(26px,2.2vw,38px)]
+            md:!leading-[0.55]
+
+            tracking-[-0.02em]
+            text-[#7f0f0f]
+            text-center
+            mb-2 md:mb-1
+
+            [font-stretch:extra-condensed]
+            [transform:scaleX(1.00)]
+            [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]
+          "
         >
           Deep down, you know:
         </motion.h2>
 
         <motion.p
           variants={itemVariants}
-          className="font-josefin text-[14px] sm:text-[15px] md:text-[clamp(12px,0.95vw,15px)]
-            font-normal leading-[1.6] md:leading-[1.5] text-[#5a0a0a] text-center
-            max-w-[380px] my-2 md:my-1 px-1 sm:px-0"
+          className="
+            font-josefin
+
+            /* MOBILE */
+            !text-[17px]
+            sm:!text-[18px]
+            !leading-[1.5]
+
+            /* DESKTOP - UNCHANGED */
+            md:!text-[clamp(12px,0.95vw,15px)]
+            md:!leading-[1.5]
+
+            font-normal
+            text-[#5a0a0a]
+            text-center
+
+            max-w-[380px]
+            my-2 md:my-1
+            px-4 sm:px-2 md:px-1
+          "
         >
           The exhaustion isn&apos;t from doing too much. It&apos;s from carrying a life
           that no longer fits.
@@ -309,7 +439,14 @@ export default function Explain() {
 
         <motion.div
           variants={containerVariants}
-          className="mt-2 md:mt-1 flex flex-col gap-3 w-full max-w-[380px]"
+          className="
+            mt-2 md:mt-1
+            flex flex-col
+            gap-3
+            w-full
+            max-w-[380px]
+            px-4 sm:px-2 md:px-0
+          "
         >
           {insights.map((text, i) => (
             <motion.div
@@ -319,15 +456,50 @@ export default function Explain() {
               whileHover={{
                 x: 8,
                 scale: 1.02,
-                transition: { type: "spring" as const, damping: 20, stiffness: 150 },
+                transition: {
+                  type: "spring" as const,
+                  damping: 20,
+                  stiffness: 150,
+                },
               }}
-              className="flex items-baseline gap-2 font-josefin text-[13px] sm:text-[14px] md:text-[clamp(12px,0.9vw,15px)]
-                leading-[1.5] md:leading-[1.4] text-[#5a0a0a] text-left cursor-default"
+              className="
+                flex items-baseline gap-2
+
+                font-josefin
+
+                /* MOBILE */
+                !text-[17px]
+                sm:!text-[18px]
+                !leading-[1.5]
+
+                /* DESKTOP - UNCHANGED */
+                md:!text-[clamp(12px,0.9vw,15px)]
+                md:!leading-[1.4]
+
+                font-normal
+                text-[#5a0a0a]
+                text-left
+                cursor-default
+              "
             >
-              <span className="font-josefin font-normal text-[#7f0f0f] min-w-[28px] md:min-w-[34px] text-[1.05em] tracking-[0.02em] flex-shrink-0">
+              <span
+                className="
+                  font-josefin
+                  font-normal
+                  text-[#7f0f0f]
+                  min-w-[28px]
+                  md:min-w-[34px]
+                  !text-[1.05em]
+                  tracking-[0.02em]
+                  flex-shrink-0
+                "
+              >
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <span className="font-normal">{text}</span>
+
+              <span className="font-normal">
+                {text}
+              </span>
             </motion.div>
           ))}
         </motion.div>

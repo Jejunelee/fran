@@ -208,13 +208,24 @@ export const Navigation = (): React.ReactElement => {
 // -------------------------------------------------------------
 // Hero Background Video
 // Plays through once, then holds on the last frame.
+// Signals `onReady` once the browser can actually paint frames.
 // -------------------------------------------------------------
-const HeroBackgroundVideo = () => {
+const HeroBackgroundVideo = ({ onReady }: { onReady: () => void }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
+  const hasSignaledRef = useRef(false);
+
+  // Wrap the signal so it only ever fires once per mount, no matter
+  // how many events race to call it (canplay, error, timeout, etc.).
+  const signalReady = () => {
+    if (hasSignaledRef.current) return;
+    hasSignaledRef.current = true;
+    onReady();
+  };
 
   // If reduced motion is preferred, skip playback entirely and jump
-  // straight to the final frame so it reads as a static image.
+  // straight to the final frame so it reads as a static image. We
+  // still must signal ready, or these users get a blank hero forever.
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -225,16 +236,46 @@ const HeroBackgroundVideo = () => {
           video.currentTime = Math.max(0, video.duration - 0.001);
         }
         video.pause();
+        signalReady();
       };
 
       if (video.readyState >= 1) {
         seekToEnd();
-      } else {
-        video.addEventListener("loadedmetadata", seekToEnd, { once: true });
-        return () => video.removeEventListener("loadedmetadata", seekToEnd);
+        return;
       }
+
+      video.addEventListener("loadedmetadata", seekToEnd, { once: true });
+      video.addEventListener("error", signalReady, { once: true });
+      const rmTimeout = window.setTimeout(signalReady, 4000);
+
+      return () => {
+        video.removeEventListener("loadedmetadata", seekToEnd);
+        video.removeEventListener("error", signalReady);
+        window.clearTimeout(rmTimeout);
+      };
     }
-  }, [prefersReducedMotion]);
+
+    // Normal path: wait until the browser can actually render frames.
+    // readyState >= 3 (HAVE_FUTURE_DATA) means the current frame is
+    // decoded and playable — a cache hit will already be there.
+    if (video.readyState >= 3) {
+      signalReady();
+      return;
+    }
+
+    video.addEventListener("canplay", signalReady, { once: true });
+
+    // Safety net: if the video stalls, never trap the user on a
+    // blank screen forever.
+    video.addEventListener("error", signalReady, { once: true });
+    const timeout = window.setTimeout(signalReady, 4000);
+
+    return () => {
+      video.removeEventListener("canplay", signalReady);
+      video.removeEventListener("error", signalReady);
+      window.clearTimeout(timeout);
+    };
+  }, [prefersReducedMotion, onReady]);
 
   const handleEnded = () => {
     const video = videoRef.current;
@@ -266,75 +307,90 @@ const HeroBackgroundVideo = () => {
 };
 
 export default function Hero() {
+  const [videoReady, setVideoReady] = useState(false);
+
   return (
     <section
       className="hero-section relative w-full min-h-screen overflow-hidden"
       aria-labelledby="homecoming-heading"
     >
-      {/* Background video covering the entire section — plays once, holds last frame */}
-      <HeroBackgroundVideo />
+      {/* Background video covering the entire section — plays once, holds last frame.
+          Signals back when it can paint so the text animation can start in sync. */}
+      <HeroBackgroundVideo onReady={() => setVideoReady(true)} />
 
-      <div className="relative z-10 mx-auto max-w-[1200px] px-6 py-12 sm:px-12 sm:py-16 lg:px-16 lg:py-20 xl:px-24 min-h-screen flex items-center
-        max-md:pt-[68px]">
-        {/* Content block - left aligned with reduced width */}
-        <div className="flex max-w-2xl flex-col items-start gap-6 text-left ml-0 lg:ml-[-0.5rem] xl:ml-[-1rem]
-          pt-14 sm:pt-16 md:pt-20 lg:pt-0
-          pb-16 sm:pb-20 md:pb-24 lg:pb-28
-          max-md:pt-4 max-md:pb-20 max-md:w-full">
-          {/* Headline */}
-          <h1
-            id="homecoming-heading"
-            className="font-serif font-light leading-[0.7] text-[#750000] [text-wrap:balance] tracking-normal [font-stretch:extra-condensed] [transform:scaleX(1.00)]
-              max-md:leading-[0.9]"
-            style={{
-              textShadow: "0 2px 4px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2)",
-            }}
-          >
-            {/* Line 1: Homecoming with script H */}
-            <span className="hero-line hero-line--1 block text-[clamp(1.5rem,4.2vw,4.2rem)] -mt-2 md:-mt-3
-              max-md:text-[clamp(1.75rem,8vw,2.75rem)] max-md:-mt-1">
-              <span className="hero-script-inline inline-block font-script text-[clamp(1.8em,2.0em,2.0em)] leading-none pr-2 md:pr-3">
-                H
+      {/* Animated content is only mounted once the video can paint,
+          so every CSS animation starts from frame zero with the first
+          visible video frame — no more racing animations behind a
+          hidden curtain. */}
+      {videoReady && (
+        <div className="relative z-10 mx-auto max-w-[1200px] px-6 py-12 sm:px-12 sm:py-16 lg:px-16 lg:py-20 xl:px-24 min-h-screen flex items-center
+          max-md:pt-[68px]">
+          {/* Content block - left aligned with reduced width */}
+          <div className="flex max-w-2xl flex-col items-start gap-6 text-left ml-0 lg:ml-[-0.5rem] xl:ml-[-1rem]
+            pt-14 sm:pt-16 md:pt-20 lg:pt-0
+            pb-16 sm:pb-20 md:pb-24 lg:pb-28
+            max-md:pt-4 max-md:pb-20 max-md:w-full">
+            {/* Headline */}
+            <h1
+              id="homecoming-heading"
+              className="font-serif font-light leading-[0.7] text-[#750000] [text-wrap:balance] tracking-normal [font-stretch:extra-condensed] [transform:scaleX(1.00)]
+                max-md:leading-[0.9]"
+              style={{
+                textShadow: "0 2px 4px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2)",
+              }}
+            >
+              {/* Line 1: Homecoming with script H */}
+              <span className="hero-line hero-line--1 block text-[clamp(1.5rem,4.2vw,4.2rem)] -mt-2 md:-mt-3
+                max-md:text-[clamp(1.75rem,8vw,2.75rem)] max-md:-mt-1">
+                <span className="hero-script-inline inline-block font-script text-[clamp(1.8em,2.0em,2.0em)] leading-none pr-2 md:pr-3">
+                  H
+                </span>
+                omecoming
               </span>
-              omecoming
-            </span>
 
-            {/* Line 2: 1:1 coaching */}
-            <span className="hero-line hero-line--2 block text-[clamp(1.5rem,4.2vw,4.2rem)] -mt-2 md:-mt-3 font-light
-              max-md:text-[clamp(1.75rem,8vw,2.75rem)] max-md:-mt-1">
-              &nbsp;&nbsp;&nbsp;&nbsp;1:1 coaching
-            </span>
-
-            {/* Line 3: with Francesca with script F */}
-            <span className="hero-line hero-line--3 block text-[clamp(1.5rem,4.2vw,4.2rem)] -mt-2 md:-mt-3 font-light
-              max-md:text-[clamp(1.75rem,8vw,2.75rem)] max-md:-mt-1">
-              &nbsp;&nbsp;&nbsp;&nbsp;with{" "}
-              <span className="hero-script-inline inline-block font-script text-[clamp(1.8em,2.0em,2.0em)] leading-none pr-1">
-                F
+              {/* Line 2: 1:1 coaching */}
+              <span className="hero-line hero-line--2 block text-[clamp(1.5rem,4.2vw,4.2rem)] -mt-2 md:-mt-3 font-light
+                max-md:text-[clamp(1.75rem,8vw,2.75rem)] max-md:-mt-1">
+                &nbsp;&nbsp;&nbsp;&nbsp;1:1 coaching
               </span>
-              rancesca
-            </span>
-          </h1>
 
-          {/* Subtitle text - updated with reduced width */}
-          <p className="hero-subtitle max-w-lg font-josefin text-[clamp(0.85rem,1.5vw,1.1rem)] text-[#2b1210]/80 sm:text-lg text-left tracking-normal px-2 sm:px-0
-            max-md:text-[15px] max-md:leading-[1.6] max-md:px-0 max-md:max-w-full">
-            This isn&apos;t about becoming someone new, and it isn&apos;t about going back to who you used to be. It&apos;s about building a strong enough relationship with yourself that you can move through any season of your life without losing the thread of who you are.
-          </p>
+              {/* Line 3: with Francesca with script F */}
+              <span className="hero-line hero-line--3 block text-[clamp(1.5rem,4.2vw,4.2rem)] -mt-2 md:-mt-3 font-light
+                max-md:text-[clamp(1.75rem,8vw,2.75rem)] max-md:-mt-1">
+                &nbsp;&nbsp;&nbsp;&nbsp;with{" "}
+                <span className="hero-script-inline inline-block font-script text-[clamp(1.8em,2.0em,2.0em)] leading-none pr-1">
+                  F
+                </span>
+                rancesca
+              </span>
+            </h1>
+
+            {/* Subtitle text - updated with reduced width */}
+            <p className="hero-subtitle max-w-lg font-josefin text-[clamp(0.85rem,1.5vw,1.1rem)] text-[#2b1210]/80 sm:text-lg text-left tracking-normal px-2 sm:px-0
+              max-md:text-[15px] max-md:leading-[1.6] max-md:px-0 max-md:max-w-full">
+              This isn&apos;t about becoming someone new, and it isn&apos;t about going back to who you used to be. It&apos;s about building a strong enough relationship with yourself that you can move through any season of your life without losing the thread of who you are.
+            </p>
+          </div>
         </div>
-      </div>
+      )}
 
-      {/* Navigation at bottom on desktop, top on mobile */}
+      {/* Navigation at bottom on desktop, top on mobile.
+          Stays mounted unconditionally so the page is never
+          unnavigable if the video fails to load. */}
       <Navigation />
 
-      {/* Decorative "Coming home" text - hidden on mobile */}
-      <div
-        aria-hidden="true"
-        className="hero-coming-home pointer-events-none absolute bottom-20 right-8 z-10 hidden lg:flex items-center gap-3 font-josefin text-xs uppercase tracking-[0.2em] text-[#fdd1db] [writing-mode:vertical-rl]"
-      >
-        <span className="h-10 w-px bg-[#fdd1db]/60" />
-        Coming home
-      </div>
+      {/* Decorative "Coming home" text - hidden on mobile.
+          Mounts with the rest of the animated content so its
+          entrance animation also plays in sync with the video. */}
+      {videoReady && (
+        <div
+          aria-hidden="true"
+          className="hero-coming-home pointer-events-none absolute bottom-20 right-8 z-10 hidden lg:flex items-center gap-3 font-josefin text-xs uppercase tracking-[0.2em] text-[#fdd1db] [writing-mode:vertical-rl]"
+        >
+          <span className="h-10 w-px bg-[#fdd1db]/60" />
+          Coming home
+        </div>
+      )}
 
       {/* ---------------- Animation layer (scoped to this section) ---------------- */}
       <style>{`
