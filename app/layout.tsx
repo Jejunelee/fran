@@ -62,7 +62,8 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${josefinSans.variable} ${notoSerif.variable} ${parfumerie.variable} h-full antialiased`}
     >
       <body className="min-h-screen flex flex-col">
-        <main className="flex-1">
+        {/* w-full min-w-0 prevents flex-child stretching issues on mobile */}
+        <main className="flex-1 w-full min-w-0">
           {children}
         </main>
 

@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
 const worksScriptClass =
-  "font-script text-[3.00em] leading-[0.5] mx-[0.04em] translate-y-[0.02em] inline-block tracking-[0.02em] text-[#8F4A4A] relative z-[2] font-normal";
+  "font-script leading-[0.5] mx-[0.04em] translate-y-[0.02em] inline-block tracking-[0.02em] text-[#8F4A4A] relative z-[2] font-normal";
 
 export default function HowItWorks() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -57,12 +57,21 @@ export default function HowItWorks() {
           max-md:gap-8">
           {/* LEFT COLUMN */}
           <div className="md:max-w-[720px]">
-            {/* Heading */}
-            <h2 className="how-heading font-serif font-normal text-[#8F4A4A] leading-[0.92] tracking-[-0.04em] text-[clamp(30px,3.7vw,58px)]
-              max-md:text-[clamp(28px,8vw,42px)] max-md:leading-[0.95]">
+            {/* Heading — sizes follow the Explain pattern:
+                base = mobile (plain px), md: = clamp() for desktop.
+                Script "works" is scaled with `em` relative to the heading,
+                so it flows automatically. */}
+            <h2
+              className="how-heading font-serif font-normal text-[#8F4A4A] leading-[0.95] tracking-[-0.04em]
+                !text-[30px]
+                sm:!text-[34px]
+                !leading-[0.95]
+                md:!text-[clamp(34px,3.7vw,58px)]
+                md:!leading-[0.92]"
+            >
               <span className="how-heading-line block">
                 <span className="font-serif">How it </span>
-                <span className={`${worksScriptClass} how-heading-script max-md:!text-[2.4em]`}>
+                <span className={`${worksScriptClass} how-heading-script !text-[2.4em]`}>
                   works
                 </span>
               </span>
@@ -74,9 +83,14 @@ export default function HowItWorks() {
               </span>
             </h2>
 
-            {/* Bullet list */}
-            <ul className="mt-[35px] md:mt-[40px] list-disc list-outside pl-7 md:pl-8 space-y-[28px] md:space-y-[30px] font-josefin font-normal text-[#750100] text-[16px] sm:text-[18px] md:text-[22px] lg:text-[24px] leading-[1.15] md:leading-[1.05]
-              max-md:mt-7 max-md:pl-6 max-md:space-y-6 max-md:leading-[1.4]">
+            {/* Bullet list — sizes follow the Explain pattern:
+                base = mobile (plain px), md: = clamp() for desktop.
+                Mobile sizes reduced a lot vs. original. */}
+            <ul
+              className="mt-7 md:mt-[40px] list-disc list-outside pl-6 md:pl-8 space-y-6 md:space-y-[30px] font-josefin font-normal text-[#750100] tracking-[0.01em]
+                !text-[13px] sm:!text-[14px] !leading-[1.5]
+                md:!text-[clamp(16px,1.5vw,24px)] md:!leading-[1.15]"
+            >
               <li className="how-bullet" style={{ animationDelay: "360ms" }}>
                 Minimum 8 sessions, up to 12 weeks
               </li>
@@ -99,23 +113,37 @@ export default function HowItWorks() {
 
           {/* RIGHT COLUMN */}
           <div className="md:w-[min(44vw,680px)] md:pt-4 lg:pt-6">
-            {/* Investment box */}
-            <div className="how-investment bg-[#750100] px-6 py-7 sm:px-8 sm:py-8 md:px-10 md:py-8 lg:px-11 lg:py-7
-              max-md:px-5 max-md:py-6">
-              <p className="font-josefin font-bold tracking-[0.01em] text-[#F8F1E7] text-[16px] sm:text-[18px] md:text-[20px] uppercase">
+            {/* Investment box — sizes follow the Explain pattern. */}
+            <div className="how-investment bg-[#750100] px-5 py-6 sm:px-8 sm:py-8 md:px-10 md:py-8 lg:px-11 lg:py-7">
+              <p
+                className="font-josefin font-bold tracking-[0.01em] text-[#F8F1E7] uppercase
+                  !text-[14px] sm:!text-[15px]
+                  md:!text-[clamp(16px,1.3vw,20px)]"
+              >
                 Investment
               </p>
-              <p className="mt-2 font-serif font-normal text-[#F8F1E7] text-[28px] sm:text-[34px] md:text-[42px] lg:text-[46px] leading-[1.05]">
+              <p
+                className="mt-2 font-serif font-normal text-[#F8F1E7] leading-[1.05]
+                  !text-[24px] sm:!text-[28px]
+                  md:!text-[clamp(28px,3vw,46px)]"
+              >
                 USD $120 per session
               </p>
-              <p className="mt-3 font-josefin font-normal text-[#F8F1E7] text-[15px] sm:text-[17px] md:text-[20px] leading-[1.35]">
+              <p
+                className="mt-3 font-josefin font-normal text-[#F8F1E7]
+                  !text-[13px] sm:!text-[14px] !leading-[1.5]
+                  md:!text-[clamp(15px,1.4vw,20px)] md:!leading-[1.35]"
+              >
                 8-session minimum, payable per session or as a full container.
               </p>
             </div>
 
-            {/* Right body paragraph */}
-            <p className="how-right-copy mt-[30px] font-josefin font-normal text-[#750100] text-[16px] sm:text-[18px] md:text-[22px] lg:text-[23px] leading-[1.3] md:leading-[1.1]
-              max-md:mt-6 max-md:leading-[1.5]">
+            {/* Right body paragraph — sizes follow the Explain pattern. */}
+            <p
+              className="how-right-copy mt-6 md:mt-[30px] font-josefin font-normal text-[#750100] tracking-[0.01em]
+                !text-[13px] sm:!text-[14px] !leading-[1.5]
+                md:!text-[clamp(16px,1.5vw,23px)] md:!leading-[1.15]"
+            >
               Eight sessions isn&rsquo;t arbitrary. Real pattern change takes
               time, and most of the meaningful shifts I see happen between
               sessions four and seven. Anything shorter is a conversation, not

@@ -37,6 +37,117 @@ const faqData: FAQItem[] = [
   },
 ];
 
+// Same pattern as the working Explain component:
+//  - base = mobile size (plain px, no clamp)
+//  - md: variant = clamp() for tablet/desktop
+//  - `!` prefix forces each size
+const questionClass = [
+  "font-josefin text-[#8B0000] font-normal",
+  "!text-[14px] sm:!text-[15px] !leading-[1.5]",
+  "md:!text-[clamp(1rem,1.1vw,1.125rem)] md:!leading-[1.6]",
+].join(" ");
+
+const answerClass = [
+  "font-josefin text-[#8B0000] font-light",
+  "!text-[13px] sm:!text-[14px] !leading-[1.6]",
+  "md:!text-[clamp(0.875rem,1vw,1rem)] md:!leading-[1.65]",
+].join(" ");
+
+const faqCss = String.raw`
+  /* ============ Heading — rise + de-blur ============ */
+  .faq-heading {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+    filter: blur(6px);
+    transition: opacity 900ms cubic-bezier(0.22, 1, 0.36, 1) 40ms,
+                transform 900ms cubic-bezier(0.22, 1, 0.36, 1) 40ms,
+                filter 900ms cubic-bezier(0.22, 1, 0.36, 1) 40ms;
+  }
+  .faq-section--visible .faq-heading {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+
+  /* ============ FAQ rows — staggered rise + de-blur ============ */
+  .faq-item {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+    filter: blur(4px);
+    animation: faqItemIn 800ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-play-state: paused;
+  }
+  .faq-section--visible .faq-item {
+    animation-play-state: running;
+  }
+  @keyframes faqItemIn {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 18px, 0);
+      filter: blur(4px);
+    }
+    60% {
+      opacity: 1;
+      filter: blur(0);
+    }
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+      filter: blur(0);
+    }
+  }
+
+  /* ============ Divider — draws in from the left ============ */
+  .faq-divider {
+    transform-origin: left center;
+    transform: scaleX(0);
+    transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .faq-section--visible .faq-divider {
+    transform: scaleX(1);
+  }
+  .faq-section--visible .faq-item:nth-child(1) .faq-divider { transition-delay: 320ms; }
+  .faq-section--visible .faq-item:nth-child(2) .faq-divider { transition-delay: 430ms; }
+  .faq-section--visible .faq-item:nth-child(3) .faq-divider { transition-delay: 540ms; }
+
+  /* ============ Plus/minus icon — springy spin on toggle ============ */
+  .faq-icon {
+    transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-origin: 50% 50%;
+  }
+  .faq-icon--open {
+    transform: rotate(180deg) scale(1.1);
+  }
+
+  /* ============ Row hover — subtle lift + question darken ============ */
+  .faq-toggle {
+    transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .faq-toggle:hover {
+      transform: translate3d(4px, 0, 0);
+    }
+    .faq-toggle:hover span:first-child {
+      color: #6a0000;
+    }
+  }
+
+  /* ============ Reduced motion ============ */
+  @media (prefers-reduced-motion: reduce) {
+    .faq-heading,
+    .faq-item,
+    .faq-divider,
+    .faq-icon,
+    .faq-toggle {
+      animation: none !important;
+      transition: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+      filter: none !important;
+    }
+  }
+`;
+
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -73,9 +184,12 @@ const FAQ = () => {
         }`}
     >
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <h1 className="faq-heading font-serif text-[#8B0000] text-4xl sm:text-5xl md:text-6xl font-normal leading-tight
-          max-md:text-[clamp(2rem,9vw,2.75rem)]">
+        {/* Header — mobile-first sizes, clamp only inside md: */}
+        <h1
+          className="faq-heading font-serif text-[#8B0000] font-normal
+            !text-[32px] sm:!text-[40px] !leading-[1.1]
+            md:!text-[clamp(2.5rem,5vw,3.75rem)] md:!leading-[1.05]"
+        >
           FAQs
         </h1>
 
@@ -83,8 +197,7 @@ const FAQ = () => {
         <div className="h-10 md:h-12 lg:h-14 max-md:h-7" />
 
         {/* Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-16 gap-y-6
-          max-md:gap-y-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-16 gap-y-6 max-md:gap-y-5">
           {/* Left Column */}
           <div className="space-y-6 max-md:space-y-5">
             {faqData.slice(0, 3).map((item, index) => (
@@ -95,18 +208,14 @@ const FAQ = () => {
               >
                 <button
                   type="button"
-                  className="faq-toggle w-full text-left flex justify-between items-start gap-4 group
-                    max-md:gap-3 max-md:min-h-[44px]"
+                  className="faq-toggle w-full text-left flex justify-between items-start gap-4 group max-md:gap-3 max-md:min-h-[44px]"
                   onClick={() => toggleAccordion(index)}
                   aria-expanded={openIndex === index}
                 >
-                  <span className="font-josefin text-[#8B0000] text-base sm:text-lg font-normal leading-relaxed
-                    max-md:leading-[1.5]">
-                    {item.question}
-                  </span>
+                  <span className={questionClass}>{item.question}</span>
                   <span
-                    className={`faq-icon text-[#8B0000] text-xl flex-shrink-0 mt-0.5 transition-transform duration-300
-                      max-md:text-[1.35rem] max-md:mt-0 ${
+                    className={`faq-icon text-[#8B0000] flex-shrink-0 mt-0.5 transition-transform duration-300
+                      !text-[20px] max-md:!text-[20px] max-md:mt-0 ${
                         openIndex === index ? "faq-icon--open" : ""
                       }`}
                   >
@@ -120,13 +229,9 @@ const FAQ = () => {
                       : "max-h-0 opacity-0"
                   }`}
                 >
-                  <p className="font-josefin text-[#8B0000] text-sm sm:text-base font-light leading-relaxed
-                    max-md:text-[0.9375rem] max-md:leading-[1.6]">
-                    {item.answer}
-                  </p>
+                  <p className={answerClass}>{item.answer}</p>
                 </div>
-                <hr className="faq-divider border-t border-[#8B0000]/20 mt-5 w-full
-                  max-md:mt-4" />
+                <hr className="faq-divider border-t border-[#8B0000]/20 mt-5 w-full max-md:mt-4" />
               </div>
             ))}
           </div>
@@ -143,18 +248,14 @@ const FAQ = () => {
                 >
                   <button
                     type="button"
-                    className="faq-toggle w-full text-left flex justify-between items-start gap-4 group
-                      max-md:gap-3 max-md:min-h-[44px]"
+                    className="faq-toggle w-full text-left flex justify-between items-start gap-4 group max-md:gap-3 max-md:min-h-[44px]"
                     onClick={() => toggleAccordion(actualIndex)}
                     aria-expanded={openIndex === actualIndex}
                   >
-                    <span className="font-josefin text-[#8B0000] text-base sm:text-lg font-normal leading-relaxed
-                      max-md:leading-[1.5]">
-                      {item.question}
-                    </span>
+                    <span className={questionClass}>{item.question}</span>
                     <span
-                      className={`faq-icon text-[#8B0000] text-xl flex-shrink-0 mt-0.5 transition-transform duration-300
-                        max-md:text-[1.35rem] max-md:mt-0 ${
+                      className={`faq-icon text-[#8B0000] flex-shrink-0 mt-0.5 transition-transform duration-300
+                        !text-[20px] max-md:!text-[20px] max-md:mt-0 ${
                           openIndex === actualIndex ? "faq-icon--open" : ""
                         }`}
                     >
@@ -168,13 +269,9 @@ const FAQ = () => {
                         : "max-h-0 opacity-0"
                     }`}
                   >
-                    <p className="font-josefin text-[#8B0000] text-sm sm:text-base font-light leading-relaxed
-                      max-md:text-[0.9375rem] max-md:leading-[1.6]">
-                      {item.answer}
-                    </p>
+                    <p className={answerClass}>{item.answer}</p>
                   </div>
-                  <hr className="faq-divider border-t border-[#8B0000]/20 mt-5 w-full
-                    max-md:mt-4" />
+                  <hr className="faq-divider border-t border-[#8B0000]/20 mt-5 w-full max-md:mt-4" />
                 </div>
               );
             })}
@@ -182,110 +279,9 @@ const FAQ = () => {
         </div>
       </div>
 
-      {/* ---------------- Animation layer (scoped to this section) ---------------- */}
-      <style>{`
-        /* ============ Heading — rise + de-blur ============ */
-        .faq-heading {
-          opacity: 0;
-          transform: translate3d(0, 20px, 0);
-          filter: blur(6px);
-          transition: opacity 900ms cubic-bezier(0.22, 1, 0.36, 1) 40ms,
-                      transform 900ms cubic-bezier(0.22, 1, 0.36, 1) 40ms,
-                      filter 900ms cubic-bezier(0.22, 1, 0.36, 1) 40ms;
-        }
-        .faq-section--visible .faq-heading {
-          opacity: 1;
-          transform: translate3d(0, 0, 0);
-          filter: blur(0);
-        }
-
-        /* ============ FAQ rows — staggered rise + de-blur ============
-           Per-row animation-delay is set inline (index * 110ms after
-           a base 120ms), so the five items cascade in reading order:
-           left column first (top to bottom), then right column. */
-        .faq-item {
-          opacity: 0;
-          transform: translate3d(0, 18px, 0);
-          filter: blur(4px);
-          animation: faqItemIn 800ms cubic-bezier(0.22, 1, 0.36, 1) both;
-        }
-        .faq-section--visible .faq-item {
-          animation-play-state: running;
-        }
-        @keyframes faqItemIn {
-          0% {
-            opacity: 0;
-            transform: translate3d(0, 18px, 0);
-            filter: blur(4px);
-          }
-          60% {
-            opacity: 1;
-            filter: blur(0);
-          }
-          100% {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-            filter: blur(0);
-          }
-        }
-
-        /* ============ Divider — draws in from the left ============
-           Each hr grows from scaleX(0) to scaleX(1) with origin at
-           the left edge, timed to land after its row has settled. */
-        .faq-divider {
-          transform-origin: left center;
-          transform: scaleX(0);
-          transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .faq-section--visible .faq-divider {
-          transform: scaleX(1);
-        }
-        .faq-section--visible .faq-item:nth-child(1) .faq-divider { transition-delay: 320ms; }
-        .faq-section--visible .faq-item:nth-child(2) .faq-divider { transition-delay: 430ms; }
-        .faq-section--visible .faq-item:nth-child(3) .faq-divider { transition-delay: 540ms; }
-
-        /* ============ Plus/minus icon — springy spin on toggle ============
-           The "+" / "−" character swaps via React state, and the span
-           gets an extra rotate + scale kick when it opens or closes,
-           so the icon feels tactile rather than just swapping text. */
-        .faq-icon {
-          transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
-          transform-origin: 50% 50%;
-        }
-        .faq-icon--open {
-          transform: rotate(180deg) scale(1.1);
-        }
-
-        /* ============ Row hover — subtle lift + question darken ============
-           A barely-there nudge on the x-axis so the row feels
-           interactive without changing the reading rhythm. */
-        .faq-toggle {
-          transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        @media (hover: hover) and (pointer: fine) {
-          .faq-toggle:hover {
-            transform: translate3d(4px, 0, 0);
-          }
-          .faq-toggle:hover span:first-child {
-            color: #6a0000;
-          }
-        }
-
-        /* ============ Reduced motion ============ */
-        @media (prefers-reduced-motion: reduce) {
-          .faq-heading,
-          .faq-item,
-          .faq-divider,
-          .faq-icon,
-          .faq-toggle {
-            animation: none !important;
-            transition: none !important;
-            opacity: 1 !important;
-            transform: none !important;
-            filter: none !important;
-          }
-        }
-      `}</style>
+      {/* CSS lives in a String.raw constant at module scope — no template
+          literal in JSX, so nothing can break the compiled chunk. */}
+      <style dangerouslySetInnerHTML={{ __html: faqCss }} />
     </section>
   );
 };

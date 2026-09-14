@@ -58,6 +58,23 @@ const WhoIsThisFor = () => {
   const leftColumnItems = items.slice(0, 2);
   const rightColumnItems = items.slice(2);
 
+  // Same pattern as the working Explain component:
+  //  - `!` prefix forces the size
+  //  - base class = mobile size
+  //  - `md:` variant overrides for desktop
+  //  - clamp() appears ONLY inside md:, never in the base
+  const titleClass = [
+    "font-josefin font-semibold text-[#F8F2E7]",
+    "!text-[15px] sm:!text-[16px] !leading-[1.3]",
+    "md:!text-[clamp(1rem,1.1vw,1.2rem)] md:!leading-[1.3]",
+  ].join(" ");
+
+  const descClass = [
+    "font-josefin font-normal text-[#F8F2E7]/90 mt-1",
+    "!text-[12px] sm:!text-[13px] !leading-[1.5]",
+    "md:!text-[clamp(0.9rem,1vw,1.05rem)] md:!leading-[1.4]",
+  ].join(" ");
+
   return (
     <section
       ref={sectionRef}
@@ -70,26 +87,34 @@ const WhoIsThisFor = () => {
       }}
     >
       {/* Content Container */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 py-16 md:py-20 lg:py-24
-        max-md:py-12 max-md:px-5">
+      <div
+        className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 py-16 md:py-20 lg:py-24
+        max-md:py-12 max-md:px-5"
+      >
         {/* Heading */}
         <div className="text-center mb-12 md:mb-14 lg:mb-16 max-md:mb-10">
-          <h2 className="who-heading font-serif font-light text-[#F8F2E7] text-[clamp(3rem,6vw,4.5rem)] leading-[1.0] tracking-[-0.02em] [font-stretch:extra-condensed]
-            max-md:text-[clamp(2rem,9vw,3rem)]">
-            <span className="who-heading-script inline-block font-script font-normal tracking-[0.02em] text-[#F8F2E7] text-[1.6em]
-              max-md:text-[1.5em]">
+          <h2
+            className="who-heading font-serif font-light text-[#F8F2E7] text-[clamp(3rem,6vw,4.5rem)] leading-[1.0] tracking-[-0.02em] [font-stretch:extra-condensed]
+            max-md:text-[clamp(2rem,9vw,3rem)]"
+          >
+            <span
+              className="who-heading-script inline-block font-script font-normal tracking-[0.02em] text-[#F8F2E7] text-[1.6em]
+              max-md:text-[1.5em]"
+            >
               W
             </span>
             <span className="font-serif font-light tracking-[-0.02em] [font-stretch:extra-condensed]">
               {" "}
-             ho this is for
+              ho this is for
             </span>
           </h2>
         </div>
 
         {/* Grid - 2 columns on desktop, 1 on mobile */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 md:gap-y-14 lg:gap-y-16 gap-x-8 md:gap-x-12 lg:gap-x-16
-          max-md:gap-y-8">
+        <div
+          className="grid grid-cols-1 md:grid-cols-2 gap-y-10 md:gap-y-14 lg:gap-y-16 gap-x-8 md:gap-x-12 lg:gap-x-16
+          max-md:gap-y-8"
+        >
           {/* Left Column */}
           <div className="space-y-10 md:space-y-14 lg:space-y-16 max-md:space-y-8">
             {leftColumnItems.map((item, index) => (
@@ -99,8 +124,10 @@ const WhoIsThisFor = () => {
                   max-md:gap-3"
                 style={{ animationDelay: `${index * 180}ms` }}
               >
-                <div className="flex-shrink-0 w-[90px] sm:w-[110px] md:w-[120px] lg:w-[135px]
-                  max-md:w-[72px]">
+                <div
+                  className="flex-shrink-0 w-[90px] sm:w-[110px] md:w-[120px] lg:w-[135px]
+                  max-md:w-[72px]"
+                >
                   <img
                     src={item.icon}
                     alt={`${item.title} icon`}
@@ -109,14 +136,8 @@ const WhoIsThisFor = () => {
                   />
                 </div>
                 <div className="flex-1 min-w-0 pt-0.5">
-                  <h3 className="font-josefin text-[#F8F2E7] text-[clamp(1rem,1.1vw,1.2rem)] font-semibold leading-[1.3]
-                    max-md:text-[1rem] max-md:leading-[1.35]">
-                    {item.title}
-                  </h3>
-                  <p className="font-josefin text-[#F8F2E7]/90 text-[clamp(0.95rem,1vw,1.1rem)] font-normal leading-[1.3] mt-1
-                    max-md:text-[0.9rem] max-md:leading-[1.5]">
-                    {item.description}
-                  </p>
+                  <h3 className={titleClass}>{item.title}</h3>
+                  <p className={descClass}>{item.description}</p>
                 </div>
               </div>
             ))}
@@ -131,8 +152,10 @@ const WhoIsThisFor = () => {
                   max-md:gap-3"
                 style={{ animationDelay: `${(index + 2) * 180}ms` }}
               >
-                <div className="flex-shrink-0 w-[90px] sm:w-[110px] md:w-[120px] lg:w-[135px]
-                  max-md:w-[72px]">
+                <div
+                  className="flex-shrink-0 w-[90px] sm:w-[110px] md:w-[120px] lg:w-[135px]
+                  max-md:w-[72px]"
+                >
                   <img
                     src={item.icon}
                     alt={`${item.title} icon`}
@@ -141,14 +164,8 @@ const WhoIsThisFor = () => {
                   />
                 </div>
                 <div className="flex-1 min-w-0 pt-0.5">
-                  <h3 className="font-josefin text-[#F8F2E7] text-[clamp(1rem,1.1vw,1.2rem)] font-semibold leading-[1.3]
-                    max-md:text-[1rem] max-md:leading-[1.35]">
-                    {item.title}
-                  </h3>
-                  <p className="font-josefin text-[#F8F2E7]/90 text-[clamp(0.95rem,1vw,1.1rem)] font-normal leading-[1.3] mt-1
-                    max-md:text-[0.9rem] max-md:leading-[1.5]">
-                    {item.description}
-                  </p>
+                  <h3 className={titleClass}>{item.title}</h3>
+                  <p className={descClass}>{item.description}</p>
                 </div>
               </div>
             ))}

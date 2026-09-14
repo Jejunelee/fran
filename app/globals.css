@@ -22,6 +22,18 @@
   }
 }
 
+/*
+  FIX: Disable iOS Safari text autosizing.
+  Without this, iOS inflates paragraph text regardless of the
+  font-size you declare — which is why changing the subtitle size
+  appeared to do nothing on real devices.
+*/
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  font-size: 16px;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

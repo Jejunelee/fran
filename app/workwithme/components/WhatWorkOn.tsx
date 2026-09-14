@@ -72,6 +72,28 @@ const WhatWorkOn = () => {
   const leftColumnTopics = topics.slice(0, 3);
   const rightColumnTopics = topics.slice(3);
 
+  // Same pattern as the working Explain component:
+  //  - base = mobile size (plain px, no clamp)
+  //  - md: variant = clamp() for tablet/desktop
+  //  - `!` prefix forces each size
+  //
+  // Title: bumped one step larger across all breakpoints so it
+  // reads as a clear heading above the description.
+  const topicTitleClass = [
+    "font-josefin text-white font-normal",
+    "!text-[15px] sm:!text-[16px] !leading-[1.3]",
+    "md:!text-[clamp(1rem,1.2vw,1.15rem)] md:!leading-[1.15]",
+  ].join(" ");
+
+  // Description: weight fixed (300 -> 400) and opacity restored
+  // (white/80 -> white) so the thin Josefin strokes stay legible
+  // against the burgundy background.
+  const topicDescClass = [
+    "font-josefin text-white font-normal mt-1",
+    "!text-[12px] sm:!text-[13px] !leading-[1.5]",
+    "md:!text-[clamp(0.85rem,1vw,0.95rem)] md:!leading-[1.15]",
+  ].join(" ");
+
   return (
     <section
       ref={sectionRef}
@@ -88,14 +110,19 @@ const WhatWorkOn = () => {
           height: "auto",
         }}
       >
-        <div className="max-w-4xl mx-auto text-center py-8 md:py-10 lg:py-12
-          max-md:py-7">
-          {/* Main Heading - Single Line */}
-          <h2 className="what-heading font-serif font-light text-[#5B0706] text-[clamp(2.5rem,5.5vw,4rem)] leading-[1.0] tracking-[-0.02em] [font-stretch:extra-condensed]
-            max-md:text-[clamp(2rem,8.5vw,3rem)]">
+        <div className="max-w-4xl mx-auto text-center py-8 md:py-10 lg:py-12 max-md:py-7">
+          {/* Main Heading — sizes reduced a bit. */}
+          <h2
+            className="what-heading font-serif font-light text-[#5B0706] tracking-[-0.02em] [font-stretch:extra-condensed]
+              !text-[24px] sm:!text-[28px] !leading-[1.1]
+              md:!text-[clamp(2.1rem,4.6vw,3.4rem)] md:!leading-[1.0]"
+          >
             What we&apos;ll{" "}
-            <span className="what-heading-script inline-block font-script font-normal tracking-[0.02em] text-[#5B0706] text-[1.8em]
-              max-md:text-[1.6em]">
+            <span
+              className="what-heading-script inline-block font-script font-normal tracking-[0.02em] text-[#5B0706]
+                !text-[1.6em] sm:!text-[1.65em]
+                md:!text-[1.7em]"
+            >
               actually
             </span>
             <span className="font-serif font-light tracking-[-0.02em] [font-stretch:extra-condensed]">
@@ -106,8 +133,11 @@ const WhatWorkOn = () => {
 
           {/* Subtitle - Very Close to Heading */}
           <div className="mt-1 md:mt-1.5">
-            <p className="what-subtitle font-josefin text-[#5B0706] text-[clamp(0.9rem,1.1vw,1.05rem)] font-normal leading-[1.3]
-              max-md:text-[0.95rem] max-md:leading-[1.5]">
+            <p
+              className="what-subtitle font-josefin text-[#5B0706] font-normal
+                !text-[13px] sm:!text-[14px] !leading-[1.5]
+                md:!text-[clamp(0.9rem,1.1vw,1.05rem)] md:!leading-[1.3]"
+            >
               Every container is different, because every person is.
               <br className="hidden sm:block" />
               The themes that come up most:
@@ -120,23 +150,19 @@ const WhatWorkOn = () => {
       <div className="w-full bg-[#5B0706] py-12 md:py-14 lg:py-16 px-6 sm:px-10 md:px-16 lg:px-20
         max-md:py-10 max-md:px-5">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-y-8 md:gap-y-0 relative
-            max-md:gap-y-7">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-y-8 md:gap-y-0 relative max-md:gap-y-7">
             {/* Vertical Divider - Desktop Only — draws down from top */}
             <div className="what-divider hidden md:block absolute left-1/2 top-8 bottom-8 w-px bg-white/20 transform -translate-x-1/2"></div>
 
             {/* Left Column */}
-            <div className="space-y-8 md:space-y-10 lg:space-y-12 pr-0 md:pr-8 lg:pr-12
-              max-md:space-y-7">
+            <div className="space-y-8 md:space-y-10 lg:space-y-12 pr-0 md:pr-8 lg:pr-12 max-md:space-y-7">
               {leftColumnTopics.map((topic, index) => (
                 <div
                   key={topic.id}
-                  className="what-topic flex items-center gap-4 md:gap-5 lg:gap-6
-                    max-md:gap-3.5"
+                  className="what-topic flex items-center gap-4 md:gap-5 lg:gap-6 max-md:gap-3.5"
                   style={{ animationDelay: `${index * 130}ms` }}
                 >
-                  <div className="flex-shrink-0 w-[70px] sm:w-[80px] md:w-[90px] lg:w-[105px] xl:w-[115px]
-                    max-md:w-[64px]">
+                  <div className="flex-shrink-0 w-[70px] sm:w-[80px] md:w-[90px] lg:w-[105px] xl:w-[115px] max-md:w-[64px]">
                     <img
                       src={topic.icon}
                       alt={`${topic.title} icon`}
@@ -145,31 +171,22 @@ const WhatWorkOn = () => {
                     />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-josefin text-white text-[clamp(0.9rem,1.1vw,1.05rem)] font-normal leading-[1.1]
-                      max-md:text-[0.95rem] max-md:leading-[1.25]">
-                      {topic.title}
-                    </h3>
-                    <p className="font-josefin text-white/80 text-[clamp(0.85rem,1vw,0.95rem)] font-light leading-[1.15] mt-1
-                      max-md:text-[0.875rem] max-md:leading-[1.45]">
-                      {topic.description}
-                    </p>
+                    <h3 className={topicTitleClass}>{topic.title}</h3>
+                    <p className={topicDescClass}>{topic.description}</p>
                   </div>
                 </div>
               ))}
             </div>
 
             {/* Right Column */}
-            <div className="space-y-8 md:space-y-10 lg:space-y-12 pl-0 md:pl-8 lg:pl-12
-              max-md:space-y-7">
+            <div className="space-y-8 md:space-y-10 lg:space-y-12 pl-0 md:pl-8 lg:pl-12 max-md:space-y-7">
               {rightColumnTopics.map((topic, index) => (
                 <div
                   key={topic.id}
-                  className="what-topic flex items-center gap-4 md:gap-5 lg:gap-6
-                    max-md:gap-3.5"
+                  className="what-topic flex items-center gap-4 md:gap-5 lg:gap-6 max-md:gap-3.5"
                   style={{ animationDelay: `${(index + 3) * 130}ms` }}
                 >
-                  <div className="flex-shrink-0 w-[70px] sm:w-[80px] md:w-[90px] lg:w-[105px] xl:w-[115px]
-                    max-md:w-[64px]">
+                  <div className="flex-shrink-0 w-[70px] sm:w-[80px] md:w-[90px] lg:w-[105px] xl:w-[115px] max-md:w-[64px]">
                     <img
                       src={topic.icon}
                       alt={`${topic.title} icon`}
@@ -178,14 +195,8 @@ const WhatWorkOn = () => {
                     />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-josefin text-white text-[clamp(0.9rem,1.1vw,1.05rem)] font-normal leading-[1.1]
-                      max-md:text-[0.95rem] max-md:leading-[1.25]">
-                      {topic.title}
-                    </h3>
-                    <p className="font-josefin text-white/80 text-[clamp(0.85rem,1vw,0.95rem)] font-light leading-[1.15] mt-1
-                      max-md:text-[0.875rem] max-md:leading-[1.45]">
-                      {topic.description}
-                    </p>
+                    <h3 className={topicTitleClass}>{topic.title}</h3>
+                    <p className={topicDescClass}>{topic.description}</p>
                   </div>
                 </div>
               ))}

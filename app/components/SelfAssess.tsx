@@ -34,14 +34,14 @@ const SelfAssess: React.FC = () => {
     <main
       ref={sectionRef}
       className="relative max-w-[1600px] mx-auto w-full overflow-visible
-        grid grid-cols-1 md:grid-cols-2 min-h-[80vh] md:min-h-[80vh] px-6 md:px-12 lg:px-16 py-8 md:py-12 bg-cover bg-center bg-no-repeat shadow-[0_8px_32px_rgba(80,40,20,0.08)] items-center"
+        grid grid-cols-1 md:grid-cols-2 min-h-[80dvh] px-6 md:px-12 lg:px-16 py-8 md:py-12 bg-cover bg-center bg-no-repeat shadow-[0_8px_32px_rgba(80,40,20,0.08)] items-center"
       style={{ backgroundImage: "url('/SelfAssess/P4.png')" }}
     >
-      {/* ==================== MOBILE LAYOUT (canonical) ==================== */}
-      <div className="flex flex-col items-center text-center w-full md:hidden py-2">
+      {/* ==================== MOBILE LAYOUT ==================== */}
+      <div className="flex flex-col items-center text-center w-full md:hidden">
         {/* Heading — centered on mobile */}
         <h2
-          className={`mt-34 font-serif font-light text-[#750000] text-[clamp(2.75rem,5.625vw,5rem)] leading-[0.6] tracking-[-0.02em] [font-stretch:extra-condensed] text-center w-full m-0 mt-10 transition-all duration-700 ${
+          className={`mt-10 font-serif font-light text-[#750000] text-[clamp(1.75rem,5.625vw,5rem)] leading-[0.6] tracking-[-0.02em] [font-stretch:extra-condensed] text-center w-full m-0 transition-all duration-700 ${
             isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
           }`}
           style={{ transitionDelay: isVisible ? '0.1s' : '0s' }}
@@ -54,11 +54,11 @@ const SelfAssess: React.FC = () => {
           </span>
         </h2>
 
-        {/* Everything below "your thing?" — shifted down 20% */}
-        <div className="flex flex-col items-center text-center w-full translate-y-[20%]">
+        {/* Everything below the heading */}
+        <div className="flex flex-col items-center text-center w-full mt-6">
           {/* Subheading — centered */}
           <h3
-            className={`font-serif font-light text-[#750000] text-[clamp(22px,6vw,30px)] leading-none m-0 mt-1 [transform:scaleX(0.75)] [transform-origin:center] text-center transition-all duration-700 ${
+            className={`font-serif font-light text-[#750000] text-[clamp(22px,6vw,30px)] leading-none m-0 [transform:scaleX(0.75)] [transform-origin:center] text-center transition-all duration-700 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
             style={{ transitionDelay: isVisible ? '0.3s' : '0s' }}
@@ -68,7 +68,7 @@ const SelfAssess: React.FC = () => {
 
           {/* Body copy — centered */}
           <p
-            className={`font-josefin text-[15px] leading-[1.5] tracking-[0.01em] text-[#5a0a0a] m-0 mt-2 max-w-[340px] text-center transition-all duration-700 ${
+            className={`font-josefin text-[10px] leading-[1.5] tracking-[0.01em] text-[#5a0a0a] m-0 mt-2 max-w-[340px] text-center transition-all duration-700 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
             style={{ transitionDelay: isVisible ? '0.35s' : '0s' }}
@@ -88,7 +88,7 @@ const SelfAssess: React.FC = () => {
         </div>
       </div>
 
-      {/* ==================== DESKTOP LAYOUT (canonical) ==================== */}
+      {/* ==================== DESKTOP LAYOUT ==================== */}
       <section className="hidden md:flex items-center justify-center w-full h-full md:-mr-8 lg:-mr-12">
         <div className="flex flex-col items-start gap-0.5 md:items-start text-center md:text-left">
           <h1 className="flex flex-col items-center md:items-start gap-0 m-0 leading-[0.5]">

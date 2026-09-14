@@ -365,9 +365,17 @@ export default function Hero() {
               </span>
             </h1>
 
-            {/* Subtitle text - updated with reduced width */}
-            <p className="hero-subtitle max-w-lg font-josefin text-[clamp(0.85rem,1.5vw,1.1rem)] text-[#2b1210]/80 sm:text-lg text-left tracking-normal px-2 sm:px-0
-              max-md:text-[15px] max-md:leading-[1.6] max-md:px-0 max-md:max-w-full">
+            {/* Subtitle text — responsive sizes using the same pattern as Explain:
+                - Base = mobile size (plain !text-[...], no clamp)
+                - md: variant = clamp() for tablet and desktop
+                - `!` prefix forces each size
+                This is what makes the mobile size actually take effect. */}
+            <p className="hero-subtitle max-w-lg font-josefin text-left tracking-normal
+              !text-[14px] sm:!text-[15px] !leading-[1.6]
+              md:!text-[clamp(0.85rem,1.5vw,1.1rem)] md:!leading-[1.5]
+              text-[#2b1210]/80
+              px-0
+              max-md:max-w-full">
               This isn&apos;t about becoming someone new, and it isn&apos;t about going back to who you used to be. It&apos;s about building a strong enough relationship with yourself that you can move through any season of your life without losing the thread of who you are.
             </p>
           </div>
