@@ -46,7 +46,7 @@ export default function TheMomentItEnded() {
         <div className="grid grid-cols-1 items-center gap-10 px-6 py-12 md:grid-cols-[60%_40%] md:gap-8 md:px-10 md:py-14 lg:grid-cols-[62%_38%] lg:px-14 lg:py-16
           max-md:gap-6 max-md:px-5 max-md:py-9">
           {/* Left text column */}
-          <div className="order-1 md:order-1">
+          <div className="order-1 md:order-1 min-w-0">
             {/* Heading */}
             <h2 className="moment-ended-heading font-serif font-normal text-[#750000] leading-[0.85] tracking-[-0.03em] text-[clamp(32px,4.2vw,70px)]
               max-md:text-[clamp(28px,8.5vw,42px)] max-md:leading-[0.9]">
@@ -89,7 +89,7 @@ export default function TheMomentItEnded() {
           </div>
 
           {/* Right image column */}
-          <div className="order-2 md:order-2 flex justify-center md:justify-end">
+          <div className="order-2 md:order-2 flex justify-center md:justify-end min-w-0">
             <img
               src="/AboutMe/ended/red.png"
               alt=""

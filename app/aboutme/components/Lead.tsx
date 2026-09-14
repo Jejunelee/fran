@@ -158,7 +158,7 @@ export default function Lead() {
       <div className="flex flex-col items-center justify-center w-full">
         {/* TEXT PANEL - Centered */}
         <section className="relative z-[2] flex flex-col justify-center items-center w-full h-full overflow-visible py-3 md:py-6 lg:py-8">
-          <div className="flex flex-col items-center gap-4 md:gap-5 lg:gap-6 w-full max-w-full mt-9 md:mt-14 lg:mt-18">
+          <div className="flex flex-col items-center gap-4 md:gap-5 lg:gap-6 w-full max-w-full min-w-0 mt-9 md:mt-14 lg:mt-18">
             {/* Desktop heading — unchanged */}
             <h1
               className="lead-heading lead-heading--desktop font-serif font-normal text-[#750000] tracking-[-0.04em] m-0 relative flex-col items-center text-center w-full [font-stretch:extra-condensed] [transform:scaleX(1.00)] [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)] hidden md:flex

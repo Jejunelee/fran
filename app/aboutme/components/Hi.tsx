@@ -129,7 +129,7 @@ export default function HiImFrancesca() {
 
       {/* Content */}
       <div className="relative z-10 flex min-h-[inherit] w-full items-center justify-center px-5 py-12 sm:px-6 max-md:py-10">
-        <div className="mx-auto flex w-full max-w-[1200px] flex-col items-center text-center">
+        <div className="mx-auto flex w-full max-w-[1200px] min-w-0 flex-col items-center text-center">
           {/* Heading */}
           <h1
             className="font-serif font-normal text-[#750000] tracking-[-0.03em]

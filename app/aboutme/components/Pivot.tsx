@@ -36,7 +36,7 @@ export default function CoachingPivot() {
       className={`coaching-pivot-section flex min-h-[60vh] w-full flex-col items-center justify-center px-5 py-[80px] sm:px-6 md:min-h-[70vh] md:py-[120px] text-center
         max-md:py-14 ${isVisible ? "coaching-pivot-section--visible" : ""}`}
     >
-      <div className="mx-auto w-full max-w-[980px]">
+      <div className="mx-auto w-full max-w-[980px] min-w-0">
         {/* Headline */}
         <h1 className="coaching-pivot-heading font-serif font-normal text-[#7A2E2E] leading-[0.7] tracking-[-0.03em] text-[32px] sm:text-[42px] md:text-[50px] lg:text-[58px]
           max-md:leading-[0.85]">

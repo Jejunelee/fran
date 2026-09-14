@@ -70,7 +70,7 @@ export default function Belief() {
         <div className="mx-auto grid max-w-[1300px] grid-cols-1 gap-x-[70px] gap-y-[30px] md:grid-cols-2 md:gap-x-[85px] lg:gap-x-[100px]
           max-md:gap-y-6">
           {/* Left column */}
-          <div>
+          <div className="min-w-0">
             <ul className="font-josefin font-normal text-[#5a0a0a] text-[15px] leading-[1.35] sm:text-[16px] md:text-[18px] lg:text-[19px] md:leading-[1.25] list-disc list-outside pl-5 space-y-[18px] md:space-y-[24px]
               max-md:text-[16px] max-md:leading-[1.55] max-md:space-y-4">
               {leftBeliefs.map((belief, index) => (
@@ -86,7 +86,7 @@ export default function Belief() {
           </div>
 
           {/* Right column */}
-          <div>
+          <div className="min-w-0">
             <ul className="font-josefin font-normal text-[#5a0a0a] text-[15px] leading-[1.35] sm:text-[16px] md:text-[18px] lg:text-[19px] md:leading-[1.25] list-disc list-outside pl-5 space-y-[18px] md:space-y-[24px]
               max-md:text-[16px] max-md:leading-[1.55] max-md:space-y-4">
               {rightBeliefs.map((belief, index) => (

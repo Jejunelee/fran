@@ -78,7 +78,7 @@ export default function WhereIAmNow() {
       <div className="relative z-[2] mx-auto flex w-full max-w-[720px] flex-col items-center text-center
         max-md:z-10 max-md:px-1">
         {/* Mobile-only scattered cluster of 4 frames at top of text */}
-        <div className="md:hidden relative mb-5 h-[170px] w-full max-w-[400px]">
+        <div className="md:hidden relative mb-5 h-[170px] w-full max-w-[400px] overflow-hidden">
           <img
             src="/AboutMe/WhereIAm/3.png"
             alt=""

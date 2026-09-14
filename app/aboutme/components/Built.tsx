@@ -64,7 +64,7 @@ export default function TheLifeIBuilt() {
           <div className="hidden md:block md:pointer-events-none md:min-h-[600px]" />
 
           {/* RIGHT COLUMN — text, pulled left with negative margin */}
-          <div className="md:max-w-[700px] md:pt-[60px] md:pb-[60px] md:-ml-6 lg:-ml-10">
+          <div className="min-w-0 md:max-w-[700px] md:pt-[60px] md:pb-[60px] md:-ml-6 lg:-ml-10">
             {/* Heading */}
             <h2 className="life-built-heading font-serif font-normal text-[#F3C8D0] leading-[0.85] tracking-[-0.04em] text-[clamp(38px,4.5vw,70px)]
               max-md:text-[clamp(30px,8.5vw,44px)] max-md:leading-[0.95]">

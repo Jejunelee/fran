@@ -26,7 +26,7 @@ export const Footer = (): React.ReactElement => {
                     </div>
 
                     {/* Center - Navigation Links */}
-                    <div className="flex items-center gap-4 xs:gap-6 sm:gap-8 md:gap-10 lg:gap-14 xl:gap-18">
+                    <div className="flex items-center gap-4 xs:gap-6 sm:gap-8 md:gap-10 lg:gap-14 xl:gap-18 min-w-0">
                         {footerLinks.map((link) => (
                             <FooterLink key={link.label} href={link.href} label={link.label} />
                         ))}

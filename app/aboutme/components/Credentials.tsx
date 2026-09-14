@@ -160,7 +160,7 @@ export default function Credentials() {
         }}
       >
         {/* Inner padding wrapper */}
-        <div className="flex w-full flex-col items-center justify-center px-6 py-12 md:px-16 md:py-16">
+        <div className="flex w-full min-w-0 flex-col items-center justify-center px-6 py-12 md:px-16 md:py-16">
           {/* Heading — sizes reduced a bit more. */}
           <h2
             className="credentials-heading font-serif font-normal text-center text-[#750000] tracking-[-0.04em] [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]

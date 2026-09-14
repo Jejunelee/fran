@@ -37,7 +37,7 @@ export default function VersionOfMeAgain() {
         <div className="grid grid-cols-1 gap-10 px-6 py-10 sm:px-10 sm:py-12 md:grid-cols-2 md:gap-12 md:px-14 md:py-14 lg:px-[5vw] lg:py-16
           max-md:gap-8 max-md:px-5 max-md:py-8">
           {/* LEFT COLUMN */}
-          <div className="flex flex-col">
+          <div className="flex flex-col min-w-0">
             {/* Heading */}
             <h2 className="version-again-heading font-serif font-normal text-[#F8F1E7] leading-[0.9] tracking-[-0.04em] text-[clamp(36px,4.3vw,68px)] [text-shadow:0_1px_2px_rgba(0,0,0,0.08)]
               max-md:text-[clamp(30px,8.5vw,44px)] max-md:leading-[0.95]">
@@ -74,7 +74,7 @@ export default function VersionOfMeAgain() {
           </div>
 
           {/* RIGHT COLUMN */}
-          <div className="flex flex-col">
+          <div className="flex flex-col min-w-0">
             <div className="space-y-[25px] md:space-y-[28px] max-md:space-y-5">
               <p className="version-again-paragraph version-again-paragraph--right-1 max-w-[600px] font-josefin font-normal text-[#F8F1E7] text-[16px] sm:text-[19px] md:text-[23px] lg:text-[24px] leading-[1.25] md:leading-[1.08]
                 max-md:leading-[1.55]">
