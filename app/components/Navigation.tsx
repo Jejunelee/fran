@@ -229,7 +229,7 @@ export const Navigation = (): React.ReactElement => {
             </div>
 
             <span className="hero-mobile-brand md:hidden font-josefin text-xs font-light text-[#f7f3ee] tracking-[0.2em] uppercase">
-              ABOUT ME
+              
             </span>
 
             <div className="md:hidden w-11" aria-hidden="true"></div>
