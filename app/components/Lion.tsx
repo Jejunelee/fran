@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import { CmsImage } from "@/lib/content/CmsImage";
+import { cmsBg, cmsStyleVars, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
 const bodyText =
   "font-josefin !text-[clamp(0.95rem,1.8vw,1.25rem)] sm:!text-xl md:!text-[clamp(16px,1.25vw,20px)] font-normal !leading-[1.5] tracking-[0.01em] text-[#5a0a0a] text-center md:text-left m-0 whitespace-normal break-words transition-all duration-700";
@@ -12,6 +14,22 @@ const scriptWord =
 export default function Lion() {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement | null>(null);
+  const c = useSection<{
+    styles: SectionStyles;
+    background: string;
+    image: string;
+    imageAlt: string;
+    headingBefore1: string;
+    headingScript1: string;
+    headingBefore2: string;
+    headingScript2: string;
+    paragraphs: string[];
+  }>("home", "lion");
+  const paragraphs = (c.paragraphs ?? []).map((text, i) => ({
+    text,
+    delay: `${0.1 + i * 0.1}s`,
+    emphasis: i === (c.paragraphs?.length ?? 0) - 1,
+  }));
 
   useEffect(() => {
     const node = sectionRef.current;
@@ -31,38 +49,11 @@ export default function Lion() {
     return () => observer.unobserve(node);
   }, []);
 
-  const paragraphs = [
-    {
-      text: "You don't need another book, another podcast, another framework. I'm not against frameworks. I have a master's in psychology, I know they have their place. But you've already done that part. You've understood yourself from every possible angle.",
-      delay: "0.1s",
-      emphasis: false,
-    },
-    {
-      text: "The problem was never that you don't know. It's that you're too close to your own patterns to see them clearly.",
-      delay: "0.2s",
-      emphasis: false,
-    },
-    {
-      text: "That's where I come in. I see what you're doing, clearly and without flinching. The truths you soften. The stories you keep repeating. The ways you abandon yourself and call it being reasonable.",
-      delay: "0.3s",
-      emphasis: false,
-    },
-    {
-      text: "Then I hold the mirror up. Not to shame you, not to fix you. Just to show you what you've been too close to see. And once you've seen it, you can't unsee it.",
-      delay: "0.4s",
-      emphasis: false,
-    },
-    {
-      text: "That's where it starts to change. It's not always comfortable. But it sticks.",
-      delay: "0.5s",
-      emphasis: true,
-    },
-  ];
-
   return (
     <main
       ref={sectionRef}
       className="
+        cms-section
         relative z-10
         w-full max-w-[1504px] mx-auto
 
@@ -82,6 +73,7 @@ export default function Lion() {
 
         overflow-visible
       "
+      style={cmsStyleVars(c.styles)}
     >
       {/* ===================== BACKGROUND ===================== */}
       <div
@@ -99,7 +91,7 @@ export default function Lion() {
           -z-10
           transition-all duration-1000
           ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
-        style={{ backgroundImage: "url('/bg.png')" }}
+        style={cmsBg(c.background)}
       />
 
       {/* ===================== MAIN GRID ===================== */}
@@ -127,9 +119,9 @@ export default function Lion() {
           "
         >
           <div className="flex items-center justify-center w-full h-full overflow-visible">
-            <Image
-              src="/Lion/1.png"
-              alt="Lion – majestic, powerful, and aware"
+            <CmsImage
+              src={c.image}
+              alt={c.imageAlt}
               width={400}
               height={488}
               className={`lion-desktop-img
@@ -210,9 +202,9 @@ export default function Lion() {
                     : "opacity-0 scale-90"
                 }`}
             >
-              <Image
-                src="/Lion/1.png"
-                alt="Lion – majestic, powerful, and aware"
+              <CmsImage
+                src={c.image}
+                alt={c.imageAlt}
                 width={400}
                 height={488}
                 className={`w-full
@@ -269,26 +261,26 @@ export default function Lion() {
                 "
               >
                 <span className="flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:hidden">
-                  I don&rsquo;t give you more
+                  <span data-cms="heading">{c.headingBefore1}</span>
                   <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-                  <span className={scriptWord}>information</span>
+                  <span className={scriptWord} data-cms="script">{c.headingScript1}</span>
                   .
                 </span>
 
                 <span className="flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:hidden">
-                  You&rsquo;ve got
+                  <span data-cms="heading">{c.headingBefore2}</span>
                   <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-                  <span className={scriptWord}>plenty</span>
+                  <span className={scriptWord} data-cms="script">{c.headingScript2}</span>
                   .
                 </span>
 
                 <span className="hidden md:inline">
-                  I don&rsquo;t give you more
+                  <span data-cms="heading">{c.headingBefore1}</span>
                   <span className="inline-block w-[0.28em]" aria-hidden="true" />
-                  <span className={scriptWord}>information</span>
-                  . You&rsquo;ve got
+                  <span className={scriptWord} data-cms="script">{c.headingScript1}</span>
+                  . <span data-cms="heading">{c.headingBefore2}</span>
                   <span className="inline-block w-[0.28em]" aria-hidden="true" />
-                  <span className={scriptWord}>plenty</span>
+                  <span className={scriptWord} data-cms="script">{c.headingScript2}</span>
                   .
                 </span>
               </h2>
@@ -316,7 +308,7 @@ export default function Lion() {
                     : "0s",
                 }}
               >
-                {p.text}
+                <span data-cms="body">{p.text}</span>
               </p>
             ))}
           </div>

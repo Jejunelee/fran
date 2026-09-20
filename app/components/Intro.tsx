@@ -1,11 +1,24 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import { CmsImage } from "@/lib/content/CmsImage";
+import { cmsBg, cmsStyleVars, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
-export default function Lion() {
+export default function Intro() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const c = useSection<{
+    styles: SectionStyles;
+    background: string;
+    image: string;
+    imageAlt: string;
+    greeting: string;
+    name: string;
+    bio: string;
+    credentials: string;
+    cta: string;
+  }>("home", "intro");
 
   useEffect(() => {
     const node = sectionRef.current;
@@ -29,11 +42,12 @@ export default function Lion() {
   return (
     <main
       ref={sectionRef}
-      className={`intro-panel grid grid-cols-1 md:grid-cols-[40%_60%] lg:grid-cols-[38%_62%] gap-6 md:gap-10 lg:gap-16 max-w-[1600px] min-h-[80vh] md:min-h-[70vh] mx-auto px-6 md:px-12 lg:px-16 py-8 md:py-10 lg:py-12 bg-cover bg-center bg-no-repeat shadow-[0_8px_32px_rgba(80,40,20,0.08)] items-center w-full ${
+      className={`intro-panel cms-section grid grid-cols-1 md:grid-cols-[40%_60%] lg:grid-cols-[38%_62%] gap-6 md:gap-10 lg:gap-16 max-w-[1600px] min-h-[80vh] md:min-h-[70vh] mx-auto px-6 md:px-12 lg:px-16 py-8 md:py-10 lg:py-12 bg-cover bg-center bg-no-repeat shadow-[0_8px_32px_rgba(80,40,20,0.08)] items-center w-full ${
         isVisible ? "intro-panel--visible" : ""
       }`}
       style={{
-        backgroundImage: "url('/Intro/Pinkbg.png')",
+        ...cmsBg(c.background),
+        ...cmsStyleVars(c.styles),
       }}
     >
       {/* =========================================================
@@ -42,9 +56,9 @@ export default function Lion() {
 
       <section className="intro-image-section flex items-center justify-center w-full h-full order-1 md:order-none">
         <div className="flex items-center justify-center w-full max-w-[200px] xs:max-w-[240px] sm:max-w-[280px] md:max-w-[380px] lg:max-w-[480px] max-h-[240px] xs:max-h-[280px] sm:max-h-[320px] md:max-h-[500px] lg:max-h-[600px]">
-          <Image
-            src="/Intro/FA.png"
-            alt="Francesca – coach, psychologist, and guide"
+          <CmsImage
+            src={c.image}
+            alt={c.imageAlt}
             width={400}
             height={488}
             className="intro-image w-full h-auto max-h-[240px] xs:max-h-[280px] sm:max-h-[320px] md:max-h-[500px] lg:max-h-[600px] aspect-[0.82/1] object-contain block drop-shadow-[0_4px_16px_rgba(60,30,10,0.12)]"
@@ -66,11 +80,11 @@ export default function Lion() {
 
           <h2 className="intro-heading font-serif font-light text-[#750000] text-[clamp(2.75rem,5.625vw,5rem)] leading-[0.6] tracking-[-0.02em] [font-stretch:extra-condensed] text-center md:text-left m-0">
             <span className="block">
-              <span className="intro-greeting inline-block md:translate-y-[0.3em] text-[0.7em]">
-                Hi, I&rsquo;m
+              <span className="intro-greeting inline-block md:translate-y-[0.3em] text-[0.7em]" data-cms="heading">
+                {c.greeting}
               </span>{" "}
-              <span className="intro-script inline-block font-script font-normal tracking-[0.02em] text-[#750000] text-[3em] md:translate-x-[0.21em]">
-                Francesca
+              <span className="intro-script inline-block font-script font-normal tracking-[0.02em] text-[#750000] text-[3em] md:translate-x-[0.21em]" data-cms="script">
+                {c.name}
               </span>
             </span>
           </h2>
@@ -79,21 +93,16 @@ export default function Lion() {
               BIO
               ===================================================== */}
 
-          <p className="intro-bio font-josefin text-[clamp(14px,1vw,16px)] md:text-[clamp(16px,1.3vw,20px)] font-normal leading-[1.6] md:leading-[1.8] tracking-[0.01em] text-[#5a0a0a] m-0 text-center md:text-left max-w-[90%] md:max-w-full">
-            I&apos;ve built a few different lives. Each one was real, and I
-            meant every one of them. The work was learning to recognize when
-            a chapter had run its course, and to evolve with it instead of
-            clinging on. Now I help other people do the same, without the
-            years of trial and error it took me.
+          <p className="intro-bio font-josefin text-[clamp(14px,1vw,16px)] md:text-[clamp(16px,1.3vw,20px)] font-normal leading-[1.6] md:leading-[1.8] tracking-[0.01em] text-[#5a0a0a] m-0 text-center md:text-left max-w-[90%] md:max-w-full" data-cms="body">
+            {c.bio}
           </p>
 
           {/* =====================================================
               CREDENTIALS
               ===================================================== */}
 
-          <p className="intro-credentials font-josefin text-[clamp(11px,0.8vw,14px)] md:text-[clamp(14px,1vw,17px)] text-[#6a2a1a] pt-2 border-t border-[rgba(90,10,10,0.08)] font-light tracking-[0.02em] m-0 text-center md:text-left max-w-[90%] md:max-w-full">
-            MSc Psychology &nbsp;|&nbsp; Former beauty PR &nbsp;|&nbsp; Based in
-            Manila, working with clients globally
+          <p className="intro-credentials font-josefin text-[clamp(11px,0.8vw,14px)] md:text-[clamp(14px,1vw,17px)] text-[#6a2a1a] pt-2 border-t border-[rgba(90,10,10,0.08)] font-light tracking-[0.02em] m-0 text-center md:text-left max-w-[90%] md:max-w-full" data-cms="body">
+            {c.credentials}
           </p>
 
           {/* =====================================================
@@ -101,7 +110,7 @@ export default function Lion() {
               ===================================================== */}
 
           <button className="intro-cta font-josefin text-[clamp(14px,0.9vw,16px)] md:text-[clamp(16px,1.1vw,18px)] font-semibold text-white bg-[#5a0a0a] px-6 md:px-8 lg:px-10 py-2.5 md:py-3 lg:py-[0.8rem] border-none cursor-pointer transition-all duration-300 ease-in-out tracking-[0.04em] mt-1 hover:bg-[#7f0f0f] hover:scale-[1.02] active:scale-[0.98] self-center md:self-start w-auto min-w-[160px] xs:min-w-[180px] md:min-w-0">
-            Read My Story
+            {c.cta}
           </button>
         </div>
       </section>

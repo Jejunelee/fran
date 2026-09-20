@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { cmsBg, cmsStyleVars, mediaUrl, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
 const WhoIsThisFor = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -24,36 +26,13 @@ const WhoIsThisFor = () => {
     return () => observer.unobserve(node);
   }, []);
 
-  const items = [
-    {
-      id: 1,
-      icon: "/WorkWithMe/WhoIsThisFor/1.png",
-      title: "You're already self-aware.",
-      description:
-        "You've done the reading, the journaling, maybe the therapy. You don't need a lecture on boundaries or attachment styles. You need help actually living what you already know.",
-    },
-    {
-      id: 2,
-      icon: "/WorkWithMe/WhoIsThisFor/2.png",
-      title: "You're high-functioning and quietly disconnected.",
-      description:
-        "From the outside, your life works. Inside, you've lost track of yourself somewhere along the way.",
-    },
-    {
-      id: 3,
-      icon: "/WorkWithMe/WhoIsThisFor/3.png",
-      title: "You're done with surface-level advice.",
-      description:
-        "You don't want a five-step framework. You want someone who can see you clearly, name what's happening, and stay in it with you.",
-    },
-    {
-      id: 4,
-      icon: "/WorkWithMe/WhoIsThisFor/4.png",
-      title: "You're in transition.",
-      description:
-        "A relationship, a career, a version of yourself. You're not lost. You're recalibrating, and you'd rather not do it alone.",
-    },
-  ];
+  const c = useSection<{
+    styles: SectionStyles;
+    background: string;
+    heading: string;
+    items: { icon: string; title: string; description: string }[];
+  }>("work", "who");
+  const items = (c.items ?? []).map((item, index) => ({ id: index + 1, ...item }));
 
   const leftColumnItems = items.slice(0, 2);
   const rightColumnItems = items.slice(2);
@@ -78,11 +57,12 @@ const WhoIsThisFor = () => {
   return (
     <section
       ref={sectionRef}
-      className={`who-section relative w-full bg-cover bg-center bg-no-repeat max-md:![min-height:0px] ${
+      className={`who-section cms-section relative w-full bg-cover bg-center bg-no-repeat max-md:![min-height:0px] ${
         isVisible ? "who-section--visible" : ""
       }`}
       style={{
-        backgroundImage: "url('/WorkWithMe/WhoIsThisFor/bg.png')",
+        ...cmsBg(c.background),
+        ...cmsStyleVars(c.styles),
         minHeight: "675px",
       }}
     >
@@ -103,11 +83,11 @@ const WhoIsThisFor = () => {
               [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]
               m-0"
           >
-            <span className="who-heading-script inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#F8F2E7] font-normal overflow-visible relative z-[2]">
-              W
+            <span className="who-heading-script inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#F8F2E7] font-normal overflow-visible relative z-[2]" data-cms="script">
+              {c.heading.charAt(0)}
             </span>
-            <span className="font-serif font-light tracking-[-0.02em] [font-stretch:extra-condensed]">
-              ho this is for
+            <span className="font-serif font-light tracking-[-0.02em] [font-stretch:extra-condensed]" data-cms="heading">
+              {c.heading.slice(1)}
             </span>
           </h2>
         </div>
@@ -131,15 +111,15 @@ const WhoIsThisFor = () => {
                   max-md:w-[72px]"
                 >
                   <img
-                    src={item.icon}
+                    src={mediaUrl(item.icon)}
                     alt={`${item.title} icon`}
                     className="who-coin w-full h-auto"
                     style={{ animationDelay: `${index * 180}ms` }}
                   />
                 </div>
                 <div className="flex-1 min-w-0 pt-0.5">
-                  <h3 className={titleClass}>{item.title}</h3>
-                  <p className={descClass}>{item.description}</p>
+                  <h3 className={titleClass} data-cms="heading">{item.title}</h3>
+                  <p className={descClass} data-cms="body">{item.description}</p>
                 </div>
               </div>
             ))}
@@ -159,15 +139,15 @@ const WhoIsThisFor = () => {
                   max-md:w-[72px]"
                 >
                   <img
-                    src={item.icon}
+                    src={mediaUrl(item.icon)}
                     alt={`${item.title} icon`}
                     className="who-coin w-full h-auto"
                     style={{ animationDelay: `${(index + 2) * 180}ms` }}
                   />
                 </div>
                 <div className="flex-1 min-w-0 pt-0.5">
-                  <h3 className={titleClass}>{item.title}</h3>
-                  <p className={descClass}>{item.description}</p>
+                  <h3 className={titleClass} data-cms="heading">{item.title}</h3>
+                  <p className={descClass} data-cms="body">{item.description}</p>
                 </div>
               </div>
             ))}

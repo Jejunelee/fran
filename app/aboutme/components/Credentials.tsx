@@ -1,17 +1,12 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { cmsBg, cmsStyleVars, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
 const scriptSpanClass =
   "font-script leading-[0.5] mx-[0.04em] md:mx-[0.08em] translate-y-[0.02em] md:translate-y-[0em] inline-block tracking-[0.02em] text-[#750000] relative z-[2] font-normal [text-shadow:0_1px_2px_rgba(127,15,15,0.06)] " +
   "!text-[1.4em] sm:!text-[1.5em] md:!text-[1.85em]";
-
-const credentials = [
-  "MSc Psychology",
-  "MA Fashion Communications and Branding",
-  "Certified Life Coach",
-  "Five years of 1:1 coaching practice",
-];
 
 const credentialsCss = String.raw`
   /* ============ Heading — soft rise + de-blur ============ */
@@ -124,6 +119,17 @@ const credentialsCss = String.raw`
 export default function Credentials() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const c = useSection<{
+    styles: SectionStyles;
+    background: string;
+    headingScript: string;
+    headingMid: string;
+    headingEnd: string;
+    items: string[];
+  }>("about", "credentials");
+  const items = c.items ?? [];
+  const listItems = items.length > 4 ? items.slice(0, -1) : items;
+  const description = items.length > 4 ? items[items.length - 1] : "";
 
   useEffect(() => {
     const node = sectionRef.current;
@@ -147,16 +153,17 @@ export default function Credentials() {
     <div className="w-full bg-[#FED2DB] py-[45px] md:py-[50px]">
       <section
         ref={sectionRef}
-        className={`credentials-section mx-auto flex flex-col items-center justify-center rounded-[2px] text-center ${
+        className={`credentials-section cms-section mx-auto flex flex-col items-center justify-center rounded-[2px] text-center ${
           isVisible ? "credentials-section--visible" : ""
         }`}
         style={{
           width: "min(71vw, 1090px)",
           minHeight: "700px",
-          backgroundImage: "url('/AboutMe/credentials/bg.png')",
+          ...cmsBg(c.background),
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
+          ...cmsStyleVars(c.styles),
         }}
       >
         {/* Inner padding wrapper */}
@@ -168,17 +175,17 @@ export default function Credentials() {
               md:!text-[clamp(40px,3.8vw,46px)] md:!leading-[0.8]"
           >
             <span className="font-serif">The</span>{" "}
-            <span className={`${scriptSpanClass} credentials-script`}>
-              credentials
+            <span className={`${scriptSpanClass} credentials-script`} data-cms="script">
+              {c.headingScript}
             </span>
-            <span className="font-serif">, for the</span>
+            <span className="font-serif" data-cms="heading">{c.headingMid}</span>
             <br />
-            <span className="font-serif">people who want them</span>
+            <span className="font-serif" data-cms="heading">{c.headingEnd}</span>
           </h2>
 
           {/* Credentials list */}
           <div className="mt-[25px] md:mt-[30px] flex flex-col items-center gap-[20px] md:gap-[22px]">
-            {credentials.map((credential, index) => (
+            {listItems.map((credential, index) => (
               <p
                 key={index}
                 className="credentials-item font-josefin font-normal text-center text-[#750000]
@@ -186,20 +193,22 @@ export default function Credentials() {
                   md:!text-[clamp(24px,1.8vw,25px)] md:!leading-[1.2]"
                 style={{ animationDelay: `${560 + index * 130}ms` }}
               >
-                {credential}
+                <span data-cms="body">{credential}</span>
               </p>
             ))}
           </div>
 
           {/* Description */}
+          {description ? (
           <p
             className="credentials-description mt-[25px] md:mt-[35px] mx-auto max-w-[320px] md:max-w-[680px] font-josefin font-normal text-center text-[#750000]
               !text-[12.5px] sm:!text-[13.5px] !leading-[1.45]
               md:!text-[clamp(23px,1.7vw,24px)] md:!leading-[1.15]"
+            data-cms="body"
           >
-            A background in PR, branding, and communications, which is exactly
-            why I can spot a performed version of someone from across a room
+            {description}
           </p>
+          ) : null}
         </div>
 
         {/* CSS lives in a String.raw constant at module scope. */}

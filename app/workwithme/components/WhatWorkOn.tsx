@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { cmsBg, cmsStyleVars, mediaUrl, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
 const WhatWorkOn = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -24,50 +26,17 @@ const WhatWorkOn = () => {
     return () => observer.unobserve(node);
   }, []);
 
-  const topics = [
-    {
-      id: 1,
-      icon: "/WorkWithMe/WhatWorkOn/1.png",
-      title: "Identity and self-trust",
-      description:
-        "Learning to tell the difference between who you are and the roles, careers, and expectations stacked on top of you.",
-    },
-    {
-      id: 2,
-      icon: "/WorkWithMe/WhatWorkOn/2.png",
-      title: "Self-abandonment",
-      description:
-        "The small, socially rewarded ways you've been leaving yourself for years without noticing.",
-    },
-    {
-      id: 3,
-      icon: "/WorkWithMe/WhatWorkOn/3.png",
-      title: "People-pleasing and performance",
-      description:
-        "The real cost of being easy to love, and what it's doing to your sense of self.",
-    },
-    {
-      id: 4,
-      icon: "/WorkWithMe/WhatWorkOn/4.png",
-      title: "Relationships and dating",
-      description:
-        "Closing the gap between knowing your worth and acting like it.",
-    },
-    {
-      id: 5,
-      icon: "/WorkWithMe/WhatWorkOn/5.png",
-      title: "Family and cultural expectations",
-      description:
-        "Especially in Asian family dynamics, where loyalty and self-abandonment get tangled up in each other.",
-    },
-    {
-      id: 6,
-      icon: "/WorkWithMe/WhatWorkOn/6.png",
-      title: "Resilience",
-      description:
-        "Not bouncing back, and not gritting through. Learning to trust that whatever season you're in, you can navigate it, because you can navigate yourself.",
-    },
-  ];
+  const c = useSection<{
+    styles: SectionStyles;
+    background: string;
+    headingLine1: string;
+    headingScript: string;
+    headingLine3: string;
+    intro: string;
+    themesLabel: string;
+    items: { icon: string; title: string; description: string }[];
+  }>("work", "what");
+  const topics = (c.items ?? []).map((item, index) => ({ id: index + 1, ...item }));
 
   const leftColumnTopics = topics.slice(0, 3);
   const rightColumnTopics = topics.slice(3);
@@ -94,15 +63,16 @@ const WhatWorkOn = () => {
   return (
     <section
       ref={sectionRef}
-      className={`what-work-on-section w-full ${
+      className={`what-work-on-section cms-section w-full ${
         isVisible ? "what-work-on-section--visible" : ""
       }`}
+      style={cmsStyleVars(c.styles)}
     >
       {/* White Header Area with Floral Background */}
       <div
         className="w-full bg-cover bg-center bg-no-repeat flex flex-col items-center justify-center px-6 sm:px-10 md:px-16 lg:px-24 overflow-x-clip"
         style={{
-          backgroundImage: "url('/WorkWithMe/WhatWorkOn/bg.png')",
+          backgroundImage: `url('${c.background}')`,
           minHeight: "275px",
           height: "auto",
         }}
@@ -116,16 +86,16 @@ const WhatWorkOn = () => {
               m-0 w-full
               [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]"
           >
-            <span className="flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9]">
-              What we&apos;ll
+            <span className="flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9]" data-cms="heading">
+              {c.headingLine1}
             </span>
             <span className="flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9]">
-              <span className="what-heading-script inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#5B0706] font-normal overflow-visible relative z-[2]">
-                actually
+              <span className="what-heading-script inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#5B0706] font-normal overflow-visible relative z-[2]" data-cms="script">
+                {c.headingScript}
               </span>
             </span>
-            <span className="flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9]">
-              work on
+            <span className="flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9]" data-cms="heading">
+              {c.headingLine3}
             </span>
           </h2>
 
@@ -136,14 +106,14 @@ const WhatWorkOn = () => {
               h-[0.8em] m-0
               [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]"
           >
-            What we&apos;ll
+            {c.headingLine1}
             <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-            <span className="what-heading-script inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#5B0706] font-normal overflow-visible relative z-[2]">
-              actually
+            <span className="what-heading-script inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#5B0706] font-normal overflow-visible relative z-[2]" data-cms="script">
+              {c.headingScript}
             </span>
             <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-            <span className="font-serif font-light tracking-[-0.02em] [font-stretch:extra-condensed]">
-              work on
+            <span className="font-serif font-light tracking-[-0.02em] [font-stretch:extra-condensed]" data-cms="heading">
+              {c.headingLine3}
             </span>
           </h2>
 
@@ -154,9 +124,9 @@ const WhatWorkOn = () => {
                 md:!text-[clamp(27px,2.1vw,34px)] md:!leading-[1.5]
                 whitespace-normal break-words max-w-[22ch] sm:max-w-none mx-auto"
             >
-              Every container is different, because every person is.
+              {c.intro}
               <br />
-              The themes that come up most:
+              {c.themesLabel}
             </p>
           </div>
         </div>
@@ -180,7 +150,7 @@ const WhatWorkOn = () => {
                 >
                   <div className="flex-shrink-0 w-[70px] sm:w-[80px] md:w-[90px] lg:w-[105px] xl:w-[115px] max-md:w-[64px]">
                     <img
-                      src={topic.icon}
+                      src={mediaUrl(topic.icon)}
                       alt={`${topic.title} icon`}
                       className="what-topic-icon w-full h-auto"
                       style={{ animationDelay: `${index * 130}ms` }}
@@ -204,7 +174,7 @@ const WhatWorkOn = () => {
                 >
                   <div className="flex-shrink-0 w-[70px] sm:w-[80px] md:w-[90px] lg:w-[105px] xl:w-[115px] max-md:w-[64px]">
                     <img
-                      src={topic.icon}
+                      src={mediaUrl(topic.icon)}
                       alt={`${topic.title} icon`}
                       className="what-topic-icon w-full h-auto"
                       style={{ animationDelay: `${(index + 3) * 130}ms` }}

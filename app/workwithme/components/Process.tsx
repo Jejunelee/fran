@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import { CmsImage } from "@/lib/content/CmsImage";
 import { motion, Variants } from "framer-motion";
+import { cmsStyleVars, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
 export default function Process() {
   const [isVisible, setIsVisible] = useState(false);
@@ -78,32 +80,15 @@ export default function Process() {
     },
   };
 
-  const processSteps = [
-    {
-      number: "01",
-      title: "Book a free 20-minute call.",
-      description:
-        "We talk. I ask questions. You ask questions. We figure out whether this is the right work, at the right time, with the right person.",
-    },
-    {
-      number: "02",
-      title: "If it's a fit, you pick a start date.",
-      description:
-        "I send the welcome pack: a short intake, the schedule, everything you need to begin.",
-    },
-    {
-      number: "03",
-      title: "We begin.",
-      description:
-        "Weekly sessions, between-session access, and we shape the work around whatever is actually happening in your life.",
-    },
-    {
-      number: "04",
-      title: "After 8 sessions, we check in.",
-      description:
-        "Some people close out the work here, some extend to 12 weeks. Both are right.",
-    },
-  ];
+  const c = useSection<{
+    styles: SectionStyles;
+    background: string;
+    frame: string;
+    heading: string;
+    headingScript: string;
+    steps: { number: string; title: string; description: string }[];
+  }>("work", "process");
+  const processSteps = c.steps ?? [];
 
   // Same pattern as the working Explain component.
   // Mobile text heights reduced further via tighter `leading` + smaller sizes.
@@ -133,8 +118,8 @@ export default function Process() {
       {/* PROCESS SECTION */}
       <section
         ref={sectionRef}
-        className="relative isolate w-full overflow-visible z-20 max-md:min-h-[80vh] max-md:!-mt-10"
-        style={{ marginTop: "-3%" }}
+        className="relative isolate w-full overflow-visible z-20 max-md:min-h-[80vh] max-md:!-mt-10 cms-section"
+        style={{ marginTop: "-3%", ...cmsStyleVars(c.styles) }}
         aria-label="Process section"
       >
         {/* 1.png — very back, behind bgcombined1 (desktop) */}
@@ -147,8 +132,8 @@ export default function Process() {
             maxWidth: "420px",
           }}
         >
-          <Image
-            src="/WorkWithMe/Process/1.png"
+          <CmsImage
+            src={c.frame}
             alt=""
             width={420}
             height={420}
@@ -160,8 +145,8 @@ export default function Process() {
 
         {/* Mobile background — previous cover treatment */}
         <div className="md:hidden absolute inset-0 z-0 overflow-hidden">
-          <Image
-            src="/WorkWithMe/Process/bgcombined1.png"
+          <CmsImage
+            src={c.background}
             alt=""
             fill
             className="object-cover object-center"
@@ -170,8 +155,8 @@ export default function Process() {
         </div>
 
         {/* Desktop background — full image, no crop */}
-        <Image
-          src="/WorkWithMe/Process/bgcombined1.png"
+        <CmsImage
+          src={c.background}
           alt=""
           width={1892}
           height={817}
@@ -211,10 +196,10 @@ export default function Process() {
                     h-[0.9em] md:h-[0.8em] m-0
                     [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]"
                 >
-                  The
+                  {c.heading}
                   <span className="w-[0.55em] shrink-0" aria-hidden="true" />
-                  <span className="inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#750000] font-normal overflow-visible relative z-[2]">
-                    process
+                  <span className="inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#750000] font-normal overflow-visible relative z-[2]" data-cms="script">
+                    {c.headingScript}
                   </span>
                 </h2>
               </motion.div>

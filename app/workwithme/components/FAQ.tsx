@@ -1,41 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-
-interface FAQItem {
-  question: string;
-  answer: string;
-}
-
-const faqData: FAQItem[] = [
-  {
-    question:
-      "I've worked with coaches before and it didn't stick. How is this different?",
-    answer:
-      "Most coaching hands you frameworks. This is more like holding a mirror up. Accurately, without judgment, and with enough care that you can actually look at what's reflected back. Frameworks fade. Seeing yourself clearly doesn't.",
-  },
-  {
-    question: "I'm not based in Manila. Does that matter?",
-    answer:
-      "No. Sessions are virtual, or in person if you're local. I work with clients all over.",
-  },
-  {
-    question: "Is this therapy?",
-    answer:
-      "No. I have a master's in psychology, but coaching and therapy are different practices. If you're navigating clinical-level concerns like active depression, trauma processing, or an eating disorder, I'll always point you to a licensed therapist. Sometimes alongside coaching, sometimes instead of it. I'll be honest with you about what I think you need.",
-  },
-  {
-    question:
-      "What if I can't commit to 8 sessions, financially or time-wise?",
-    answer:
-      "Then this isn't the right container right now, and that's okay. Take the self-assessment, join the email list for free reflections and supper club invites, and come back when the timing's right.",
-  },
-  {
-    question: "Can I pay per session?",
-    answer:
-      "Yes. Pay as you go, or pay for the full 8-session container upfront. There's no discount for paying upfront, but some clients prefer it, because the commitment is part of the work.",
-  },
-];
+import { cmsStyleVars, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
 // Same pattern as the working Explain component:
 //  - base = mobile size (plain px, no clamp)
@@ -152,6 +119,12 @@ const FAQ = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const c = useSection<{
+    styles: SectionStyles;
+    heading: string;
+    items: { question: string; answer: string }[];
+  }>("work", "faq");
+  const faqData = c.items ?? [];
 
   useEffect(() => {
     const node = sectionRef.current;
@@ -178,10 +151,11 @@ const FAQ = () => {
   return (
     <section
       ref={sectionRef}
-      className={`faq-section bg-[#F6F2E7] w-full px-6 sm:px-10 md:px-16 lg:px-24 py-12 md:py-16 lg:py-20
+      className={`faq-section cms-section bg-[#F6F2E7] w-full px-6 sm:px-10 md:px-16 lg:px-24 py-12 md:py-16 lg:py-20
         max-md:px-5 max-md:py-10 ${
           isVisible ? "faq-section--visible" : ""
         }`}
+      style={cmsStyleVars(c.styles)}
     >
       <div className="max-w-7xl mx-auto">
         {/* Header — mobile-first sizes, clamp only inside md: */}
@@ -191,8 +165,9 @@ const FAQ = () => {
             md:!text-[clamp(60px,5.4vw,96px)] md:!leading-[0.8]
             m-0
             [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]"
+          data-cms="heading"
         >
-          FAQs
+          {c.heading}
         </h1>
 
         {/* Spacer */}
@@ -214,7 +189,7 @@ const FAQ = () => {
                   onClick={() => toggleAccordion(index)}
                   aria-expanded={openIndex === index}
                 >
-                  <span className={questionClass}>{item.question}</span>
+                  <span className={questionClass} data-cms="heading">{item.question}</span>
                   <span
                     className={`faq-icon text-[#8B0000] flex-shrink-0 mt-0.5 transition-transform duration-300
                       !text-[20px] max-md:!text-[20px] max-md:mt-0 ${
@@ -231,7 +206,7 @@ const FAQ = () => {
                       : "max-h-0 opacity-0"
                   }`}
                 >
-                  <p className={answerClass}>{item.answer}</p>
+                  <p className={answerClass} data-cms="body">{item.answer}</p>
                 </div>
                 <hr className="faq-divider border-t border-[#8B0000]/20 mt-5 w-full max-md:mt-4" />
               </div>
@@ -254,7 +229,7 @@ const FAQ = () => {
                     onClick={() => toggleAccordion(actualIndex)}
                     aria-expanded={openIndex === actualIndex}
                   >
-                    <span className={questionClass}>{item.question}</span>
+                    <span className={questionClass} data-cms="heading">{item.question}</span>
                     <span
                       className={`faq-icon text-[#8B0000] flex-shrink-0 mt-0.5 transition-transform duration-300
                         !text-[20px] max-md:!text-[20px] max-md:mt-0 ${
@@ -271,7 +246,7 @@ const FAQ = () => {
                         : "max-h-0 opacity-0"
                     }`}
                   >
-                    <p className={answerClass}>{item.answer}</p>
+                    <p className={answerClass} data-cms="body">{item.answer}</p>
                   </div>
                   <hr className="faq-divider border-t border-[#8B0000]/20 mt-5 w-full max-md:mt-4" />
                 </div>

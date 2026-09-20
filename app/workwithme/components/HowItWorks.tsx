@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { cmsBg, cmsStyleVars, mediaUrl, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
 const worksScriptClass =
   "font-script !text-[2.15em] inline-block tracking-[0.01em] text-[#8F4A4A] relative z-[2] font-normal overflow-visible";
@@ -8,6 +10,23 @@ const worksScriptClass =
 export default function HowItWorks() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const c = useSection<{
+    styles: SectionStyles;
+    background: string;
+    cat: string;
+    heading: string;
+    headingScript: string;
+    containerLabel: string;
+    containerName: string;
+    bullets: string[];
+    investmentLabel: string;
+    investmentPrice: string;
+    investmentNote: string;
+    investmentBoxBg: string;
+    investmentBoxText: string;
+    rightCopy: string;
+  }>("work", "how");
+  const bullets = c.bullets ?? [];
 
   useEffect(() => {
     const node = sectionRef.current;
@@ -30,20 +49,21 @@ export default function HowItWorks() {
   return (
     <section
       ref={sectionRef}
-      className={`how-section relative w-full overflow-hidden max-md:![min-height:0px] ${
+      className={`how-section cms-section relative w-full overflow-hidden max-md:![min-height:0px] ${
         isVisible ? "how-section--visible" : ""
       }`}
       style={{
         minHeight: "clamp(650px, 49vw, 760px)",
-        backgroundImage: "url('/WorkWithMe/HowItWorks/bg.png')",
+        ...cmsBg(c.background),
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
+        ...cmsStyleVars(c.styles),
       }}
     >
       {/* CAT IMAGE — decorative, bottom-right on desktop */}
       <img
-        src="/WorkWithMe/HowItWorks/cat.png"
+        src={mediaUrl(c.cat)}
         alt=""
         aria-hidden="true"
         className="how-cat-desktop pointer-events-none absolute right-0 bottom-0 z-[1] hidden h-auto w-[42vw] max-w-[700px] object-contain md:block"
@@ -70,17 +90,17 @@ export default function HowItWorks() {
                 [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]"
             >
               <span className="how-heading-line flex items-end justify-start whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8]">
-                <span className="font-serif">How it</span>
+                <span className="font-serif" data-cms="heading">{c.heading}</span>
                 <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-                <span className={`${worksScriptClass} how-heading-script`}>
-                  works
+                <span className={`${worksScriptClass} how-heading-script`} data-cms="script">
+                  {c.headingScript}
                 </span>
               </span>
-              <span className="how-heading-line flex items-end justify-start whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8] font-serif">
-                1:1 Coaching Container:
+              <span className="how-heading-line flex items-end justify-start whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8] font-serif" data-cms="heading">
+                {c.containerLabel}
               </span>
-              <span className="how-heading-line flex items-end justify-center md:justify-start whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8] font-serif font-semibold mt-9 md:mt-12 w-full">
-                &ldquo;Homecoming&rdquo;
+              <span className="how-heading-line flex items-end justify-center md:justify-start whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8] font-serif font-semibold mt-9 md:mt-12 w-full" data-cms="heading">
+                {c.containerName}
               </span>
             </h2>
 
@@ -89,50 +109,41 @@ export default function HowItWorks() {
                 !text-[clamp(0.95rem,1.8vw,1.25rem)] sm:!text-xl !leading-[1.5]
                 md:!text-[clamp(16px,1.25vw,20px)] md:!leading-[1.5]"
             >
-              <li className="how-bullet" style={{ animationDelay: "360ms" }}>
-                Minimum 8 sessions, up to 12 weeks
+              {bullets.map((text, i) => (
+              <li key={i} className="how-bullet" style={{ animationDelay: `${360 + i * 100}ms` }} data-cms="body">
+                {text}
               </li>
-              <li className="how-bullet" style={{ animationDelay: "460ms" }}>
-                60-minute weekly sessions, conversational, led by whatever is
-                actually coming up for you that week
-              </li>
-              <li className="how-bullet" style={{ animationDelay: "560ms" }}>
-                Voice-note and message support between sessions, for when
-                something hits midweek and you can&rsquo;t wait for the next
-                call
-              </li>
-              <li className="how-bullet" style={{ animationDelay: "660ms" }}>
-                Prompts, reflections, and the occasional framework sent between
-                sessions, built around what you&rsquo;re working through. No
-                generic workbooks.
-              </li>
+              ))}
             </ul>
           </div>
 
           {/* RIGHT COLUMN */}
           <div className="md:w-[min(44vw,680px)] md:pt-4 lg:pt-6">
             {/* Investment box — sizes follow the Explain pattern. */}
-            <div className="how-investment bg-[#750100] px-5 py-6 sm:px-8 sm:py-8 md:px-10 md:py-8 lg:px-11 lg:py-7">
+            <div
+              className="how-investment px-5 py-6 sm:px-8 sm:py-8 md:px-10 md:py-8 lg:px-11 lg:py-7"
+              style={{ backgroundColor: c.investmentBoxBg, color: c.investmentBoxText }}
+            >
               <p
-                className="font-josefin font-bold tracking-[0.01em] text-[#F8F1E7] uppercase
+                className="font-josefin font-bold tracking-[0.01em] uppercase
                   !text-[18px] sm:!text-[20px]
                   md:!text-[clamp(18px,1.5vw,22px)]"
               >
-                Investment
+                {c.investmentLabel}
               </p>
               <p
-                className="mt-2 font-serif font-light text-[#F8F1E7] tracking-[-0.02em] [font-stretch:extra-condensed] leading-[1.05]
+                className="mt-2 font-serif font-light tracking-[-0.02em] [font-stretch:extra-condensed] leading-[1.05]
                   !text-[24px] sm:!text-[28px]
                   md:!text-[clamp(30px,2.7vw,48px)]"
               >
-                USD $120 per session
+                {c.investmentPrice}
               </p>
               <p
-                className="mt-3 font-josefin font-normal text-[#F8F1E7]
+                className="mt-3 font-josefin font-normal
                   !text-[clamp(0.95rem,1.8vw,1.25rem)] sm:!text-xl !leading-[1.5]
                   md:!text-[clamp(16px,1.25vw,20px)] md:!leading-[1.5]"
               >
-                8-session minimum, payable per session or as a full container.
+                {c.investmentNote}
               </p>
             </div>
 
@@ -141,11 +152,9 @@ export default function HowItWorks() {
               className="how-right-copy mt-6 md:mt-[30px] font-josefin font-normal text-[#750100] tracking-[0.01em]
                 !text-[clamp(0.95rem,1.8vw,1.25rem)] sm:!text-xl !leading-[1.5]
                 md:!text-[clamp(16px,1.25vw,20px)] md:!leading-[1.5]"
+              data-cms="body"
             >
-              Eight sessions isn&rsquo;t arbitrary. Real pattern change takes
-              time, and most of the meaningful shifts I see happen between
-              sessions four and seven. Anything shorter is a conversation, not
-              a container.
+              {c.rightCopy}
             </p>
           </div>
         </div>
@@ -154,7 +163,7 @@ export default function HowItWorks() {
       {/* MOBILE CAT — pinned to section bottom on mobile */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] flex justify-center md:hidden">
         <img
-          src="/WorkWithMe/HowItWorks/cat.png"
+          src={mediaUrl(c.cat)}
           alt=""
           aria-hidden="true"
           className="how-cat-mobile h-auto w-full max-w-[min(80vw,360px)] object-contain"

@@ -1,11 +1,30 @@
 "use client";
 
 import React, { useRef } from "react";
-import Image from "next/image";
+import { CmsImage } from "@/lib/content/CmsImage";
 import { motion, useInView, Variants } from "framer-motion";
+import { cmsBg, cmsStyleVars, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
 export default function Explain() {
   const sectionRef = useRef(null);
+  const c = useSection<{
+    styles: SectionStyles;
+    background: string;
+    artwork: string;
+    artworkAlt: string;
+    line1: string;
+    line2Before: string;
+    line2Script: string;
+    line3: string;
+    line4Before: string;
+    line4Script: string;
+    body: string;
+    rightHeading: string;
+    rightBody: string;
+    insights: string[];
+  }>("home", "explain");
+  const insights = c.insights ?? [];
 
   const isInView = useInView(sectionRef, {
     once: true,
@@ -145,14 +164,6 @@ export default function Explain() {
     }),
   };
 
-  const insights = [
-    "You became who you needed to be to survive, and somewhere along the way, you lost yourself.",
-    "You silence your truth before anyone else gets the chance to reject it.",
-    "You crave deeper intimacy, yet hide the very parts that would make it possible.",
-    "You shrink your power to stay lovable, digestible, and safe.",
-    "And you're reaching a point where abandoning yourself hurts more than being fully seen.",
-  ];
-
   return (
     <motion.main
       ref={sectionRef}
@@ -160,16 +171,17 @@ export default function Explain() {
       animate={isInView ? "visible" : "hidden"}
       variants={containerVariants}
       className="
+        cms-section
         w-full max-w-[1504px] mx-auto
         px-4 sm:px-6 md:px-8 lg:px-12
         py-6 sm:py-8 md:py-8 lg:py-10
         grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]
         gap-8 sm:gap-10 md:gap-6 lg:gap-10
         items-center justify-items-center
-        bg-[url('/Explain2/bg.png')]
         bg-cover bg-center bg-no-repeat
         overflow-x-clip
       "
+      style={{ ...cmsBg(c.background), ...cmsStyleVars(c.styles) }}
     >
       {/* ===================== LEFT SECTION ===================== */}
       <motion.section
@@ -216,7 +228,7 @@ export default function Explain() {
               variants={headlineLineVariants}
               className="explain-line flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8]"
             >
-              You already know
+              <span data-cms="heading">{c.line1}</span>
             </motion.span>
 
             <motion.span
@@ -224,7 +236,7 @@ export default function Explain() {
               variants={headlineLineVariants}
               className="explain-line flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8]"
             >
-              what&apos;s not
+              <span data-cms="heading">{c.line2Before}</span>
               <span className="w-[0.28em] shrink-0" aria-hidden="true" />
               <motion.span
                 variants={scriptWordVariants}
@@ -237,8 +249,9 @@ export default function Explain() {
                   overflow-visible
                 "
                 style={{ transformOrigin: "50% 70%" }}
+                data-cms="script"
               >
-                working
+                {c.line2Script}
               </motion.span>
             </motion.span>
 
@@ -247,7 +260,7 @@ export default function Explain() {
               variants={headlineLineVariants}
               className="explain-line flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8]"
             >
-              You&apos;ve known for years
+              <span data-cms="heading">{c.line3}</span>
             </motion.span>
 
             <motion.span
@@ -255,7 +268,7 @@ export default function Explain() {
               variants={headlineLineVariants}
               className="explain-line flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8]"
             >
-              That&apos;s the part that&apos;s
+              <span data-cms="heading">{c.line4Before}</span>
               <span className="w-[0.28em] shrink-0" aria-hidden="true" />
               <motion.span
                 variants={scriptWordVariants}
@@ -268,8 +281,9 @@ export default function Explain() {
                   overflow-visible
                 "
                 style={{ transformOrigin: "50% 70%" }}
+                data-cms="script"
               >
-                exhausting
+                {c.line4Script}
               </motion.span>
             </motion.span>
           </motion.h1>
@@ -306,9 +320,7 @@ export default function Explain() {
               md:px-0
             "
           >
-            You can name your patterns. You&apos;ve named them out loud, to friends,
-            over drinks, more times than you can count. You&apos;ve read the books.
-            You follow the accounts. You are not short on information.
+            <span data-cms="body">{c.body}</span>
           </motion.p>
         </div>
       </motion.section>
@@ -355,9 +367,9 @@ export default function Explain() {
               w-full md:w-auto
             "
           >
-            <Image
-              src="/Explain2/md2.png"
-              alt="Ornate mirror with woman and chair – decorative golden artwork"
+            <CmsImage
+              src={c.artwork}
+              alt={c.artworkAlt}
               width={400}
               height={488}
               className="
@@ -409,7 +421,7 @@ export default function Explain() {
             [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]
           "
         >
-          Deep down, you know:
+          <span data-cms="heading">{c.rightHeading}</span>
         </motion.h2>
 
         <motion.p
@@ -434,9 +446,9 @@ export default function Explain() {
             my-2 md:my-1
             px-4 sm:px-2 md:px-1
           "
+          data-cms="body"
         >
-          The exhaustion isn&apos;t from doing too much. It&apos;s from carrying a life
-          that no longer fits.
+          {c.rightBody}
         </motion.p>
 
         <motion.div
@@ -499,7 +511,7 @@ export default function Explain() {
                 {String(i + 1).padStart(2, "0")}
               </span>
 
-              <span className="font-normal">
+              <span className="font-normal" data-cms="body">
                 {text}
               </span>
             </motion.div>

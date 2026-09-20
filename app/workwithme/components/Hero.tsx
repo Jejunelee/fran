@@ -2,6 +2,8 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Navigation } from "@/app/components/Navigation";
+import { cmsStyleVars, mediaUrl, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
 // -------------------------------------------------------------
 // Reduced-motion hook
@@ -26,7 +28,7 @@ const usePrefersReducedMotion = () => {
 // Plays through once, then holds on the last frame.
 // Signals `onReady` once the browser can actually paint frames.
 // -------------------------------------------------------------
-const HeroBackgroundVideo = ({ onReady }: { onReady: () => void }) => {
+const HeroBackgroundVideo = ({ onReady, src }: { onReady: () => void; src: string }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
   const hasSignaledRef = useRef(false);
@@ -116,7 +118,7 @@ const HeroBackgroundVideo = ({ onReady }: { onReady: () => void }) => {
         onEnded={handleEnded}
         aria-hidden="true"
       >
-        <source src="/WorkWithMe/Hero/herobg4.mp4" type="video/mp4" />
+        <source src={mediaUrl(src)} type="video/mp4" />
       </video>
     </div>
   );
@@ -124,15 +126,27 @@ const HeroBackgroundVideo = ({ onReady }: { onReady: () => void }) => {
 
 export default function Hero() {
   const [videoReady, setVideoReady] = useState(false);
+  const c = useSection<{
+    styles: SectionStyles;
+    video: string;
+    line1: string;
+    line2: string;
+    body: string;
+    comingHome: string;
+  }>("work", "hero");
+  const line2Parts = c.line2?.split(/\s+with\s+/i) ?? ["", ""];
+  const line2Main = line2Parts[0] ?? c.line2;
+  const line2Name = line2Parts[1] ?? "";
 
   return (
     <section
-      className="hero-section relative w-full min-h-screen overflow-hidden"
+      className="hero-section cms-section relative w-full min-h-screen overflow-hidden"
       aria-labelledby="homecoming-heading"
+      style={cmsStyleVars(c.styles)}
     >
       {/* Background video covering the entire section — plays once, holds last frame.
           Signals back when it can paint so the text animation can start in sync. */}
-      <HeroBackgroundVideo onReady={() => setVideoReady(true)} />
+      <HeroBackgroundVideo src={c.video} onReady={() => setVideoReady(true)} />
 
       {/* Animated content is only mounted once the video can paint,
           so every CSS animation starts from frame zero with the first
@@ -154,28 +168,30 @@ export default function Hero() {
             >
               {/* Line 1: Homecoming with script H */}
               <span className="hero-line hero-line--1 flex w-full items-end justify-center md:justify-start whitespace-nowrap overflow-visible">
-                <span className="hero-script-inline inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#750000] relative z-[2] font-normal overflow-visible">
-                  H
+                <span className="hero-script-inline inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#750000] relative z-[2] font-normal overflow-visible" data-cms="script">
+                  {c.line1.charAt(0)}
                 </span>
-                <span>omecoming</span>
+                <span data-cms="heading">{c.line1.slice(1)}</span>
               </span>
 
               {/* Line 2: 1:1 coaching */}
               <span className="hero-line hero-line--2 flex w-full items-end justify-center md:justify-start whitespace-nowrap overflow-visible">
                 <span className="hidden md:block w-[1.15em] shrink-0" aria-hidden="true" />
-                1:1 coaching
+                <span data-cms="heading">{line2Main}</span>
               </span>
 
               {/* Line 3: with Francesca with script F */}
+              {line2Name ? (
               <span className="hero-line hero-line--3 flex w-full items-end justify-center md:justify-start whitespace-nowrap overflow-visible">
                 <span className="hidden md:block w-[1.15em] shrink-0" aria-hidden="true" />
                 <span>with</span>
                 <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-                <span className="hero-script-inline inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#750000] relative z-[2] font-normal overflow-visible">
-                  F
+                <span className="hero-script-inline inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#750000] relative z-[2] font-normal overflow-visible" data-cms="script">
+                  {line2Name.charAt(0)}
                 </span>
-                <span>rancesca</span>
+                <span data-cms="heading">{line2Name.slice(1)}</span>
               </span>
+              ) : null}
             </h1>
 
             <p className="hero-subtitle mt-10 max-w-[28ch] sm:max-w-md md:max-w-xl lg:max-w-2xl font-josefin tracking-normal
@@ -183,8 +199,9 @@ export default function Hero() {
               md:!text-[clamp(24px,1.875vw,30px)] md:!leading-[1.5]
               text-[#2b1210]/80 text-center md:text-left
               px-1 sm:px-0
-              ml-3 md:ml-6 lg:ml-8">
-              This isn&apos;t about becoming someone new, and it isn&apos;t about going back to who you used to be. It&apos;s about building a strong enough relationship with yourself that you can move through any season of your life without losing the thread of who you are.
+              ml-3 md:ml-6 lg:ml-8"
+              data-cms="body">
+              {c.body}
             </p>
           </div>
         </div>

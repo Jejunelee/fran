@@ -1,46 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-
-const TESTIMONIALS = [
-  {
-    text: "I thought I needed more motivation. What I actually needed was clarity. Coaching helped me make decisions with more confidence and less second-guessing.",
-    author: "BEA T.",
-  },
-  {
-    text: "Working with Francesca helped me gain clarity and confidence in both my personal and professional life. I finally feel like I'm moving forward with purpose",
-    author: "LIZA C.",
-  },
-  {
-    text: "The sessions gave me practical tools to manage stress, set boundaries, and stay focused on my goals. I've seen real growth in just a few months",
-    author: "THEA D.",
-  },
-];
-
-// Desktop line-broken variants
-const DESKTOP_LINES = [
-  [
-    "I thought I needed more motivation.",
-    "What I actually needed was clarity.",
-    "Coaching helped me make decisions",
-    "with more confidence and less",
-    "second-guessing.",
-  ],
-  [
-    "Working with Francesca helped",
-    "me gain clarity and confidence in",
-    "both my personal and professional",
-    "life. I finally feel like I'm moving",
-    "forward with purpose",
-  ],
-  [
-    "The sessions gave me practical",
-    "tools to manage stress, set",
-    "boundaries, and stay focused on my",
-    "goals. I've seen real growth in just a",
-    "few months",
-  ],
-];
+import { cmsBg, cmsStyleVars, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
 /*
  * MOBILE SCRIPT
@@ -54,6 +16,20 @@ const mobileScriptClass =
 
 export default function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const c = useSection<{
+    styles: SectionStyles;
+    background: string;
+    headingBefore1: string;
+    headingScript1: string;
+    headingAfter1: string;
+    headingBefore2: string;
+    headingScript2: string;
+    items: { text: string; desktopLines: string; author: string }[];
+  }>("home", "testimonials");
+  const testimonials = c.items ?? [];
+  const desktopLines = testimonials.map((item) =>
+    item.desktopLines.split("\n")
+  );
 
   const textClass =
     "font-josefin text-[clamp(1.1rem,1.2vw,1.35rem)] font-medium leading-[1.7] tracking-[0.01em] text-[#5a0a0a] m-0 text-left";
@@ -62,14 +38,17 @@ export default function Testimonials() {
     "font-serif font-medium text-[clamp(2.4rem,2.6vw,3rem)] leading-[1.3] tracking-[0.02em] text-[#750000] mt-5 md:mt-7 lg:mt-9 m-0 text-left";
 
   return (
-    <section className="testimonials-section relative w-full overflow-hidden py-16 md:py-20 lg:py-24">
+    <section
+      className="testimonials-section cms-section relative w-full overflow-hidden py-16 md:py-20 lg:py-24"
+      style={cmsStyleVars(c.styles)}
+    >
       {/* =========================================================
           BACKGROUND
           ========================================================= */}
 
       <div
         className="testimonials-bg absolute inset-0 bg-cover bg-[#F6F2E7] bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/Testimonials/bg.png')" }}
+        style={cmsBg(c.background)}
       />
 
       {/* =========================================================
@@ -87,17 +66,17 @@ export default function Testimonials() {
             <h2 className="testimonials-heading font-serif font-light text-[#750000] text-[clamp(2.75rem,5.625vw,5rem)] leading-[0.6] tracking-[-0.02em] [font-stretch:extra-condensed] text-left">
 
               <span className="block testimonials-headline-line">
-                What{" "}
-                <span className="testimonials-script inline-block font-script font-normal tracking-[0.02em] text-[#750000] text-[2em]">
-                  changes
+                <span data-cms="heading">{c.headingBefore1}</span>{" "}
+                <span className="testimonials-script inline-block font-script font-normal tracking-[0.02em] text-[#750000] text-[2em]" data-cms="script">
+                  {c.headingScript1}
                 </span>{" "}
-                when
+                <span data-cms="heading">{c.headingAfter1}</span>
               </span>
 
               <span className="block -mt-1 md:-mt-2 lg:-mt-3 testimonials-headline-line">
-                someone actually{" "}
-                <span className="testimonials-script inline-block font-script font-normal tracking-[0.02em] text-[#750000] text-[2em]">
-                  sees you
+                <span data-cms="heading">{c.headingBefore2}</span>{" "}
+                <span className="testimonials-script inline-block font-script font-normal tracking-[0.02em] text-[#750000] text-[2em]" data-cms="script">
+                  {c.headingScript2}
                 </span>
               </span>
 
@@ -109,22 +88,22 @@ export default function Testimonials() {
               ===================================================== */}
 
           <div className="hidden md:contents">
-            {TESTIMONIALS.map((_, i) => (
+            {testimonials.map((_, i) => (
               <div
                 key={i}
                 className="flex flex-col testimonials-card"
               >
                 <p className={textClass}>
-                  {DESKTOP_LINES[i].map((line, j) => (
+                  {desktopLines[i]?.map((line, j) => (
                     <React.Fragment key={j}>
-                      {line}
-                      {j < DESKTOP_LINES[i].length - 1 && <br />}
+                      <span data-cms="body">{line}</span>
+                      {j < (desktopLines[i]?.length ?? 0) - 1 && <br />}
                     </React.Fragment>
                   ))}
                 </p>
 
-                <p className={authorClass}>
-                  {TESTIMONIALS[i].author}
+                <p className={authorClass} data-cms="heading">
+                  {testimonials[i]?.author}
                 </p>
               </div>
             ))}
@@ -144,14 +123,15 @@ export default function Testimonials() {
                 key={`text-${currentIndex}`}
                 className="testimonials-mobile-text font-josefin font-medium leading-[1.6] tracking-[0.01em] text-[#5a0a0a] m-0 text-center"
               >
-                {TESTIMONIALS[currentIndex].text}
+                {testimonials[currentIndex]?.text}
               </p>
 
               <p
                 key={`author-${currentIndex}`}
                 className="testimonials-mobile-author font-serif font-medium leading-[1.3] tracking-[0.02em] text-[#750000] mt-5 m-0 text-center"
+                data-cms="heading"
               >
-                {TESTIMONIALS[currentIndex].author}
+                {testimonials[currentIndex]?.author}
               </p>
 
             </div>
@@ -159,7 +139,7 @@ export default function Testimonials() {
             {/* Navigation Dots */}
 
             <div className="flex gap-3 mt-6">
-              {TESTIMONIALS.map((_, index) => (
+              {testimonials.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}

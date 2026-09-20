@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { cmsBg, cmsStyleVars, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
 const francescaScriptClass =
   "font-script !text-[5.05em] inline-block tracking-[0.01em] text-[#750000] relative z-[2] font-normal overflow-visible";
@@ -90,6 +92,13 @@ const hiFrancescaCss = String.raw`
 export default function HiImFrancesca() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const c = useSection<{
+    styles: SectionStyles;
+    background: string;
+    greeting: string;
+    name: string;
+    body: string;
+  }>("about", "hi");
 
   useEffect(() => {
     const node = sectionRef.current;
@@ -112,19 +121,18 @@ export default function HiImFrancesca() {
   return (
     <section
       ref={sectionRef}
-      className={`hi-francesca-section relative w-full max-md:!min-h-[500px] ${
+      className={`hi-francesca-section cms-section relative w-full max-md:!min-h-[500px] ${
         isVisible ? "hi-francesca-section--visible" : ""
       }`}
       style={{
         minHeight: "clamp(480px, 34.5vw, 560px)",
+        ...cmsStyleVars(c.styles),
       }}
     >
       {/* Background layer */}
       <div
         className="hi-francesca-bg absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: "url('/AboutMe/hi/bg.png')",
-        }}
+        style={cmsBg(c.background)}
       />
 
       {/* Content */}
@@ -142,11 +150,11 @@ export default function HiImFrancesca() {
             <span className="hi-francesca-greeting flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8]
               !text-[30px] sm:!text-[35px] md:!text-[clamp(37.5px,3.375vw,60px)]
               -translate-y-3 md:-translate-y-6">
-              Hi, I&rsquo;m
+              <span data-cms="heading">{c.greeting}</span>
             </span>
             <span className="flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8]">
-              <span className={`${francescaScriptClass} hi-francesca-script`}>
-                Francesca
+              <span className={`${francescaScriptClass} hi-francesca-script`} data-cms="script">
+                {c.name}
               </span>
             </span>
           </h1>
@@ -155,12 +163,9 @@ export default function HiImFrancesca() {
             className="hi-francesca-paragraph mx-auto mt-6 md:mt-[38px] w-full max-w-full sm:max-w-[700px] md:max-w-[1100px] font-josefin font-normal text-[#111111]
               !text-[clamp(1.14rem,2.16vw,1.5rem)] sm:!text-[24px] !leading-[1.5]
               md:!text-[clamp(19.2px,1.5vw,24px)] md:!leading-[1.5]"
+            data-cms="body"
           >
-            Most coaching pages open with credentials. I&rsquo;ll get to mine.
-            But credentials aren&rsquo;t why anyone hires a coach. They hire a
-            coach because they want to know one thing: have you been where I
-            am, and did you find your way through? So here&rsquo;s the version
-            that matters.
+            {c.body}
           </p>
         </div>
       </div>

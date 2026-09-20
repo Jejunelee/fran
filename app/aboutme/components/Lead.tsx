@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-
-const SCRIPT_WORDS = ["resonated"];
+import { cmsBg, cmsStyleVars, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
 const scriptSpanClass =
   "font-script leading-[0.5] mx-[0.08em] translate-y-[0.02em] md:translate-y-[0em] inline-block tracking-[0.02em] text-[#750000] relative z-[2] font-normal [text-shadow:0_1px_2px_rgba(127,15,15,0.06)] " +
@@ -123,6 +123,17 @@ const leadCss = String.raw`
 export default function Lead() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const c = useSection<{
+    styles: SectionStyles;
+    background: string;
+    heading: string;
+    headingScript: string;
+    headingEndDesktop: string;
+    headingEndMobile: string;
+    ctaPrimary: string;
+    ctaSecondary: string;
+  }>("about", "lead");
+  const scriptWords = c.headingScript?.split(/\s+/) ?? [];
 
   useEffect(() => {
     const node = sectionRef.current;
@@ -145,14 +156,15 @@ export default function Lead() {
   return (
     <main
       ref={sectionRef}
-      className={`lead-section relative z-10 max-w-full mx-auto px-6 md:px-8 lg:px-12 pt-20 md:pt-12 lg:pt-18 pb-12 md:pb-16 lg:pb-20 -mt-12 md:-mt-16 lg:-mt-24 ${
+      className={`lead-section cms-section relative z-10 max-w-full mx-auto px-6 md:px-8 lg:px-12 pt-20 md:pt-12 lg:pt-18 pb-12 md:pb-16 lg:pb-20 -mt-12 md:-mt-16 lg:-mt-24 ${
         isVisible ? "lead-section--visible" : ""
       }`}
+      style={cmsStyleVars(c.styles)}
     >
       {/* Background layer */}
       <div
         className="lead-bg absolute top-12 md:top-16 lg:top-24 left-0 right-0 bottom-0 bg-cover bg-center bg-no-repeat rounded-b-[2rem] md:rounded-b-[1.5rem] lg:rounded-b-[2rem] shadow-[0_8px_32px_rgba(80,40,20,0.08)] -z-10"
-        style={{ backgroundImage: "url('AboutMe/Lead/bg.png')" }}
+        style={cmsBg(c.background)}
       />
 
       <div className="flex flex-col items-center justify-center w-full">
@@ -166,10 +178,10 @@ export default function Lead() {
                 lg:!text-[clamp(48px,5vw,76px)] lg:!leading-[0.7]"
             >
               <span className="lead-line lead-line--desktop-1 flex items-baseline flex-wrap whitespace-nowrap relative justify-center leading-[0.7] mt-[0.1em] first:mt-0">
-                <span className="font-serif inline-block relative z-[1] leading-[0.7] text-[1em]">
-                  If any of that
+                <span className="font-serif inline-block relative z-[1] leading-[0.7] text-[1em]" data-cms="heading">
+                  {c.heading}
                 </span>
-                {SCRIPT_WORDS.map((word) => (
+                {scriptWords.map((word) => (
                   <span
                     key={word}
                     className={`${scriptSpanClass} lead-script lead-script--desktop`}
@@ -179,8 +191,8 @@ export default function Lead() {
                 ))}
               </span>
               <span className="lead-line lead-line--desktop-2 flex items-baseline flex-wrap whitespace-nowrap relative justify-center leading-[0.7] mt-[0.1em]">
-                <span className="font-serif inline-block relative z-[1] leading-[0.7] text-[1em]">
-                  we should probably work.
+                <span className="font-serif inline-block relative z-[1] leading-[0.7] text-[1em]" data-cms="heading">
+                  {c.headingEndDesktop}
                 </span>
               </span>
             </h1>
@@ -191,11 +203,11 @@ export default function Lead() {
                 !text-[28px] sm:!text-[32px] !leading-[0.85]"
             >
               <span className="lead-line lead-line--mobile-1 flex items-baseline justify-center leading-[0.85] flex-wrap">
-                <span className="block leading-[0.85]">
-                  If any of that&nbsp;&nbsp;
+                <span className="block leading-[0.85]" data-cms="heading">
+                  {c.heading}&nbsp;&nbsp;
                 </span>
                 <span className="flex items-baseline justify-center leading-[0.85] mt-[0.05em] text-[2.6em]">
-                  {SCRIPT_WORDS.map((word, i) => (
+                  {scriptWords.map((word, i) => (
                     <span
                       key={word}
                       className={`${mobileScriptSpanClass} lead-script lead-script--mobile ${
@@ -207,8 +219,8 @@ export default function Lead() {
                   ))}
                 </span>
               </span>
-              <span className="lead-line lead-line--mobile-2 block leading-[0.85] mt-[0.05em]">
-                we should probably talk.
+              <span className="lead-line lead-line--mobile-2 block leading-[0.85] mt-[0.05em]" data-cms="heading">
+                {c.headingEndMobile}
               </span>
             </h1>
 
@@ -225,14 +237,14 @@ export default function Lead() {
                   !text-[11px] sm:!text-[12px]
                   md:!text-[clamp(14px,1vw,18px)]"
               >
-                BOOK A CALL
+                {c.ctaPrimary}
               </button>
               <button
                 className="lead-cta lead-cta--secondary font-josefin font-semibold tracking-[0.05em] text-white bg-[#5B0706] border border-[#5B0706] px-6 md:px-8 lg:px-10 py-2.5 md:py-3 lg:py-[0.9rem] rounded cursor-pointer transition-all duration-300 ease-in-out uppercase hover:bg-[#5B0706] hover:text-[#fdd1db] hover:-translate-y-0.5 hover:shadow-[0_4px_14px_-4px_rgba(91,7,6,0.3)]
                   !text-[11px] sm:!text-[12px]
                   md:!text-[clamp(14px,1vw,18px)]"
               >
-                TAKE A QUIZ
+                {c.ctaSecondary}
               </button>
             </div>
           </div>

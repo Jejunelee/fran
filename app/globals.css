@@ -51,3 +51,59 @@ body {
   line-height: 0.5;
   text-box: trim-both cap alphabetic;
 }
+
+.cms-section [data-cms="heading"]:not(button):not(a) {
+  color: var(--cms-heading) !important;
+}
+.cms-section [data-cms="body"]:not(button):not(a) {
+  color: var(--cms-body) !important;
+}
+.cms-section [data-cms="script"]:not(button):not(a) {
+  color: var(--cms-script) !important;
+}
+.cms-section [data-cms="accent"]:not(button):not(a) {
+  color: var(--cms-accent) !important;
+}
+
+.cms-section :is(button, a.hero-cta-item, a.cta-button, a.contact-cta, .lead-cta, .intro-cta)[data-cms],
+.cms-section .how-investment [data-cms="heading"],
+.cms-section .how-investment [data-cms="body"] {
+  color: inherit !important;
+}
+
+/* Pink / accent buttons: fill from Accent, label from contrast (not Heading). */
+.cms-section .lead-cta--primary {
+  background-color: var(--cms-accent) !important;
+  color: var(--cms-on-accent) !important;
+}
+
+/* Dark buttons keep cream type, never the heading color. */
+.cms-section :is(.lead-cta--secondary, .intro-cta, .contact-cta, .cta-button--secondary) {
+  color: #f7f1e7 !important;
+}
+
+.cms-section a.hero-cta-item:not(.border) {
+  color: #fdd1db !important;
+}
+
+.cms-section a.hero-cta-item.border {
+  color: #5b0706 !important;
+}
+
+.cms-section .cta-button--primary {
+  color: #750000 !important;
+}
+
+.admin-section-preview .opacity-0 {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.admin-section-preview .where-frame,
+.admin-section-preview .where-mobile-frame,
+.admin-section-preview .life-built-book-img,
+.admin-section-preview .moment-ended-image,
+.admin-section-preview .version-again-image {
+  opacity: 1 !important;
+  filter: none !important;
+}

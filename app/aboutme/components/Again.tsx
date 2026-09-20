@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { cmsStyleVars, mediaUrl, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
 const scriptSpanClass =
   "font-script text-[1.5em] md:text-[1.6em] leading-[0.5] mx-[0.04em] md:mx-[0.06em] translate-y-[0.02em] md:translate-y-[0em] inline-block tracking-[0.02em] text-[#F8F1E7] relative z-[2] font-normal";
@@ -8,6 +10,16 @@ const scriptSpanClass =
 export default function VersionOfMeAgain() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const c = useSection<{
+    styles: SectionStyles;
+    panelColor: string;
+    accentImage: string;
+    heading: string;
+    headingMid: string;
+    headingScript: string;
+    paragraphs: string[];
+  }>("about", "again");
+  const paragraphs = c.paragraphs ?? [];
 
   useEffect(() => {
     const node = sectionRef.current;
@@ -30,10 +42,14 @@ export default function VersionOfMeAgain() {
   return (
     <section
       ref={sectionRef}
-      className={`version-again-section w-full px-4 py-[30px] sm:px-[3%]
+      className={`version-again-section cms-section w-full px-4 py-[30px] sm:px-[3%]
         max-md:py-6 ${isVisible ? "version-again-section--visible" : ""}`}
+      style={cmsStyleVars(c.styles)}
     >
-      <div className="version-again-panel mx-auto pt-8 w-full bg-[#750100]">
+      <div
+        className="version-again-panel mx-auto pt-8 w-full bg-[#750100]"
+        style={{ backgroundColor: c.panelColor || "#750100" }}
+      >
         <div className="grid grid-cols-1 gap-10 px-6 py-10 sm:px-10 sm:py-12 md:grid-cols-2 md:gap-12 md:px-14 md:py-14 lg:px-[5vw] lg:py-16
           max-md:gap-8 max-md:px-5 max-md:py-8">
           {/* LEFT COLUMN */}
@@ -41,15 +57,16 @@ export default function VersionOfMeAgain() {
             {/* Heading */}
             <h2 className="version-again-heading font-serif font-normal text-[#F8F1E7] leading-[0.9] tracking-[-0.04em] text-[clamp(36px,4.3vw,68px)] [text-shadow:0_1px_2px_rgba(0,0,0,0.08)]
               max-md:text-[clamp(30px,8.5vw,44px)] max-md:leading-[0.95]">
-              <span className="version-again-line version-again-line--1 block font-serif">
-                The version of me
+              <span className="version-again-line version-again-line--1 block font-serif md:whitespace-nowrap" data-cms="heading">
+                {c.heading}
               </span>
-              <span className="version-again-line version-again-line--2 block font-serif">
-                that did it{" "}
+              <span className="version-again-line version-again-line--2 block font-serif md:whitespace-nowrap">
+                <span data-cms="heading">{c.headingMid}</span>{" "}
                 <span
                   className={`${scriptSpanClass} version-again-script md:!text-[2.4em] max-md:!text-[2.1em] max-md:!leading-[0.75]`}
+                  data-cms="script"
                 >
-                  again
+                  {c.headingScript}
                 </span>
               </span>
             </h2>
@@ -57,51 +74,41 @@ export default function VersionOfMeAgain() {
             {/* Left paragraphs — pushed down on desktop */}
             <div className="mt-[30px] md:mt-[33px] space-y-[25px] md:space-y-[28px]
               max-md:mt-6 max-md:space-y-5 md:translate-y-[40px]">
-              <p className="version-again-paragraph version-again-paragraph--left-1 max-w-[600px] font-josefin font-normal text-[#F8F1E7] text-[16px] sm:text-[19px] md:text-[23px] lg:text-[24px] leading-[1.25] md:leading-[1.08]
-                max-md:leading-[1.55]">
-                I trained as a coach. I built the business. I got clients. I
-                moved back to London. I did a second master&rsquo;s, this time
-                in psychology, because I wanted the work grounded in more than
-                my own instincts.
-              </p>
-
-              <p className="version-again-paragraph version-again-paragraph--left-2 max-w-[600px] font-josefin font-normal text-[#F8F1E7] text-[16px] sm:text-[19px] md:text-[23px] lg:text-[24px] leading-[1.25] md:leading-[1.08]
-                max-md:leading-[1.55]">
-                And then life rerouted me again. Visa issues, of all things. So
-                I came back to Manila, and started over one more time.
-              </p>
+              {paragraphs.slice(0, 2).map((text, i) => (
+                <p
+                  key={i}
+                  className={`version-again-paragraph version-again-paragraph--left-${i + 1} max-w-[600px] font-josefin font-normal text-[#F8F1E7] text-[16px] sm:text-[19px] md:text-[23px] lg:text-[24px] leading-[1.25] md:leading-[1.08]
+                max-md:leading-[1.55]`}
+                  data-cms="body"
+                >
+                  {text}
+                </p>
+              ))}
             </div>
           </div>
 
           {/* RIGHT COLUMN */}
           <div className="flex flex-col min-w-0">
             <div className="space-y-[25px] md:space-y-[28px] max-md:space-y-5">
-              <p className="version-again-paragraph version-again-paragraph--right-1 max-w-[600px] font-josefin font-normal text-[#F8F1E7] text-[16px] sm:text-[19px] md:text-[23px] lg:text-[24px] leading-[1.25] md:leading-[1.08]
-                max-md:leading-[1.55]">
-                But this time I knew what I was building toward. Not a version
-                of myself that looked impressive. A version that fits who
-                I&rsquo;d actually become.
-              </p>
-
-              <p className="version-again-paragraph version-again-paragraph--right-2 max-w-[600px] font-josefin font-normal text-[#F8F1E7] text-[16px] sm:text-[19px] md:text-[23px] lg:text-[24px] leading-[1.25] md:leading-[1.08]
-                max-md:leading-[1.55]">
-                Here&rsquo;s the thing I&rsquo;ve learned doing this over and
-                over. The careers changed. The cities changed. The dreams
-                changed. The one constant, through all of it, was my
-                relationship with myself. That&rsquo;s the whole of what I do
-                now. I don&rsquo;t help you become someone new. I help you
-                build a relationship with yourself that&rsquo;s strong enough to
-                survive every version of your life.
-              </p>
+              {paragraphs.slice(2).map((text, i) => (
+                <p
+                  key={i}
+                  className={`version-again-paragraph version-again-paragraph--right-${i + 1} max-w-[600px] font-josefin font-normal text-[#F8F1E7] text-[16px] sm:text-[19px] md:text-[23px] lg:text-[24px] leading-[1.25] md:leading-[1.08]
+                max-md:leading-[1.55]`}
+                  data-cms="body"
+                >
+                  {text}
+                </p>
+              ))}
             </div>
 
             {/* Gold decorative image */}
             <div className="version-again-image-wrap mt-[35px] flex justify-center md:mt-auto md:justify-end md:pt-[30px]
               max-md:mt-7">
               <img
-                src="/AboutMe/again/gold.png"
+                src={mediaUrl(c.accentImage)}
                 alt=""
-                className="version-again-image h-auto w-[min(75%,360px)] object-contain md:w-[380px] lg:w-[420px]
+                className="version-again-image h-auto w-[min(75%,360px)] max-h-[240px] object-contain md:w-[380px] md:max-h-[300px] lg:w-[420px] lg:max-h-[340px]
                   max-md:w-[min(70%,300px)]"
               />
             </div>

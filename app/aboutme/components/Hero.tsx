@@ -2,6 +2,8 @@
 
 import React, { useEffect } from "react";
 import { Navigation } from "@/app/components/Navigation";
+import { cmsBg, cmsStyleVars, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
 /* ---------------- Script type styles ---------------- */
 
@@ -179,6 +181,20 @@ const heroCss = String.raw`
 `;
 
 export default function Hero() {
+  const c = useSection<{
+    styles: SectionStyles;
+    background: string;
+    line1a: string;
+    line1b: string;
+    line1Script: string;
+    line1c: string;
+    line2Before: string;
+    line2Script: string;
+    line2After: string;
+    line3: string;
+  }>("about", "hero");
+  const line3Words = c.line3?.trim().split(/\s+/) ?? [];
+
   // Parallax on the background (transform only — no background-position trick)
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -216,13 +232,14 @@ export default function Hero() {
 
   return (
     <section
-      className="hero-section relative w-full min-h-screen overflow-x-clip"
+      className="hero-section cms-section relative w-full min-h-screen overflow-x-clip"
       aria-labelledby="about-heading"
+      style={cmsStyleVars(c.styles)}
     >
       <div
         id="hero-bg-parallax"
         className="hero-bg absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/AboutMe/hero/hero.png')" }}
+        style={cmsBg(c.background)}
         aria-hidden="true"
       />
 
@@ -247,32 +264,31 @@ export default function Hero() {
               <Word delay={360}>I</Word>
               <span className="w-[0.28em] shrink-0" aria-hidden="true" />
               <Word delay={470} variant="script" className={scriptWordClass}>
-                genuinely
+                <span data-cms="script">{c.line1Script}</span>
               </Word>
               <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-              <Word delay={640}>wanted</Word>
+              <Word delay={640}><span data-cms="heading">{c.line1c}</span></Word>
             </span>
             <span className="hero-line flex items-end justify-center whitespace-nowrap overflow-visible">
-              <Word delay={820}>Then</Word>
+              <Word delay={820}><span data-cms="heading">{c.line2Before}</span></Word>
               <span className="w-[0.28em] shrink-0" aria-hidden="true" />
               <Word delay={910}>I</Word>
               <span className="w-[0.28em] shrink-0" aria-hidden="true" />
               <Word delay={1020} variant="script" className={scriptWordClass}>
-                outgrew
+                <span data-cms="script">{c.line2Script}</span>
               </Word>
               <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-              <Word delay={1190}>it</Word>
+              <Word delay={1190}><span data-cms="heading">{c.line2After}</span></Word>
             </span>
             <span className="hero-line flex items-end justify-center whitespace-nowrap overflow-visible font-script tracking-[0.01em] text-[#750000] relative z-[2] font-normal mt-5">
-              <Word delay={2280} variant="script">Then</Word>
-              <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-              <Word delay={2370} variant="script">I</Word>
-              <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-              <Word delay={2460} variant="script">did</Word>
-              <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-              <Word delay={2550} variant="script">it</Word>
-              <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-              <Word delay={2640} variant="script">again.</Word>
+              {line3Words.map((word, i) => (
+                <React.Fragment key={word + i}>
+                  {i > 0 && <span className="w-[0.28em] shrink-0" aria-hidden="true" />}
+                  <Word delay={2280 + i * 90} variant="script">
+                    <span data-cms="script">{word}</span>
+                  </Word>
+                </React.Fragment>
+              ))}
             </span>
           </h1>
 
@@ -292,36 +308,35 @@ export default function Hero() {
               <Word delay={360}>I</Word>
               <span className="w-[0.28em] shrink-0" aria-hidden="true" />
               <Word delay={470} variant="script" className={scriptWordClass}>
-                genuinely
+                <span data-cms="script">{c.line1Script}</span>
               </Word>
               <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-              <Word delay={640}>wanted</Word>
+              <Word delay={640}><span data-cms="heading">{c.line1c}</span></Word>
             </span>
 
             {/* Line 2 */}
             <span className="hero-line flex items-end justify-center whitespace-nowrap overflow-visible">
-              <Word delay={820}>Then</Word>
+              <Word delay={820}><span data-cms="heading">{c.line2Before}</span></Word>
               <span className="w-[0.28em] shrink-0" aria-hidden="true" />
               <Word delay={910}>I</Word>
               <span className="w-[0.28em] shrink-0" aria-hidden="true" />
               <Word delay={1020} variant="script" className={scriptWordClass}>
-                outgrew
+                <span data-cms="script">{c.line2Script}</span>
               </Word>
               <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-              <Word delay={1190}>it</Word>
+              <Word delay={1190}><span data-cms="heading">{c.line2After}</span></Word>
             </span>
 
             {/* Line 3 */}
             <span className="hero-line flex items-end justify-center whitespace-nowrap overflow-visible font-script tracking-[0.01em] text-[#750000] relative z-[2] font-normal mt-10 md:mt-14 lg:mt-16">
-              <Word delay={2280} variant="script">Then</Word>
-              <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-              <Word delay={2370} variant="script">I</Word>
-              <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-              <Word delay={2460} variant="script">did</Word>
-              <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-              <Word delay={2550} variant="script">it</Word>
-              <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-              <Word delay={2640} variant="script">again.</Word>
+              {line3Words.map((word, i) => (
+                <React.Fragment key={`d-${word}-${i}`}>
+                  {i > 0 && <span className="w-[0.28em] shrink-0" aria-hidden="true" />}
+                  <Word delay={2280 + i * 90} variant="script">
+                    <span data-cms="script">{word}</span>
+                  </Word>
+                </React.Fragment>
+              ))}
             </span>
           </h1>
         </div>

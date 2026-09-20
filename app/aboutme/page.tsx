@@ -1,21 +1,24 @@
-// app/aboutme/page.tsx
-import { Footer } from "./components/Footer";
-import Lead from "./components/Lead"
-import Hero from "./components/Hero"
-import Credentials from "./components/Credentials"
-import Belief from "./components/Belief"
-import Pivot from "./components/Pivot"
-import Ended from "./components/Ended"
-import WhereIAm from "./components/WhereIAm"
-import Again from "./components/Again"
-import Hi from "./components/Hi"
-import Built from "./components/Built"
+import { getSiteContent } from "@/lib/content/get-site-content";
+import { cmsBg } from "@/lib/content/style";
+import Lead from "./components/Lead";
+import Hero from "./components/Hero";
+import Credentials from "./components/Credentials";
+import Belief from "./components/Belief";
+import Pivot from "./components/Pivot";
+import Ended from "./components/Ended";
+import WhereIAm from "./components/WhereIAm";
+import Again from "./components/Again";
+import Hi from "./components/Hi";
+import Built from "./components/Built";
 
-export default function Home() {
+export default async function Home() {
+  const content = await getSiteContent();
+  const page = content.about.page as { background?: string };
+
   return (
-    <div 
+    <div
       className="min-h-screen bg-white bg-cover bg-center bg-no-repeat bg-fixed"
-      style={{ backgroundImage: "url('/AboutMe/main/white.png')" }}
+      style={cmsBg(page.background)}
     >
       <Hero />
       <Hi />

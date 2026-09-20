@@ -2,6 +2,8 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import {Navigation} from "./Navigation";
+import { cmsStyleVars, mediaUrl, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
 // -------------------------------------------------------------
 // Reduced-motion hook
@@ -24,19 +26,6 @@ const usePrefersReducedMotion = () => {
 // -------------------------------------------------------------
 // Hero Actions
 // -------------------------------------------------------------
-const heroActions = [
-  {
-    label: "Take the 2-minute self-assessment",
-    href: "#self-assessment",
-    variant: "primary" as const,
-  },
-  {
-    label: "Book a call",
-    href: "#book-a-call",
-    variant: "secondary" as const,
-  },
-];
-
 const buttonBase =
   "font-josefin inline-flex h-[52px] items-center justify-center whitespace-nowrap rounded-sm px-7 text-center text-sm uppercase tracking-[0.05em] transition-colors motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 sm:h-[58px] sm:px-9 sm:text-base";
 
@@ -73,7 +62,7 @@ const Word = ({
 // so we don't skip frames. Loops forever.
 // Signals `onReady` once the browser can paint the first frame.
 // -------------------------------------------------------------
-const HeroBackgroundVideo = ({ onReady }: { onReady: () => void }) => {
+const HeroBackgroundVideo = ({ onReady, src }: { onReady: () => void; src: string }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
   const hasSignaledRef = useRef(false);
@@ -288,7 +277,7 @@ const HeroBackgroundVideo = ({ onReady }: { onReady: () => void }) => {
         preload="auto"
         aria-hidden="true"
       >
-        <source src="/Hero/herobg4.mp4" type="video/mp4" />
+        <source src={mediaUrl(src)} type="video/mp4" />
       </video>
     </div>
   );
@@ -299,13 +288,33 @@ const HeroBackgroundVideo = ({ onReady }: { onReady: () => void }) => {
 // -------------------------------------------------------------
 export default function Hero() {
   const [videoReady, setVideoReady] = useState(false);
+  const c = useSection<{
+    styles: SectionStyles;
+    video: string;
+    line1: string;
+    line2: string;
+    line3Before: string;
+    line3Script: string;
+    line3After: string;
+    body: string;
+    ctaPrimary: string;
+    ctaPrimaryHref: string;
+    ctaSecondary: string;
+    ctaSecondaryHref: string;
+    comingHome: string;
+  }>("home", "hero");
+  const heroActions = [
+    { label: c.ctaPrimary, href: c.ctaPrimaryHref, variant: "primary" as const },
+    { label: c.ctaSecondary, href: c.ctaSecondaryHref, variant: "secondary" as const },
+  ];
 
   return (
     <section
-      className="hero-section relative w-full min-h-screen overflow-x-clip"
+      className="hero-section cms-section relative w-full min-h-screen overflow-x-clip"
       aria-labelledby="homecoming-heading"
+      style={cmsStyleVars(c.styles)}
     >
-      <HeroBackgroundVideo onReady={() => setVideoReady(true)} />
+      <HeroBackgroundVideo src={c.video} onReady={() => setVideoReady(true)} />
 
       {/* Animated hero content is only mounted once the video can paint,
           so every CSS animation starts from frame zero in sync with the
@@ -329,48 +338,44 @@ export default function Hero() {
               }}
             >
               <span className="mt-12 hero-line flex items-end justify-center whitespace-nowrap overflow-visible">
-                <Word delay={0} variant="script" className="font-script text-[clamp(1.8em,2.0em,2.0em)] pr-2 md:pr-3">
-                  A
-                </Word>
-                <Word delay={80}>t</Word>
-                <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-                <Word delay={160}>some</Word>
-                <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-                <Word delay={240}>point,</Word>
-                <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-                <Word delay={330}>the</Word>
-                <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-                <Word delay={420}>life</Word>
+                {c.line1.split(/\s+/).map((word, i) => (
+                  <React.Fragment key={`l1-${i}`}>
+                    {i > 0 && <span className="w-[0.28em] shrink-0" aria-hidden="true" />}
+                    <Word
+                      delay={i * 80}
+                      variant={i === 0 ? "script" : "serif"}
+                      className={i === 0 ? "font-script text-[clamp(1.8em,2.0em,2.0em)] pr-2 md:pr-3" : undefined}
+                    >
+                      {i === 0 ? word.charAt(0) : word}
+                    </Word>
+                    {i === 0 && word.length > 1 && <Word delay={80}>{word.slice(1)}</Word>}
+                  </React.Fragment>
+                ))}
               </span>
 
               <span className="hero-line flex items-end justify-center whitespace-nowrap overflow-visible">
-                <Word delay={520}>you</Word>
-                <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-                <Word delay={600}>built</Word>
-                <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-                <Word delay={680}>stops</Word>
-                <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-                <Word delay={770}>feeling</Word>
+                {c.line2.split(/\s+/).map((word, i) => (
+                  <React.Fragment key={`l2-${i}`}>
+                    {i > 0 && <span className="w-[0.28em] shrink-0" aria-hidden="true" />}
+                    <Word delay={520 + i * 80}>{word}</Word>
+                  </React.Fragment>
+                ))}
               </span>
 
               <span className="hero-line flex items-end justify-center whitespace-nowrap overflow-visible">
-                <Word delay={880}>like</Word>
+                <Word delay={880}>{c.line3Before}</Word>
                 <span className="w-[0.28em] shrink-0" aria-hidden="true" />
                 <span className="hero-word-group" style={{ animationDelay: "980ms" }}>
                   <Word delay={980} variant="script" className="font-script text-[clamp(0.8em,2.0em,2.0em)]">
-                    y
+                    {c.line3Script}
                   </Word>
-                  <Word delay={1060}>ours</Word>
+                  <Word delay={1060}>{c.line3After}</Word>
                 </span>
               </span>
             </h1>
 
-            <p className="mt-10 hero-fade-up max-w-[36ch] sm:max-w-xl font-josefin text-[clamp(0.95rem,1.8vw,1.25rem)] text-[#2b1210]/80 sm:text-xl text-center tracking-normal px-1 sm:px-0 leading-relaxed">
-              Not because you chose wrong. You wanted it. You meant it. You
-              just grew, and it didn&apos;t grow with you. Aren&apos;t you
-              exhausted? I help women let go of what no longer fits, shed the
-              roles they&apos;ve outgrown, and come back to the one thing
-              that&apos;s been there the whole time.
+            <p className="mt-10 hero-fade-up max-w-[36ch] sm:max-w-xl font-josefin text-[clamp(0.95rem,1.8vw,1.25rem)] text-[#2b1210]/80 sm:text-xl text-center tracking-normal px-1 sm:px-0 leading-relaxed" data-cms="body">
+              {c.body}
             </p>
 
             <nav
@@ -400,7 +405,7 @@ export default function Hero() {
           className="hero-coming-home pointer-events-none absolute bottom-20 right-8 z-10 hidden lg:flex items-center gap-3 font-josefin text-xs uppercase tracking-[0.2em] text-[#fdd1db] [writing-mode:vertical-rl]"
         >
           <span className="h-10 w-px bg-[#fdd1db]/60" />
-          Coming home
+          {c.comingHome}
         </div>
       )}
 

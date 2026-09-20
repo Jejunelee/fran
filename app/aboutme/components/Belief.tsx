@@ -1,26 +1,25 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { cmsBg, cmsStyleVars, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
 const scriptSpanClass =
   "font-script text-[1.8em] md:text-[2.05em] leading-[0.5] mx-[0.08em] translate-y-[0.02em] md:translate-y-[0em] inline-block tracking-[0.02em] text-[#750000] relative z-[2] font-normal [text-shadow:0_1px_2px_rgba(127,15,15,0.06)]";
 
-const leftBeliefs = [
-  "Awareness is not the same as change. Most people get stuck mistaking one for the other.",
-  "Toxic positivity is just avoidance with better lighting.",
-  "You can be deeply emotional and brutally honest at the same time.",
-  "Self-abandonment is socially rewarded. That's why it's so hard to spot.",
-];
-
-const rightBeliefs = [
-  "Resilience isn't bouncing back. It's trusting that you can navigate whatever's next, because you can navigate yourself.",
-  "The goal was never certainty about what happens. The goal is knowing you'll be okay regardless of what happens.",
-  "If a coach tells you they have all the answers, run.",
-];
-
 export default function Belief() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const c = useSection<{
+    styles: SectionStyles;
+    background: string;
+    heading: string;
+    headingScript: string;
+    items: string[];
+  }>("about", "belief");
+  const items = c.items ?? [];
+  const leftBeliefs = items.slice(0, 4);
+  const rightBeliefs = items.slice(4);
 
   useEffect(() => {
     const node = sectionRef.current;
@@ -43,14 +42,15 @@ export default function Belief() {
   return (
     <section
       ref={sectionRef}
-      className={`belief-section relative w-full ${
+      className={`belief-section cms-section relative w-full ${
         isVisible ? "belief-section--visible" : ""
       }`}
       style={{
-        backgroundImage: "url('/AboutMe/belief/bg.png')",
+        ...cmsBg(c.background),
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
+        ...cmsStyleVars(c.styles),
       }}
     >
       <div className="mx-auto w-full max-w-[1350px] px-6 py-[55px] md:px-[7vw] md:py-[65px]
@@ -58,11 +58,12 @@ export default function Belief() {
         {/* Heading */}
         <h2 className="belief-heading font-serif font-normal text-center text-[#750000] tracking-[-0.04em] text-[1.75rem] leading-[1.1] sm:text-[2.25rem] md:text-[2.75rem] lg:text-[3.25rem] mb-[35px] md:mb-[45px]
           max-md:mb-7 max-md:leading-[1.05]">
-          <span className="font-serif">What I actually</span>{" "}
+          <span className="font-serif" data-cms="heading">{c.heading}</span>{" "}
           <span
             className={`${scriptSpanClass} belief-script md:!text-[2.665em] max-md:!text-[1.95em] max-md:!leading-[0.75]`}
+            data-cms="script"
           >
-            believe
+            {c.headingScript}
           </span>
         </h2>
 
@@ -79,7 +80,7 @@ export default function Belief() {
                   className="belief-item belief-item--left"
                   style={{ animationDelay: `${320 + index * 110}ms` }}
                 >
-                  {belief}
+                  <span data-cms="body">{belief}</span>
                 </li>
               ))}
             </ul>
@@ -95,7 +96,7 @@ export default function Belief() {
                   className="belief-item belief-item--right"
                   style={{ animationDelay: `${760 + index * 110}ms` }}
                 >
-                  {belief}
+                  <span data-cms="body">{belief}</span>
                 </li>
               ))}
             </ul>

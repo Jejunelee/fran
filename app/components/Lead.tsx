@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
-
-const SCRIPT_WORDS = ["comfort", "over", "truth?"];
+import { CmsImage } from "@/lib/content/CmsImage";
+import { cmsBg, cmsStyleVars, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
 const scriptSpanClass =
   "font-script !text-[2.15em] inline-block tracking-[0.01em] text-[#750000] relative z-[2] font-normal overflow-visible";
@@ -11,6 +11,19 @@ const scriptSpanClass =
 export default function Lead() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const c = useSection<{
+    styles: SectionStyles;
+    background: string;
+    image: string;
+    imageAlt: string;
+    heading: string;
+    scriptWords: string;
+    body: string;
+    ctaPrimary: string;
+    ctaSecondary: string;
+  }>("home", "lead");
+  const scriptWords = c.scriptWords?.split(/\s+/) ?? [];
+  const bodyLines = c.body?.split("\n") ?? [];
 
   useEffect(() => {
     const node = sectionRef.current;
@@ -36,9 +49,10 @@ export default function Lead() {
   return (
     <main
       ref={sectionRef}
-      className={`lead-section relative z-10 max-w-full mx-auto px-6 md:px-8 lg:px-12 pt-6 md:pt-12 lg:pt-18 pb-12 md:pb-16 lg:pb-20 -mt-12 md:-mt-16 lg:-mt-24 ${
+      className={`lead-section cms-section relative z-10 max-w-full mx-auto px-6 md:px-8 lg:px-12 pt-6 md:pt-12 lg:pt-18 pb-12 md:pb-16 lg:pb-20 -mt-12 md:-mt-16 lg:-mt-24 ${
         isVisible ? "lead-section--visible" : ""
       }`}
+      style={cmsStyleVars(c.styles)}
     >
       {/* =========================================================
           BACKGROUND
@@ -46,7 +60,7 @@ export default function Lead() {
 
       <div
         className="lead-bg absolute top-12 md:top-16 lg:top-24 left-0 right-0 bottom-0 bg-cover bg-center bg-no-repeat rounded-b-[2rem] md:rounded-b-[1.5rem] lg:rounded-b-[2rem] shadow-[0_8px_32px_rgba(80,40,20,0.08)] -z-10"
-        style={{ backgroundImage: "url('/Lead/bg.png')" }}
+        style={cmsBg(c.background)}
       />
 
       <div className="grid grid-cols-1 md:grid-cols-[65%_35%] lg:grid-cols-[70%_30%] gap-2 md:gap-4 lg:gap-6 items-center w-full">
@@ -65,11 +79,11 @@ export default function Lead() {
             <h1 className="font-serif font-light text-[clamp(2.625rem,11.25vw,6.3rem)] md:text-[clamp(2.25rem,6.3vw,6.3rem)] leading-[0.85] md:leading-[0.7] tracking-[-0.02em] text-[#750000] m-0 relative hidden md:flex flex-col items-start gap-[0.22em] md:gap-[0.28em] text-left w-full [font-stretch:extra-condensed] [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]">
 
               <span className="lead-line lead-line--desktop flex items-end justify-start whitespace-nowrap overflow-visible h-[0.85em] leading-[0.85] md:h-[0.7em] md:leading-[0.7]">
-                Ready to stop choosing
+                <span data-cms="heading">{c.heading}</span>
               </span>
 
               <span className="lead-line lead-line--desktop flex items-end justify-start whitespace-nowrap overflow-visible relative h-[0.85em] leading-[0.85] md:h-[0.7em] md:leading-[0.7]">
-                {SCRIPT_WORDS.map((word, i) => (
+                {scriptWords.map((word, i) => (
                   <React.Fragment key={word}>
                     {i > 0 && (
                       <span className="w-[0.28em] shrink-0" aria-hidden="true" />
@@ -79,6 +93,7 @@ export default function Lead() {
                       style={{
                         animationDelay: `${520 + i * 160}ms`,
                       }}
+                      data-cms="script"
                     >
                       {word}
                     </span>
@@ -93,12 +108,12 @@ export default function Lead() {
 
             <h1 className="pt-10 lead-mobile-heading font-serif font-light !text-[24px] sm:!text-[28px] leading-[0.85] tracking-[-0.02em] text-[#750000] m-0 relative flex md:hidden flex-col items-center gap-[0.2em] text-center w-full [font-stretch:extra-condensed] [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]">
 
-              <span className="lead-line lead-line--mobile flex items-end justify-center whitespace-nowrap overflow-visible h-[0.85em] leading-[0.85]">
-                Ready to stop choosing
+              <span className="lead-line lead-line--mobile flex items-end justify-center whitespace-nowrap overflow-visible h-[0.85em] leading-[0.85]" data-cms="heading">
+                {c.heading}
               </span>
 
               <span className="lead-script-line lead-line--mobile flex items-end justify-center whitespace-nowrap overflow-visible h-[0.85em] leading-[0.85]">
-                {SCRIPT_WORDS.map((word, i) => (
+                {scriptWords.map((word, i) => (
                   <React.Fragment key={word}>
                     {i > 0 && (
                       <span className="w-[0.28em] shrink-0" aria-hidden="true" />
@@ -120,10 +135,13 @@ export default function Lead() {
                 SUPPORTING COPY
                 =================================================== */}
 
-            <p className="lead-copy font-josefin !text-[clamp(0.95rem,1.8vw,1.25rem)] sm:!text-xl md:!text-[clamp(16px,1.25vw,20px)] font-normal !leading-[1.5] tracking-[0.01em] text-[#5a0a0a] text-left mt-10 md:mt-12 md:text-left text-center">
-              We start with a free 20-minute call to see if it's a fit.
-              <br />
-              Not ready yet? Take the quiz instead.
+            <p className="lead-copy font-josefin !text-[clamp(0.95rem,1.8vw,1.25rem)] sm:!text-xl md:!text-[clamp(16px,1.25vw,20px)] font-normal !leading-[1.5] tracking-[0.01em] text-[#5a0a0a] text-left mt-10 md:mt-12 md:text-left text-center" data-cms="body">
+              {bodyLines.map((line, i) => (
+                <React.Fragment key={i}>
+                  {line}
+                  {i < bodyLines.length - 1 && <br />}
+                </React.Fragment>
+              ))}
             </p>
 
             {/* ===================================================
@@ -133,11 +151,11 @@ export default function Lead() {
             <div className="lead-buttons flex gap-3 md:gap-4 flex-wrap mt-1 md:justify-start justify-center">
 
               <button className="lead-cta lead-cta--primary font-josefin text-[clamp(12px,0.8vw,13px)] md:text-[clamp(14px,1vw,18px)] font-bold tracking-[0.05em] text-[#750100] bg-[#F5B7C4] border-none px-6 md:px-8 lg:px-10 py-2.5 md:py-3 lg:py-[0.9rem] rounded cursor-pointer transition-all duration-300 ease-in-out uppercase shadow-[0_4px_14px_-4px_rgba(91,7,6,0.55)] hover:bg-[#ecb4b8] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_-4px_rgba(91,7,6,0.65)]">
-                BOOK A CALL
+                {c.ctaPrimary}
               </button>
 
               <button className="lead-cta lead-cta--secondary font-josefin text-[clamp(12px,0.8vw,13px)] md:text-[clamp(14px,1vw,18px)] font-semibold tracking-[0.05em] text-white bg-[#5B0706] border border-[#5B0706] px-6 md:px-8 lg:px-10 py-2.5 md:py-3 lg:py-[0.9rem] rounded cursor-pointer transition-all duration-300 ease-in-out uppercase hover:bg-[#5B0706] hover:text-[#fdd1db] hover:-translate-y-0.5 hover:shadow-[0_4px_14px_-4px_rgba(91,7,6,0.3)]">
-                TAKE A QUIZ
+                {c.ctaSecondary}
               </button>
 
             </div>
@@ -156,9 +174,9 @@ export default function Lead() {
                 isVisible ? "lead-image-float--active" : ""
               }`}
             >
-              <Image
-                src="/Lead/1.png"
-                alt="Lead – majestic, powerful, and aware"
+              <CmsImage
+                src={c.image}
+                alt={c.imageAlt}
                 width={400}
                 height={488}
                 className="relative z-[2] w-full max-w-[240px] md:max-w-[280px] lg:max-w-[360px] h-auto aspect-[0.82/1] object-contain block drop-shadow-[0_4px_16px_rgba(60,30,10,0.12)] scale-[1.20] rounded-lg -mt-2 md:-mt-4 lg:-mt-6 overflow-visible"

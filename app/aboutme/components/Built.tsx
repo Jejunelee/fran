@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { cmsStyleVars, mediaUrl, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
 const builtScriptClass =
   "font-script text-[2.325em] leading-[0.5] mx-[0.04em] translate-y-[0.02em] inline-block tracking-[0.02em] text-[#F3C8D0] relative z-[2] font-normal";
@@ -8,6 +10,16 @@ const builtScriptClass =
 export default function TheLifeIBuilt() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const c = useSection<{
+    styles: SectionStyles;
+    panelColor: string;
+    book: string;
+    photo: string;
+    heading: string;
+    headingScript: string;
+    body1: string;
+    body2: string;
+  }>("about", "built");
 
   useEffect(() => {
     const node = sectionRef.current;
@@ -30,24 +42,25 @@ export default function TheLifeIBuilt() {
   return (
     <section
       ref={sectionRef}
-      className={`life-built-section relative w-full overflow-visible min-h-fit ${
+      className={`life-built-section cms-section relative w-full overflow-visible min-h-fit ${
         isVisible ? "life-built-section--visible" : ""
       }`}
       style={{
-        backgroundColor: "#5B0706",
+        backgroundColor: c.panelColor || "#5B0706",
+        ...cmsStyleVars(c.styles),
       }}
     >
       {/* BOOK LAYER — sticks left, overlaps top (all sizes) */}
       <div className="life-built-book pointer-events-none absolute left-0 top-[-40px] sm:top-[-55px] md:top-[-55px] z-[3] w-[min(62vw,380px)] sm:w-[min(58vw,460px)] md:w-[clamp(500px,46vw,720px)]">
         <div className="relative w-full">
           <img
-            src="/AboutMe/Built/book.png"
+            src={mediaUrl(c.book)}
             alt=""
             aria-hidden="true"
             className="life-built-book-img relative z-[1] h-auto w-full object-contain"
           />
           <img
-            src="/AboutMe/Built/pic.png"
+            src={mediaUrl(c.photo)}
             alt=""
             aria-hidden="true"
             className="life-built-picture absolute left-[30%] top-[18%] z-[2] w-[54%] h-auto object-contain"
@@ -68,11 +81,12 @@ export default function TheLifeIBuilt() {
             {/* Heading */}
             <h2 className="life-built-heading font-serif font-normal text-[#F3C8D0] leading-[0.85] tracking-[-0.04em] text-[clamp(38px,4.5vw,70px)]
               max-md:text-[clamp(30px,8.5vw,44px)] max-md:leading-[0.95]">
-              <span className="font-serif">The life I </span>
+              <span className="font-serif" data-cms="heading">{c.heading} </span>
               <span
                 className={`${builtScriptClass} life-built-script max-md:!text-[2.175em] max-md:!leading-[0.75]`}
+                data-cms="script"
               >
-                built
+                {c.headingScript}
               </span>
             </h2>
 
@@ -80,22 +94,13 @@ export default function TheLifeIBuilt() {
             <div className="mt-[35px] md:mt-[38px] space-y-[32px] md:space-y-[36px]
               max-md:mt-6 max-md:space-y-6">
               <p className="life-built-paragraph life-built-paragraph--1 font-josefin font-normal text-[#EFC0C9] text-[16px] sm:text-[18px] md:text-[22px] lg:text-[23px] leading-[1.45] md:leading-[1.4]
-                max-md:leading-[1.6]">
-                I spent my twenties chasing a very specific dream from fashion
-                school in New York, a master&rsquo;s in fashion communications
-                in London, then a career in beauty PR. And I want to be clear,
-                because this is the part most people get wrong about stories
-                like mine: I wasn&rsquo;t faking it. I loved it. The city, the
-                work, the version of myself it let me be. It was real, and it
-                was mine.
+                max-md:leading-[1.6]" data-cms="body">
+                {c.body1}
               </p>
 
               <p className="life-built-paragraph life-built-paragraph--2 font-josefin font-normal text-[#EFC0C9] text-[16px] sm:text-[18px] md:text-[22px] lg:text-[23px] leading-[1.45] md:leading-[1.4]
-                max-md:leading-[1.6]">
-                And then, slowly, it stopped fitting. Not because it had been
-                wrong, but because I had changed and it hadn&rsquo;t.
-                That&rsquo;s the part nobody warns you about. Even the things
-                you genuinely love can quietly stop being yours.
+                max-md:leading-[1.6]" data-cms="body">
+                {c.body2}
               </p>
             </div>
           </div>

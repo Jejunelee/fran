@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Josefin_Sans } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
-import { Footer } from "@/app/components/Footer";
+import { ConditionalFooter } from "@/app/components/ConditionalFooter";
+import { SiteContentProvider } from "@/lib/content/context";
+import { getSiteContent } from "@/lib/content/get-site-content";
 import type { ReactNode } from "react";
 
 const geistSans = Geist({
@@ -51,23 +53,25 @@ export const metadata: Metadata = {
     "Coaching for people ready to build a life that actually fits.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: ReactNode;
 }) {
+  const content = await getSiteContent();
+
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${josefinSans.variable} ${notoSerif.variable} ${parfumerie.variable} h-full antialiased overflow-x-clip`}
     >
       <body className="min-h-screen w-full min-w-0 flex flex-col">
-        {/* w-full min-w-0 prevents flex-child stretching issues on mobile */}
-        <main className="flex-1 w-full min-w-0">
-          {children}
-        </main>
-
-        <Footer />
+        <SiteContentProvider value={content}>
+          <main className="flex-1 w-full min-w-0">
+            {children}
+          </main>
+          <ConditionalFooter />
+        </SiteContentProvider>
       </body>
     </html>
   );

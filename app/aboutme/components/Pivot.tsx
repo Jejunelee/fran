@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { cmsStyleVars, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
 const coachingScriptClass =
   "font-script font-normal text-[#7A2E2E] inline-block relative z-[2] leading-[0.5] tracking-[0.01em] text-[2.8em] sm:text-[3em] md:text-[3.1em] lg:text-[3.2em] [text-shadow:0_1px_2px_rgba(127,15,15,0.06)]";
@@ -11,6 +13,14 @@ const pivotScriptClass =
 export default function CoachingPivot() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const c = useSection<{
+    styles: SectionStyles;
+    heading: string;
+    headingMid: string;
+    headingScript: string;
+    body1: string;
+    body2: string;
+  }>("about", "pivot");
 
   useEffect(() => {
     const node = sectionRef.current;
@@ -33,8 +43,9 @@ export default function CoachingPivot() {
   return (
     <section
       ref={sectionRef}
-      className={`coaching-pivot-section flex min-h-[60vh] w-full flex-col items-center justify-center px-5 py-[80px] sm:px-6 md:min-h-[70vh] md:py-[120px] text-center
+      className={`coaching-pivot-section cms-section flex min-h-[60vh] w-full flex-col items-center justify-center px-5 py-[80px] sm:px-6 md:min-h-[70vh] md:py-[120px] text-center
         max-md:py-14 ${isVisible ? "coaching-pivot-section--visible" : ""}`}
+      style={cmsStyleVars(c.styles)}
     >
       <div className="mx-auto w-full max-w-[980px] min-w-0">
         {/* Headline */}
@@ -45,27 +56,27 @@ export default function CoachingPivot() {
             <span
               className={`${coachingScriptClass} coaching-pivot-script coaching-pivot-script--coaching max-md:!text-[1.8em] max-md:!leading-[0.75]`}
             >
-              Coaching
+              <span data-cms="script">{c.heading}</span>
             </span>
           </span>
 
           {/* Line 2 */}
           <span className="coaching-pivot-line coaching-pivot-line--2 block leading-[0.8] max-md:leading-[0.95]">
-            <span className="font-serif font-normal">wasn&rsquo;t a</span>{" "}
+            <span className="font-serif font-normal" data-cms="heading">{c.headingMid}</span>{" "}
             <span
               className={`${pivotScriptClass} coaching-pivot-script coaching-pivot-script--pivot max-md:!text-[1.5em] max-md:!leading-[0.75]`}
+              data-cms="script"
             >
-              pivot
+              {c.headingScript}
             </span>
           </span>
         </h1>
 
         {/* Subtitle */}
         <p className="coaching-pivot-subtitle mx-auto mt-[35px] md:mt-[42px] max-w-[340px] sm:max-w-[500px] md:max-w-[760px] font-josefin font-normal text-[#7A2E2E] text-[16px] sm:text-[20px] md:text-[24px] lg:text-[26px] leading-[1.3] md:leading-[1.28]
-          max-md:mt-6 max-md:max-w-full max-md:leading-[1.5]">
-          It was the only thing I&rsquo;d been doing consistently
-          <br className="hidden sm:block" /> my whole life. I just hadn&rsquo;t
-          named it yet.
+          max-md:mt-6 max-md:max-w-full max-md:leading-[1.5]" data-cms="body">
+          {c.body1}
+          <br className="hidden sm:block" /> {c.body2}
         </p>
       </div>
 

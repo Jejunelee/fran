@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { cmsBg, cmsStyleVars, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
 const NotForYouIf = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -24,21 +26,25 @@ const NotForYouIf = () => {
     return () => observer.unobserve(node);
   }, []);
 
-  const bulletPoints = [
-    "You want a quick fix or a 30-day transformation.",
-    "You want someone to tell you what to do.",
-    "You want validation, not reflection. I'll be honest with you, even when it's uncomfortable. Especially then.",
-    "You're not ready to sit with what comes up between sessions.",
-  ];
+  const c = useSection<{
+    styles: SectionStyles;
+    background: string;
+    headingBefore: string;
+    headingScript: string;
+    headingAfter: string;
+    bullets: string[];
+  }>("work", "notForYou");
+  const bulletPoints = c.bullets ?? [];
 
   return (
     <section
       ref={sectionRef}
-      className={`not-for-you-section w-full bg-cover bg-center bg-no-repeat py-12 sm:py-16 md:py-20 lg:py-24 px-6 sm:px-10 md:px-16 lg:px-24 max-md:![min-height:0px] ${
+      className={`not-for-you-section cms-section w-full bg-cover bg-center bg-no-repeat py-12 sm:py-16 md:py-20 lg:py-24 px-6 sm:px-10 md:px-16 lg:px-24 max-md:![min-height:0px] ${
         isVisible ? "not-for-you-section--visible" : ""
       }`}
       style={{
-        backgroundImage: "url('/WorkWithMe/NotForYouIf/bg.png')",
+        ...cmsBg(c.background),
+        ...cmsStyleVars(c.styles),
         minHeight: "330px",
       }}
     >
@@ -54,14 +60,14 @@ const NotForYouIf = () => {
               m-0
               [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]">
               <span className="not-for-you-line flex items-end justify-start whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8]">
-                This is
+                {c.headingBefore}
                 <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-                <span className="not-for-you-script inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#7D0808] font-normal overflow-visible relative z-[2]">
-                  not
+                <span className="not-for-you-script inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#7D0808] font-normal overflow-visible relative z-[2]" data-cms="script">
+                  {c.headingScript}
                 </span>
               </span>
               <span className="not-for-you-line flex items-end justify-start whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8]">
-                for you if:
+                {c.headingAfter}
               </span>
             </h2>
           </div>

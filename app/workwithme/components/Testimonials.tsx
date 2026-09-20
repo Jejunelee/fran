@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import { cmsBg, cmsStyleVars, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
 const testimonialsCss = String.raw`
   /* ============ Heading — editorial slide from the left with soft de-blur ============ */
@@ -123,21 +125,16 @@ const testimonialsCss = String.raw`
 
 export default function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  const testimonials = [
-    {
-      text: "I thought I needed more motivation. What I actually needed was clarity. Coaching helped me make decisions with more confidence and less second-guessing.",
-      author: "BEA T.",
-    },
-    {
-      text: "Working with my Francesca helped me gain clarity and confidence in both my personal and professional life. I finally feel like I'm moving forward with purpose",
-      author: "LIZA C.",
-    },
-    {
-      text: "The sessions gave me practical tools to manage stress, set boundaries, and stay focused on my goals. I've seen real growth in just a few months",
-      author: "THEA D.",
-    },
-  ];
+  const c = useSection<{
+    styles: SectionStyles;
+    background: string;
+    headingLine1: string;
+    headingLine2: string;
+    headingScript: string;
+    items: { text: string; desktopLines: string; author: string }[];
+  }>("work", "testimonials");
+  const testimonials = c.items ?? [];
+  const desktopLines = testimonials.map((item) => item.desktopLines.split("\n"));
 
   const desktopTextClass =
     "font-josefin font-medium tracking-[0.01em] text-[#5a0a0a] m-0 text-left " +
@@ -150,11 +147,14 @@ export default function Testimonials() {
     "md:!text-[clamp(28px,2.4vw,40px)] md:!leading-[1.2]";
 
   return (
-    <section className="testimonials-section relative w-full overflow-x-clip py-8 md:py-10 lg:py-12">
+    <section
+      className="testimonials-section cms-section relative w-full overflow-x-clip py-8 md:py-10 lg:py-12"
+      style={cmsStyleVars(c.styles)}
+    >
       {/* Background */}
       <div
         className="testimonials-bg absolute inset-0 bg-cover bg-[#F6F2E7] bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/Testimonials/bg.png')" }}
+        style={cmsBg(c.background)}
       />
 
       {/* Content */}
@@ -170,14 +170,14 @@ export default function Testimonials() {
                 [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]"
             >
               <span className="testimonials-heading-line flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9]">
-                What
+                <span data-cms="heading">{c.headingLine1}</span>
                 <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-                <span className="testimonials-script inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#750000] font-normal overflow-visible relative z-[2]">
-                  clients
+                <span className="testimonials-script inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#750000] font-normal overflow-visible relative z-[2]" data-cms="script">
+                  {c.headingLine2}
                 </span>
               </span>
-              <span className="testimonials-heading-line flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9]">
-                actually say
+              <span className="testimonials-heading-line flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9]" data-cms="heading">
+                {c.headingScript}
               </span>
             </h2>
 
@@ -189,63 +189,32 @@ export default function Testimonials() {
                 [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]"
             >
               <span className="testimonials-heading-line flex items-end justify-start whitespace-nowrap overflow-visible">
-                What
+                <span data-cms="heading">{c.headingLine1}</span>
                 <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-                <span className="testimonials-script inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#750000] font-normal overflow-visible relative z-[2]">
-                  clients
+                <span className="testimonials-script inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#750000] font-normal overflow-visible relative z-[2]" data-cms="script">
+                  {c.headingLine2}
                 </span>
                 <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-                actually say
+                <span data-cms="heading">{c.headingScript}</span>
               </span>
             </h2>
           </div>
 
           {/* Desktop: 3 testimonials */}
           <div className="hidden md:contents">
-            <div className="testimonials-card flex flex-col">
+            {testimonials.map((item, i) => (
+            <div key={i} className="testimonials-card flex flex-col">
               <p className={desktopTextClass}>
-                I thought I needed more motivation.
-                <br />
-                What I actually needed was clarity.
-                <br />
-                Coaching helped me make decisions
-                <br />
-                with more confidence and less
-                <br />
-                second-guessing.
+                {desktopLines[i]?.map((line, j) => (
+                  <React.Fragment key={j}>
+                    <span data-cms="body">{line}</span>
+                    {j < (desktopLines[i]?.length ?? 0) - 1 && <br />}
+                  </React.Fragment>
+                ))}
               </p>
-              <p className={desktopAuthorClass}>BEA T.</p>
+              <p className={desktopAuthorClass} data-cms="heading">{item.author}</p>
             </div>
-
-            <div className="testimonials-card flex flex-col">
-              <p className={desktopTextClass}>
-                Working with my Francesca helped
-                <br />
-                me gain clarity and confidence in
-                <br />
-                both my personal and professional
-                <br />
-                life. I finally feel like I&apos;m moving
-                <br />
-                forward with purpose
-              </p>
-              <p className={desktopAuthorClass}>LIZA C.</p>
-            </div>
-
-            <div className="testimonials-card flex flex-col">
-              <p className={desktopTextClass}>
-                The sessions gave me practical
-                <br />
-                tools to manage stress, set
-                <br />
-                boundaries, and stay focused on my
-                <br />
-                goals. I&apos;ve seen real growth in just a
-                <br />
-                few months
-              </p>
-              <p className={desktopAuthorClass}>THEA D.</p>
-            </div>
+            ))}
           </div>
 
           {/* Mobile: 1 testimonial at a time */}

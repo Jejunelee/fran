@@ -1,7 +1,10 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { CmsImage } from "@/lib/content/CmsImage";
 import { motion, Variants } from "framer-motion";
+import { cmsStyleVars, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
 const ctaCss = String.raw`
   /* ============ Background texture — slow ambient drift ============ */
@@ -53,6 +56,18 @@ const ctaCss = String.raw`
 export default function CTA() {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const c = useSection<{
+    styles: SectionStyles;
+    image: string;
+    headingLine1: string;
+    headingLine2: string;
+    headingScript: string;
+    notReady: string;
+    selfAssess: string;
+    joinList: string;
+    ctaPrimary: string;
+    ctaSecondary: string;
+  }>("work", "cta");
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -174,8 +189,9 @@ export default function CTA() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full overflow-hidden"
+      className="cms-section relative w-full overflow-hidden"
       aria-label="Call to action"
+      style={cmsStyleVars(c.styles)}
     >
       {/* Background with subtle texture */}
       <div className="absolute inset-0 w-full h-full bg-[#DFA0B2]">
@@ -210,18 +226,19 @@ export default function CTA() {
                 m-0 w-full
                 [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]"
             >
-              <span className="flex items-end justify-center lg:justify-start whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8]">
-                If you&apos;re still reading, you&apos;re
+              <span className="flex items-end justify-center lg:justify-start whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8]" data-cms="heading">
+                {c.headingLine1}
               </span>
               <span className="flex items-end justify-center lg:justify-start whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8]">
-                probably the
+                <span data-cms="heading">{c.headingLine2}</span>
                 <span className="w-[0.28em] shrink-0" aria-hidden="true" />
                 <motion.span
                   variants={scriptVariants}
                   className="cta-script inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#750000] font-normal overflow-visible relative z-[2]"
                   style={{ transformOrigin: "50% 70%" }}
+                  data-cms="script"
                 >
-                  right person.
+                  {c.headingScript}
                 </motion.span>
               </span>
             </h2>
@@ -237,12 +254,12 @@ export default function CTA() {
                 !text-[clamp(1.1875rem,2.25vw,1.5625rem)] sm:!text-[25px] !leading-[1.5]
                 md:!text-[clamp(20px,1.5625vw,25px)] md:!leading-[1.5]"
             >
-              Not quite ready?
+              <span data-cms="body">{c.notReady}</span>
               <br />
-              Take the self-assessment
+              <span data-cms="body">{c.selfAssess}</span>
               <br className="md:hidden" />
               <span className="hidden md:inline"> </span>
-              and join the list.
+              <span data-cms="body">{c.joinList}</span>
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 mt-4 md:mt-5 lg:mt-6 max-md:w-full">
@@ -261,7 +278,7 @@ export default function CTA() {
                   md:!text-[clamp(0.85rem,1vw,1rem)]
                   max-md:w-full max-md:max-w-[280px] max-md:min-h-[48px]"
               >
-                BOOK A CALL
+                {c.ctaPrimary}
               </motion.a>
 
               <motion.a
@@ -279,7 +296,7 @@ export default function CTA() {
                   md:!text-[clamp(0.85rem,1vw,1rem)]
                   max-md:w-full max-md:max-w-[280px] max-md:min-h-[48px]"
               >
-                TAKE A QUIZ
+                {c.ctaSecondary}
               </motion.a>
             </div>
           </motion.div>
@@ -291,11 +308,20 @@ export default function CTA() {
           >
             <div
               className="relative w-full max-w-[240px] sm:max-w-[260px] lg:max-w-none aspect-[4/5] rounded-lg overflow-hidden bg-[#750000]/15 border border-[#750000]/20"
-              aria-hidden="true"
+              aria-hidden={!c.image}
             >
+              {c.image ? (
+                <CmsImage
+                  src={c.image}
+                  alt=""
+                  fill
+                  className="object-cover"
+                />
+              ) : (
               <div className="absolute inset-0 flex items-center justify-center font-josefin uppercase tracking-[0.18em] text-[#750000]/45 !text-[11px] sm:!text-[12px]">
                 Image
               </div>
+              )}
             </div>
           </motion.div>
         </div>

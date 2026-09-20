@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { cmsStyleVars, mediaUrl, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
 /* ============================================================
    NAVIGATION
@@ -281,6 +283,22 @@ const josefin = "font-josefin text-[#5B0706]";
 export default function Contact() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const c = useSection<{
+    styles: SectionStyles;
+    image: string;
+    heading: string;
+    headingScript: string;
+    headingEnd: string;
+    intro: string;
+    option1Title: string;
+    option1Body: string;
+    option1Cta: string;
+    option2Title: string;
+    option2Body: string;
+    option2Cta: string;
+    note: string;
+    findMe: string;
+  }>("contact", "main");
 
   useEffect(() => {
     const node = sectionRef.current;
@@ -327,7 +345,7 @@ export default function Contact() {
         <section className="relative w-full flex-shrink-0 md:w-[42vw]">
           <div className="contact-image-panel relative h-[40vh] min-h-[260px] w-full overflow-hidden md:sticky md:top-0 md:h-screen md:min-h-0">
             <img
-              src="/Contact/left.png"
+              src={mediaUrl(c.image)}
               alt=""
               className="contact-image absolute inset-0 h-full w-full object-cover object-center md:object-center"
             />
@@ -347,52 +365,56 @@ export default function Contact() {
           an integrated card-on-image composition.
           Desktop: normal flow, no overlap, full width of the right column.
         */}
-        <section className="relative z-10 -mt-8 w-full flex flex-col rounded-t-[28px] bg-[#F7F1E7] md:mt-0 md:w-[58vw] md:rounded-none md:z-auto">
+        <section
+          className="cms-section relative z-10 -mt-8 w-full flex flex-col rounded-t-[28px] bg-[#F7F1E7] md:mt-0 md:w-[58vw] md:rounded-none md:z-auto"
+          style={cmsStyleVars(c.styles)}
+        >
           {/* pt-24 on md+ so the absolute nav doesn't cover the heading.
               On mobile, pt-8 after the -mt-8 overlap gives comfortable spacing. */}
           <div className="mx-auto flex w-full max-w-[880px] flex-col px-6 py-8 sm:px-8 md:px-12 md:py-16 md:pt-24 lg:px-16">
             {/* Eyebrow */}
             <p
               className={`contact-eyebrow ${josefin} text-[11px] font-semibold uppercase tracking-[0.32em] sm:text-[12px]`}
+              data-cms="heading"
             >
-              Contact
+              {c.heading}
             </p>
 
             {/* Heading */}
             <h1 className="contact-heading mt-3 font-serif text-[clamp(52px,6vw,92px)] font-normal leading-[0.85] tracking-[-0.04em] text-[#750100] md:mt-4">
-              <span>Let&rsquo;s</span>{" "}
-              <span className="contact-heading-script inline-block font-script font-normal tracking-[0.01em]">
-                talk.
+              <span data-cms="heading">{c.headingScript}</span>{" "}
+              <span className="contact-heading-script inline-block font-script font-normal tracking-[0.01em]" data-cms="script">
+                {c.headingEnd}
               </span>
             </h1>
 
             {/* Intro */}
             <p
               className={`contact-intro ${josefin} mt-4 text-[15px] leading-[1.5] sm:text-[16px] md:mt-5 md:text-[17px] lg:text-[18px]`}
+              data-cms="body"
             >
-              There are two ways to start. Pick whichever feels right.
+              {c.intro}
             </p>
 
             {/* ===================== OPTIONS ===================== */}
             <div className="mt-8 flex flex-col gap-8 md:mt-12 md:gap-12">
               {/* -------- Option 1 -------- */}
               <div className="contact-option contact-option--1 flex flex-col" style={{ animationDelay: "620ms" }}>
-                <h2 className="font-serif text-[clamp(24px,2.2vw,32px)] font-normal leading-[1.1] tracking-[-0.02em] text-[#750100]">
-                  Option 1: Book a free 20-minute call
+                <h2 className="font-serif text-[clamp(24px,2.2vw,32px)] font-normal leading-[1.1] tracking-[-0.02em] text-[#750100]" data-cms="heading">
+                  {c.option1Title}
                 </h2>
                 <p
                   className={`${josefin} mt-3 max-w-[520px] text-[14px] leading-[1.5] sm:text-[15px] lg:text-[16px]`}
+                  data-cms="body"
                 >
-                  This is a conversation, not a sales call. We talk. I listen. I
-                  ask questions. You ask questions. By the end of 20 minutes,
-                  we both know whether to move forward.
+                  {c.option1Body}
                 </p>
 
                 <a
                   href="#"
                   className={`${josefin} contact-cta mt-5 inline-flex w-fit items-center gap-1.5 rounded-[2px] bg-[#5B0706] px-5 py-2.5 text-[13px] font-semibold text-[#F7F1E7] transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5B0706] sm:text-[14px]`}
                 >
-                  Book a call →
+                  {c.option1Cta}
                 </a>
               </div>
 
@@ -401,14 +423,14 @@ export default function Contact() {
 
               {/* -------- Option 2 -------- */}
               <div className="contact-option contact-option--2 flex flex-col" style={{ animationDelay: "780ms" }}>
-                <h2 className="font-serif text-[clamp(24px,2.2vw,32px)] font-normal leading-[1.1] tracking-[-0.02em] text-[#750100]">
-                  Option 2: Send me a message
+                <h2 className="font-serif text-[clamp(24px,2.2vw,32px)] font-normal leading-[1.1] tracking-[-0.02em] text-[#750100]" data-cms="heading">
+                  {c.option2Title}
                 </h2>
                 <p
                   className={`${josefin} mt-3 max-w-[520px] text-[14px] leading-[1.5] sm:text-[15px] lg:text-[16px]`}
+                  data-cms="body"
                 >
-                  For a specific question, group offerings, supper club
-                  invitations, or corporate work.
+                  {c.option2Body}
                 </p>
 
                 <form
@@ -455,16 +477,16 @@ export default function Contact() {
                       type="submit"
                       className={`${josefin} contact-cta mt-1 inline-flex w-fit items-center gap-1.5 rounded-[2px] bg-[#5B0706] px-5 py-2.5 text-[13px] font-semibold text-[#F7F1E7] transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5B0706] sm:text-[14px]`}
                     >
-                      Send message →
+                      {c.option2Cta}
                     </button>
                   </div>
 
                   <p
                     className={`contact-field ${josefin} text-[11px] leading-[1.5] text-[#7A3A3A] sm:text-[12px]`}
                     style={{ animationDelay: "380ms" }}
+                    data-cms="body"
                   >
-                    I read every message myself. I usually reply within 2 to 3
-                    working days.
+                    {c.note}
                   </p>
                 </form>
               </div>
@@ -476,8 +498,8 @@ export default function Contact() {
               <div className="contact-option contact-option--3 flex flex-col" style={{ animationDelay: "940ms" }}>
                 <h2 className="font-serif text-[clamp(24px,2.3vw,34px)] font-normal leading-[1.1] tracking-[-0.02em] text-[#750100]">
                   Other places to{" "}
-                  <span className="contact-heading-script inline-block font-script font-normal tracking-[0.01em]">
-                    find me
+                  <span className="contact-heading-script inline-block font-script font-normal tracking-[0.01em]" data-cms="script">
+                    {c.findMe}
                   </span>
                 </h2>
 

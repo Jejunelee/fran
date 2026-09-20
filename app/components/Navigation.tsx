@@ -7,6 +7,7 @@ import React, { useEffect, useRef, useState } from "react";
 const navigationItems = [
   { label: "HOME", href: "/" },
   { label: "HOW IT WORKS", href: "/workwithme" },
+  { label: "ABOUT ME", href: "/aboutme" },
   { label: "WORK WITH ME", href: "/workwithme" },
   { label: "RESOURCES", href: "/resources" },
 ];

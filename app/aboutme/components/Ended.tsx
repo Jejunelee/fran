@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { cmsBg, cmsStyleVars, mediaUrl, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
 const scriptSpanClass =
   "font-script text-[1.5em] md:text-[1.65em] leading-[0.5] mx-[0.06em] translate-y-[0.02em] md:translate-y-[0em] inline-block tracking-[0.02em] text-[#750000] relative z-[2] font-normal [text-shadow:0_1px_2px_rgba(127,15,15,0.06)]";
@@ -8,6 +10,16 @@ const scriptSpanClass =
 export default function TheMomentItEnded() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const c = useSection<{
+    styles: SectionStyles;
+    background: string;
+    accentImage: string;
+    heading: string;
+    headingScript: string;
+    body1: string;
+    body2: string;
+    body3: string;
+  }>("about", "ended");
 
   useEffect(() => {
     const node = sectionRef.current;
@@ -30,13 +42,14 @@ export default function TheMomentItEnded() {
   return (
     <section
       ref={sectionRef}
-      className={`moment-ended-section w-full px-4 py-[35px] sm:px-[3%] md:py-[40px]
+      className={`moment-ended-section cms-section w-full px-4 py-[35px] sm:px-[3%] md:py-[40px]
         max-md:py-7 ${isVisible ? "moment-ended-section--visible" : ""}`}
+      style={cmsStyleVars(c.styles)}
     >
       <div
         className="moment-ended-panel relative mx-auto w-full overflow-hidden"
         style={{
-          backgroundImage: "url('/AboutMe/ended/bg.png')",
+          ...cmsBg(c.background),
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -50,11 +63,12 @@ export default function TheMomentItEnded() {
             {/* Heading */}
             <h2 className="moment-ended-heading font-serif font-normal text-[#750000] leading-[0.85] tracking-[-0.03em] text-[clamp(32px,4.2vw,70px)]
               max-md:text-[clamp(28px,8.5vw,42px)] max-md:leading-[0.9]">
-              <span className="font-serif">The moment it</span>{" "}
+              <span className="font-serif" data-cms="heading">{c.heading}</span>{" "}
               <span
                 className={`${scriptSpanClass} moment-ended-script md:!text-[2.475em] max-md:!text-[2.175em] max-md:!leading-[0.75]`}
+                data-cms="script"
               >
-                ended
+                {c.headingScript}
               </span>
             </h2>
 
@@ -62,28 +76,18 @@ export default function TheMomentItEnded() {
             <div className="mt-[30px] md:mt-[33px] space-y-[25px] md:space-y-[28px]
               max-md:mt-6 max-md:space-y-5">
               <p className="moment-ended-paragraph moment-ended-paragraph--1 max-w-[760px] font-josefin font-normal text-[#750000] text-[16px] sm:text-[19px] md:text-[23px] lg:text-[24px] leading-[1.15] md:leading-[1.08]
-                max-md:leading-[1.5]">
-                I was writing a content calendar for a feminine hygiene brand,
-                for an influencer I didn&rsquo;t respect, and something in me
-                just went quiet. I quit the next week. No plan. I just
-                couldn&rsquo;t keep maintaining a life I&rsquo;d already moved
-                past.
+                max-md:leading-[1.5]" data-cms="body">
+                {c.body1}
               </p>
 
               <p className="moment-ended-paragraph moment-ended-paragraph--2 max-w-[760px] font-josefin font-normal text-[#750000] text-[16px] sm:text-[19px] md:text-[23px] lg:text-[24px] leading-[1.15] md:leading-[1.1]
-                max-md:leading-[1.5]">
-                That was the start of the real work.
+                max-md:leading-[1.5]" data-cms="body">
+                {c.body2}
               </p>
 
               <p className="moment-ended-paragraph moment-ended-paragraph--3 max-w-[780px] font-josefin font-normal text-[#750000] text-[16px] sm:text-[19px] md:text-[23px] lg:text-[24px] leading-[1.15] md:leading-[1.08]
-                max-md:leading-[1.5]">
-                I didn&rsquo;t find my purpose in a single clean epiphany. I
-                found it the way most people do. Slowly, awkwardly, while doing
-                other things. The thread that kept showing up was this: I was
-                the friend people called when their life was falling apart. The
-                one who could sit with someone in the worst version of
-                themselves and not flinch. The one who asked the question nobody
-                else would.
+                max-md:leading-[1.5]" data-cms="body">
+                {c.body3}
               </p>
             </div>
           </div>
@@ -91,7 +95,7 @@ export default function TheMomentItEnded() {
           {/* Right image column */}
           <div className="order-2 md:order-2 flex justify-center md:justify-end min-w-0">
             <img
-              src="/AboutMe/ended/red.png"
+              src={mediaUrl(c.accentImage)}
               alt=""
               className="moment-ended-image h-auto w-full max-w-[400px] object-cover shadow-[0_3px_5px_rgba(0,0,0,0.25)] md:max-w-none md:w-[475px] md:h-[565px]
                 max-md:max-w-[min(80vw,340px)]"

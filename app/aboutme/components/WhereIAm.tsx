@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { cmsStyleVars, mediaUrl, useSection } from "@/lib/content/context";
+import type { SectionStyles } from "@/lib/content/types";
 
 const scriptSpanClass =
   "font-script text-[1.4em] md:text-[1.5em] leading-[0.5] mx-[0.06em] translate-y-[0.02em] md:translate-y-[0em] inline-block tracking-[0.02em] text-[#750100] relative z-[2] font-normal";
@@ -8,6 +10,14 @@ const scriptSpanClass =
 export default function WhereIAmNow() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const c = useSection<{
+    styles: SectionStyles;
+    images: string[];
+    heading: string;
+    headingScript: string;
+    paragraphs: string[];
+  }>("about", "whereIAm");
+  const imgs = c.images ?? [];
 
   useEffect(() => {
     const node = sectionRef.current;
@@ -30,33 +40,34 @@ export default function WhereIAmNow() {
   return (
     <section
       ref={sectionRef}
-      className={`where-i-am-section relative w-full overflow-visible px-5 py-[80px] sm:px-6 md:py-[100px]
+      className={`where-i-am-section cms-section relative w-full overflow-visible px-5 py-[80px] sm:px-6 md:py-[100px]
         max-md:py-14 ${isVisible ? "where-i-am-section--visible" : ""}`}
+      style={cmsStyleVars(c.styles)}
     >
       {/* Frame Images — decorative, desktop only */}
       {/* Frame 4 — Top Right */}
       <img
-        src="/AboutMe/WhereIAm/4.png"
+        src={mediaUrl(imgs[0])}
         alt=""
         aria-hidden="true"
-        className="where-frame where-frame--tr pointer-events-none absolute right-[20px] top-[-60px] z-[1] h-auto w-[143px] object-contain sm:right-[40px] sm:top-[-70px] sm:w-[176px] md:right-[60px] md:top-[-80px] md:w-[220px] lg:right-[105px] lg:w-[275px]
+        className="where-frame where-frame--tr pointer-events-none absolute right-[20px] top-[-60px] z-[1] h-auto w-[143px] object-contain sm:right-[40px] sm:top-[-70px] sm:w-[176px] md:right-[60px] md:top-[-80px] md:w-[220px] lg:right-[105px] lg:w-[325px]
           max-md:hidden"
         style={{ animationDelay: "220ms" }}
       />
 
       {/* Frame 2 — Bottom Left */}
       <img
-        src="/AboutMe/WhereIAm/1.png"
+        src={mediaUrl(imgs[1])}
         alt=""
         aria-hidden="true"
-        className="where-frame where-frame--bl pointer-events-none absolute left-[10px] top-[55%] z-[1] h-auto w-[143px] object-contain sm:left-[20px] sm:top-[50%] sm:w-[176px] md:left-[30px] md:top-[48%] md:w-[220px] lg:left-[42px] lg:top-[45%] lg:w-[277px]
+        className="where-frame where-frame--bl pointer-events-none absolute left-[10px] top-[55%] z-[1] h-auto w-[143px] object-contain sm:left-[20px] sm:top-[50%] sm:w-[176px] md:left-[30px] md:top-[48%] md:w-[220px] lg:left-[42px] lg:top-[55%] lg:w-[277px]
           max-md:hidden"
         style={{ animationDelay: "340ms" }}
       />
 
       {/* Frame 1 — Top Left */}
       <img
-        src="/AboutMe/WhereIAm/3.png"
+        src={mediaUrl(imgs[2])}
         alt=""
         aria-hidden="true"
         className="where-frame where-frame--tl pointer-events-none absolute left-[10px] top-[-30px] z-[3] h-auto w-[163px] object-contain sm:left-[40px] sm:top-[-20px] sm:w-[213px] md:left-[60px] md:top-[-15px] md:w-[263px] lg:left-[100px] lg:top-[-5px] lg:w-[319px]
@@ -66,7 +77,7 @@ export default function WhereIAmNow() {
 
       {/* Frame 3 — Bottom Right */}
       <img
-        src="/AboutMe/WhereIAm/2.png"
+        src={mediaUrl(imgs[3])}
         alt=""
         aria-hidden="true"
         className="where-frame where-frame--br pointer-events-none absolute right-[10px] bottom-[-40px] z-[3] h-auto w-[154px] object-contain sm:right-[40px] sm:bottom-[-50px] sm:w-[187px] md:right-[60px] md:bottom-[-60px] md:w-[231px] lg:right-[110px] lg:bottom-[-70px] lg:w-[286px]
@@ -78,33 +89,33 @@ export default function WhereIAmNow() {
       <div className="relative z-[2] mx-auto flex w-full max-w-[720px] flex-col items-center text-center
         max-md:z-10 max-md:px-1">
         {/* Mobile-only scattered cluster of 4 frames at top of text */}
-        <div className="md:hidden relative mb-5 h-[170px] w-full max-w-[400px] overflow-hidden">
+        <div className="md:hidden relative mb-7 w-full max-w-[400px] overflow-visible h-[min(78vw,300px)]">
           <img
-            src="/AboutMe/WhereIAm/3.png"
+            src={mediaUrl(imgs[2])}
             alt=""
             aria-hidden="true"
-            className="where-mobile-frame where-mobile-frame--1 absolute left-[0%] top-[-6px] h-auto w-[38%] max-w-[120px] object-contain rotate-[-8deg] z-[3]"
+            className="where-mobile-frame where-mobile-frame--1 absolute left-[0%] top-[6%] h-auto w-[42%] max-w-[148px] object-contain object-top rotate-[-8deg] z-[3]"
             style={{ animationDelay: "0ms" }}
           />
           <img
-            src="/AboutMe/WhereIAm/1.png"
+            src={mediaUrl(imgs[1])}
             alt=""
             aria-hidden="true"
-            className="where-mobile-frame where-mobile-frame--2 absolute left-[33%] top-[6px] h-auto w-[34%] max-w-[108px] object-contain rotate-[6deg] z-[2]"
+            className="where-mobile-frame where-mobile-frame--2 absolute left-[28%] top-[0%] h-auto w-[38%] max-w-[136px] object-contain object-top rotate-[6deg] z-[2]"
             style={{ animationDelay: "100ms" }}
           />
           <img
-            src="/AboutMe/WhereIAm/4.png"
+            src={mediaUrl(imgs[0])}
             alt=""
             aria-hidden="true"
-            className="where-mobile-frame where-mobile-frame--3 absolute right-[-2%] top-[-10px] h-auto w-[36%] max-w-[116px] object-contain rotate-[-4deg] z-[1]"
+            className="where-mobile-frame where-mobile-frame--3 absolute right-[0%] top-[10%] h-auto w-[40%] max-w-[144px] object-contain object-top rotate-[-4deg] z-[1]"
             style={{ animationDelay: "200ms" }}
           />
           <img
-            src="/AboutMe/WhereIAm/2.png"
+            src={mediaUrl(imgs[3])}
             alt=""
             aria-hidden="true"
-            className="where-mobile-frame where-mobile-frame--4 absolute left-[55%] top-[52px] h-auto w-[34%] max-w-[112px] object-contain rotate-[10deg] z-[4]"
+            className="where-mobile-frame where-mobile-frame--4 absolute left-[48%] top-[46%] h-auto w-[40%] max-w-[144px] object-contain object-top rotate-[10deg] z-[4]"
             style={{ animationDelay: "300ms" }}
           />
         </div>
@@ -112,40 +123,28 @@ export default function WhereIAmNow() {
         {/* Heading */}
         <h2 className="where-i-am-heading font-serif font-normal text-[#750100] leading-[0.9] tracking-[-0.04em] text-[clamp(36px,4vw,62px)]
           max-md:text-[clamp(30px,8.5vw,44px)] max-md:leading-[0.95]">
-          <span className="font-serif">Where I am</span>{" "}
+          <span className="font-serif" data-cms="heading">{c.heading}</span>{" "}
           <span
             className={`${scriptSpanClass} where-i-am-script md:!text-[2.25em] max-md:!text-[1.95em] max-md:!leading-[0.75]`}
+            data-cms="script"
           >
-            now
+            {c.headingScript}
           </span>
         </h2>
 
         {/* Paragraphs */}
         <div className="mt-[35px] md:mt-[38px] space-y-[25px] md:space-y-[28px]
           max-md:mt-6 max-md:space-y-5">
-          <p className="where-i-am-paragraph where-i-am-paragraph--1 mx-auto max-w-[650px] font-josefin font-normal text-[#750100] text-[16px] sm:text-[19px] md:text-[21px] lg:text-[22px] leading-[1.3] md:leading-[1.1]
-            max-md:leading-[1.55]">
-            I&rsquo;m 36. I live in Manila. I work with clients globally. I
-            have a master&rsquo;s in psychology and a clinical eye for
-            patterns. I also have a colorful personal life, a sharp sense of
-            humor, and a low tolerance for nonsense.
-          </p>
-
-          <p className="where-i-am-paragraph where-i-am-paragraph--2 mx-auto max-w-[650px] font-josefin font-normal text-[#750100] text-[16px] sm:text-[19px] md:text-[21px] lg:text-[22px] leading-[1.3] md:leading-[1.1]
-            max-md:leading-[1.55]">
-            I&rsquo;m not a &ldquo;healing&rdquo; coach. I don&rsquo;t pull
-            cards. I won&rsquo;t tell you to manifest your way out of grief.
-            I&rsquo;ll tell you the truth, clearly, with care, and in a way
-            that&rsquo;s hard to unsee once you&rsquo;ve heard it.
-          </p>
-
-          <p className="where-i-am-paragraph where-i-am-paragraph--3 mx-auto max-w-[650px] font-josefin font-normal text-[#750100] text-[16px] sm:text-[19px] md:text-[21px] lg:text-[22px] leading-[1.3] md:leading-[1.1]
-            max-md:leading-[1.55]">
-            My work isn&rsquo;t about teaching you who to become. It&rsquo;s
-            about helping you stay connected to yourself while you become it.
-            That&rsquo;s the work. If it sounds like what you&rsquo;ve been
-            looking for, you&rsquo;re in the right place.
-          </p>
+          {(c.paragraphs ?? []).map((text, i) => (
+            <p
+              key={i}
+              className={`where-i-am-paragraph where-i-am-paragraph--${i + 1} mx-auto max-w-[650px] font-josefin font-normal text-[#750100] text-[16px] sm:text-[19px] md:text-[21px] lg:text-[22px] leading-[1.3] md:leading-[1.1]
+            max-md:leading-[1.55]`}
+              data-cms="body"
+            >
+              {text}
+            </p>
+          ))}
         </div>
       </div>
 
@@ -186,9 +185,12 @@ export default function WhereIAmNow() {
         }
         .where-i-am-section--visible .where-mobile-frame {
           opacity: 1;
-          transform: scale(1);
           filter: blur(0);
         }
+        .where-i-am-section--visible .where-mobile-frame--1 { transform: scale(1) rotate(-8deg); }
+        .where-i-am-section--visible .where-mobile-frame--2 { transform: scale(1) rotate(6deg); }
+        .where-i-am-section--visible .where-mobile-frame--3 { transform: scale(1) rotate(-4deg); }
+        .where-i-am-section--visible .where-mobile-frame--4 { transform: scale(1) rotate(10deg); }
 
         /* ============ Heading — editorial slide from left ============ */
         .where-i-am-heading {
