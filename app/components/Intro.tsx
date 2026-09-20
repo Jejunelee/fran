@@ -43,7 +43,7 @@ export default function Lion() {
       <section className="intro-image-section flex items-center justify-center w-full h-full order-1 md:order-none">
         <div className="flex items-center justify-center w-full max-w-[200px] xs:max-w-[240px] sm:max-w-[280px] md:max-w-[380px] lg:max-w-[480px] max-h-[240px] xs:max-h-[280px] sm:max-h-[320px] md:max-h-[500px] lg:max-h-[600px]">
           <Image
-            src="/Intro/1.png"
+            src="/Intro/FA.png"
             alt="Francesca – coach, psychologist, and guide"
             width={400}
             height={488}

@@ -6,16 +6,7 @@ import Image from "next/image";
 const SCRIPT_WORDS = ["comfort", "over", "truth?"];
 
 const scriptSpanClass =
-  "font-script text-[1.8em] md:text-[2.05em] leading-[0.5] mx-[0.08em] translate-y-[0.02em] md:translate-y-[0em] inline-block tracking-[0.02em] text-[#750000] relative z-[2] font-normal [text-shadow:0_1px_2px_rgba(127,15,15,0.06)]";
-
-/*
- * MOBILE SCRIPT
- *
- * Mobile words have their own explicit size so they do not
- * inherit an unexpectedly large size from the heading.
- */
-const mobileScriptSpanClass =
-  "font-script text-[68px] leading-[0.5] inline-block tracking-[0.02em] text-[#750000] relative z-[2] font-normal [text-shadow:0_1px_2px_rgba(127,15,15,0.06)]";
+  "font-script !text-[2.15em] inline-block tracking-[0.01em] text-[#750000] relative z-[2] font-normal overflow-visible";
 
 export default function Lead() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -71,23 +62,27 @@ export default function Lead() {
                 DESKTOP HEADING
                 =================================================== */}
 
-            <h1 className="font-serif font-normal text-[clamp(30px,6vw,38px)] md:text-[clamp(36px,4vw,56px)] lg:text-[clamp(48px,5vw,76px)] leading-[0.7] tracking-[-0.04em] text-[#750000] m-0 relative flex-col items-start text-left w-full [font-stretch:extra-condensed] [transform:scaleX(1.00)] [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)] hidden md:flex">
+            <h1 className="font-serif font-light text-[clamp(2.625rem,11.25vw,6.3rem)] md:text-[clamp(2.25rem,6.3vw,6.3rem)] leading-[0.85] md:leading-[0.7] tracking-[-0.02em] text-[#750000] m-0 relative hidden md:flex flex-col items-start gap-[0.22em] md:gap-[0.28em] text-left w-full [font-stretch:extra-condensed] [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]">
 
-              <span className="lead-line lead-line--desktop block whitespace-nowrap leading-[0.7] mt-[0.1em] first:mt-0">
+              <span className="lead-line lead-line--desktop flex items-end justify-start whitespace-nowrap overflow-visible h-[0.85em] leading-[0.85] md:h-[0.7em] md:leading-[0.7]">
                 Ready to stop choosing
               </span>
 
-              <span className="lead-line lead-line--desktop flex items-baseline flex-wrap whitespace-nowrap relative justify-start leading-[0.7] mt-[0.1em]">
+              <span className="lead-line lead-line--desktop flex items-end justify-start whitespace-nowrap overflow-visible relative h-[0.85em] leading-[0.85] md:h-[0.7em] md:leading-[0.7]">
                 {SCRIPT_WORDS.map((word, i) => (
-                  <span
-                    key={word}
-                    className={`${scriptSpanClass} lead-script-word`}
-                    style={{
-                      animationDelay: `${520 + i * 160}ms`,
-                    }}
-                  >
-                    {word}
-                  </span>
+                  <React.Fragment key={word}>
+                    {i > 0 && (
+                      <span className="w-[0.28em] shrink-0" aria-hidden="true" />
+                    )}
+                    <span
+                      className={`${scriptSpanClass} lead-script-word`}
+                      style={{
+                        animationDelay: `${520 + i * 160}ms`,
+                      }}
+                    >
+                      {word}
+                    </span>
+                  </React.Fragment>
                 ))}
               </span>
             </h1>
@@ -96,29 +91,27 @@ export default function Lead() {
                 MOBILE HEADING
                 =================================================== */}
 
-            <h1 className="pt-10 lead-mobile-heading font-serif font-normal leading-[0.8] tracking-[-0.04em] text-[#750000] m-0 relative flex flex-col items-center text-center w-full [font-stretch:extra-condensed] [transform:scaleX(1.00)] [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)] flex md:hidden">
+            <h1 className="pt-10 lead-mobile-heading font-serif font-light !text-[24px] sm:!text-[28px] leading-[0.85] tracking-[-0.02em] text-[#750000] m-0 relative flex md:hidden flex-col items-center gap-[0.2em] text-center w-full [font-stretch:extra-condensed] [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]">
 
-              {/* First line */}
-
-              <span className="lead-line lead-line--mobile block leading-[0.8]">
+              <span className="lead-line lead-line--mobile flex items-end justify-center whitespace-nowrap overflow-visible h-[0.85em] leading-[0.85]">
                 Ready to stop choosing
               </span>
 
-              {/* Script line */}
-
-              <span className="lead-script-line lead-line--mobile flex items-baseline justify-center leading-[0.8] mt-[0.05em] whitespace-nowrap">
+              <span className="lead-script-line lead-line--mobile flex items-end justify-center whitespace-nowrap overflow-visible h-[0.85em] leading-[0.85]">
                 {SCRIPT_WORDS.map((word, i) => (
-                  <span
-                    key={word}
-                    className={`${mobileScriptSpanClass} lead-script-word ${
-                      i === 1 ? "mx-[0.17em]" : "mx-[0.08em]"
-                    }`}
-                    style={{
-                      animationDelay: `${520 + i * 160}ms`,
-                    }}
-                  >
-                    {word}
-                  </span>
+                  <React.Fragment key={word}>
+                    {i > 0 && (
+                      <span className="w-[0.28em] shrink-0" aria-hidden="true" />
+                    )}
+                    <span
+                      className={`${scriptSpanClass} lead-script-word`}
+                      style={{
+                        animationDelay: `${520 + i * 160}ms`,
+                      }}
+                    >
+                      {word}
+                    </span>
+                  </React.Fragment>
                 ))}
               </span>
             </h1>
@@ -127,7 +120,7 @@ export default function Lead() {
                 SUPPORTING COPY
                 =================================================== */}
 
-            <p className="lead-copy font-josefin text-[clamp(13px,1vw,14px)] md:text-[clamp(14px,1.2vw,18px)] font-normal leading-[1.5] tracking-[0.01em] text-[#5a0a0a] text-left m-0 md:text-left text-center">
+            <p className="lead-copy font-josefin !text-[clamp(0.95rem,1.8vw,1.25rem)] sm:!text-xl md:!text-[clamp(16px,1.25vw,20px)] font-normal !leading-[1.5] tracking-[0.01em] text-[#5a0a0a] text-left mt-10 md:mt-12 md:text-left text-center">
               We start with a free 20-minute call to see if it's a fit.
               <br />
               Not ready yet? Take the quiz instead.
@@ -259,43 +252,18 @@ export default function Lead() {
 
           .lead-mobile-heading {
             width: 100% !important;
-
-            font-size: 38px !important;
-            line-height: 0.8 !important;
-
             margin: 0 !important;
           }
 
-          /*
-           * First serif line.
-           *
-           * This stays independent from the script words.
-           */
-
           .lead-mobile-heading > .lead-line--mobile:first-child {
-            font-size: 38px !important;
-            line-height: 0.8 !important;
-
             white-space: nowrap;
           }
-
-          /*
-           * Script line.
-           *
-           * IMPORTANT:
-           * The parent itself does NOT get a large font size.
-           * Each word controls its own size.
-           */
 
           .lead-script-line {
             width: 100% !important;
 
-            font-size: 1px !important;
-
-            line-height: 0.8 !important;
-
             display: flex !important;
-            align-items: baseline !important;
+            align-items: flex-end !important;
             justify-content: center !important;
 
             white-space: nowrap !important;
@@ -303,43 +271,24 @@ export default function Lead() {
             transform: none !important;
           }
 
-          /*
-           * Script words.
-           */
-
           .lead-script-line .lead-script-word {
-            font-size: 68px !important;
-
-            line-height: 0.5 !important;
-
             flex: 0 0 auto !important;
-
             white-space: nowrap !important;
           }
-
-          /*
-           * The middle word needs slightly more separation.
-           */
-
-          .lead-script-line .lead-script-word:nth-child(2) {
-            margin-left: 0.17em !important;
-            margin-right: 0.17em !important;
-          }
-
-          /*
-           * Supporting paragraph.
-           */
 
           .lead-copy {
             width: 100% !important;
             max-width: 92% !important;
-
-            font-size: 14px !important;
-            line-height: 1.5 !important;
-
             text-align: center !important;
+            margin: 32px 0 0 0 !important;
+            font-size: clamp(0.95rem, 1.8vw, 1.25rem) !important;
+            line-height: 1.5 !important;
+          }
 
-            margin: 0 !important;
+          @media (min-width: 640px) {
+            .lead-copy {
+              font-size: 1.25rem !important;
+            }
           }
 
           /*
@@ -395,27 +344,8 @@ export default function Lead() {
             gap: 17px !important;
           }
 
-          /*
-           * First line scales slightly according to the phone,
-           * but never becomes excessively large.
-           */
-
-          .lead-mobile-heading > .lead-line--mobile:first-child {
-            font-size: clamp(30px, 8.2vw, 36px) !important;
-          }
-
-          /*
-           * Script remains independently controlled.
-           */
-
-          .lead-script-line .lead-script-word {
-            font-size: 64px !important;
-          }
-
           .lead-copy {
             max-width: 94% !important;
-
-            font-size: 14px !important;
           }
         }
 
@@ -428,18 +358,6 @@ export default function Lead() {
           .lead-section {
             padding-left: 18px;
             padding-right: 18px;
-          }
-
-          .lead-mobile-heading > .lead-line--mobile:first-child {
-            font-size: 30px !important;
-          }
-
-          .lead-script-line .lead-script-word {
-            font-size: 60px !important;
-          }
-
-          .lead-copy {
-            font-size: 13.5px !important;
           }
 
           .lead-buttons button {

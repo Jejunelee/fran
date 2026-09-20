@@ -111,21 +111,21 @@ export default function Process() {
 
   const numberClass = [
     "font-josefin font-semibold text-[#5a0a0a] tracking-[0.02em] flex-shrink-0",
-    "!text-[14px] sm:!text-[15px] !leading-[1.05]",
-    "md:!text-[clamp(1.2rem,1.5vw,1.6rem)] md:!leading-[1.3]",
+    "!text-[11.7px] sm:!text-[13px] !leading-[1.3]",
+    "md:!text-[clamp(18px,1.5vw,22px)] md:!leading-[1.3]",
     "min-w-[1.7rem] sm:min-w-[1.9rem] md:min-w-[2.8rem] lg:min-w-[3.2rem]",
   ].join(" ");
 
   const stepTitleClass = [
     "font-josefin font-semibold text-[#5a0a0a]",
-    "!text-[11px] sm:!text-[12px] !leading-[1.15]",
-    "md:!text-[clamp(1.05rem,1.25vw,1.35rem)] md:!leading-[1.3]",
+    "!text-[11.7px] sm:!text-[13px] !leading-[1.3]",
+    "md:!text-[clamp(18px,1.5vw,22px)] md:!leading-[1.3]",
   ].join(" ");
 
   const stepDescClass = [
     "font-josefin font-normal text-[#5a0a0a] mt-0.5",
-    "!text-[10.5px] sm:!text-[11.5px] !leading-[1.35]",
-    "md:!text-[clamp(0.9rem,1.05vw,1.15rem)] md:!leading-[1.5]",
+    "!text-[clamp(0.6175rem,1.17vw,0.8125rem)] sm:!text-[13px] !leading-[1.5]",
+    "md:!text-[clamp(16px,1.25vw,20px)] md:!leading-[1.5]",
   ].join(" ");
 
   return (
@@ -133,24 +133,13 @@ export default function Process() {
       {/* PROCESS SECTION */}
       <section
         ref={sectionRef}
-        className="relative w-full overflow-visible min-h-[80vh] md:min-h-[80vh] z-20 max-md:!-mt-10"
+        className="relative isolate w-full overflow-visible z-20 max-md:min-h-[80vh] max-md:!-mt-10"
         style={{ marginTop: "-3%" }}
         aria-label="Process section"
       >
-        {/* Background: bgcombined1.png */}
-        <div className="absolute inset-0 w-full h-full overflow-hidden">
-          <Image
-            src="/WorkWithMe/Process/bgcombined1.png"
-            alt=""
-            fill
-            className="object-cover object-center"
-            priority
-          />
-        </div>
-
-        {/* 1.png — behind everything (including bgcombined1), centered in left column */}
+        {/* 1.png — very back, behind bgcombined1 (desktop) */}
         <div
-          className="hidden lg:block absolute top-1/2 pointer-events-none z-[-1]"
+          className="hidden lg:block absolute top-1/2 pointer-events-none z-0"
           style={{
             left: "20%",
             transform: "translate(-50%, -50%)",
@@ -169,12 +158,34 @@ export default function Process() {
           />
         </div>
 
+        {/* Mobile background — previous cover treatment */}
+        <div className="md:hidden absolute inset-0 z-0 overflow-hidden">
+          <Image
+            src="/WorkWithMe/Process/bgcombined1.png"
+            alt=""
+            fill
+            className="object-cover object-center"
+            priority
+          />
+        </div>
+
+        {/* Desktop background — full image, no crop */}
+        <Image
+          src="/WorkWithMe/Process/bgcombined1.png"
+          alt=""
+          width={1892}
+          height={817}
+          className="relative z-[1] hidden md:block w-full h-auto pointer-events-none"
+          priority
+        />
+
         {/* Content wrapper */}
         <div
-          className="relative z-10 max-w-[1600px] mx-auto px-6 md:px-12 lg:px-16 py-8 md:py-12 min-h-[80vh] md:min-h-[80vh] flex items-center
-            max-md:px-5 max-md:py-6"
+          className="relative z-10 max-w-[1600px] mx-auto px-6 md:px-12 lg:px-16 py-8 md:py-12 flex items-center
+            max-md:min-h-[80vh] max-md:px-5 max-md:py-6
+            md:absolute md:inset-0"
         >
-          <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-0 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-[36%_64%] gap-0 w-full">
             {/* Left column: empty space */}
             <div className="relative hidden lg:block" />
 
@@ -183,32 +194,27 @@ export default function Process() {
               initial="hidden"
               animate={isVisible ? "visible" : "hidden"}
               variants={containerVariants}
-              className="flex flex-col justify-center w-full max-w-[680px] lg:max-w-[660px] px-4 sm:px-6 md:px-8 lg:px-10 py-8 md:py-10 lg:py-12 ml-auto lg:ml-0 lg:mr-8
-                max-md:px-0 max-md:py-2 max-md:pl-6 max-md:pr-4"
+              className="flex flex-col justify-center w-full max-w-[800px] lg:max-w-[840px] px-4 sm:px-6 md:px-8 lg:px-10 py-8 md:py-10 lg:py-12 ml-auto lg:ml-0 lg:mr-8
+                max-md:px-0 max-md:py-2 max-md:pl-6 max-md:pr-4
+                mt-6 md:mt-10 lg:mt-14"
             >
               {/* Heading */}
               <motion.div
                 variants={headingVariants}
-                className="mb-6 md:mb-8 lg:mb-10 max-md:mb-3"
+                className="mb-6 md:mb-8 lg:mb-10 max-md:mb-3 max-md:flex max-md:justify-center"
               >
                 <h2
                   className="font-serif font-light text-[#750000] tracking-[-0.02em] [font-stretch:extra-condensed]
-                    !text-[24px] sm:!text-[28px] !leading-[0.95]
-                    md:!text-[clamp(2.2rem,4vw,3.6rem)] md:!leading-[0.6]"
+                    !text-[36px] sm:!text-[42px] !leading-[0.9]
+                    md:!text-[clamp(60px,5.4vw,96px)] md:!leading-[0.8]
+                    flex items-end justify-center md:justify-start whitespace-nowrap overflow-visible
+                    h-[0.9em] md:h-[0.8em] m-0
+                    [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]"
                 >
-                  <span
-                    className="block font-serif font-light text-[#750000]
-                      !text-[24px] sm:!text-[28px] !leading-[0.95]
-                      md:!text-[clamp(2.2rem,4vw,3.6rem)] md:!leading-[0.6]"
-                  >
-                    The{" "}
-                    <span
-                      className="font-script font-medium tracking-[0.02em]
-                        !text-[1.7em] sm:!text-[1.75em]
-                        md:!text-[1.85em]"
-                    >
-                      process
-                    </span>
+                  The
+                  <span className="w-[0.55em] shrink-0" aria-hidden="true" />
+                  <span className="inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#750000] font-normal overflow-visible relative z-[2]">
+                    process
                   </span>
                 </h2>
               </motion.div>

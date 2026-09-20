@@ -39,3 +39,15 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
+
+/*
+  Parfumerie is cursive: default font metrics leave unused space above
+  and below the letterforms, which inflates line boxes and pushes
+  neighboring text away. Trim the layout box so the curves overlap
+  instead of adding gap. Glyphs still paint outside the box.
+*/
+.font-script {
+  overflow: visible;
+  line-height: 0.5;
+  text-box: trim-both cap alphabetic;
+}

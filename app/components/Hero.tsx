@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import {Navigation} from "./Navigation";
 
 // -------------------------------------------------------------
 // Reduced-motion hook
@@ -18,188 +19,6 @@ const usePrefersReducedMotion = () => {
   }, []);
 
   return prefersReduced;
-};
-
-// Navigation items
-const navigationItems = [
-  { label: "HOME", href: "/" },
-  { label: "HOW IT WORKS", href: "/workwithme" },
-  { label: "WORK WITH ME", href: "/workwithme" },
-  { label: "RESOURCES", href: "#resources" },
-];
-
-// -------------------------------------------------------------
-// Nav Link
-// -------------------------------------------------------------
-const NavLink = ({ href, label }: { href: string; label: string }) => (
-  <a
-    href={href}
-    className="relative font-josefin text-[clamp(0.5rem,1.2vw,1rem)] font-normal text-[#f7f3ee] whitespace-nowrap transition-all duration-300 ease-in-out hover:opacity-80 hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f7f3ee] after:content-[''] after:absolute after:left-0 after:bottom-[-2px] after:w-0 after:h-[1px] sm:after:h-[1.5px] after:bg-[#f7f3ee] after:transition-all after:duration-300 hover:after:w-full [text-shadow:0_1px_3px_rgba(0,0,0,0.25)]"
-  >
-    {label}
-  </a>
-);
-
-// -------------------------------------------------------------
-// Mobile Hamburger Button
-// -------------------------------------------------------------
-const MobileMenuButton = ({
-  isOpen,
-  onClick,
-}: {
-  isOpen: boolean;
-  onClick: () => void;
-}) => (
-  <button
-    type="button"
-    onClick={onClick}
-    className="relative z-50 flex flex-col items-center justify-center w-11 h-11 -ml-1 rounded-sm bg-transparent focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f7f3ee] md:hidden"
-    aria-label={isOpen ? "Close menu" : "Open menu"}
-    aria-expanded={isOpen}
-    aria-controls="mobile-menu"
-  >
-    <span
-      className={`block h-0.5 w-6 bg-[#f7f3ee] transition-transform duration-300 ease-in-out ${
-        isOpen ? "rotate-45 translate-y-1.5" : ""
-      }`}
-    />
-    <span
-      className={`block h-0.5 w-6 bg-[#f7f3ee] transition-opacity duration-300 ease-in-out my-1 ${
-        isOpen ? "opacity-0" : ""
-      }`}
-    />
-    <span
-      className={`block h-0.5 w-6 bg-[#f7f3ee] transition-transform duration-300 ease-in-out ${
-        isOpen ? "-rotate-45 -translate-y-1.5" : ""
-      }`}
-    />
-  </button>
-);
-
-// -------------------------------------------------------------
-// Navigation
-// -------------------------------------------------------------
-export const Navigation = (): React.ReactElement => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const closeMenu = () => setIsMobileMenuOpen(false);
-
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-    if (!isMobileMenuOpen) return;
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-    };
-  }, [isMobileMenuOpen]);
-
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") closeMenu();
-    };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, []);
-
-  return (
-    <>
-      {isMobileMenuOpen && (
-        <div
-          id="mobile-menu"
-          className="hero-mobile-menu-enter fixed inset-0 z-40 bg-[#750100]/95 backdrop-blur-sm md:hidden overflow-y-auto overscroll-contain"
-          onClick={closeMenu}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Mobile navigation menu"
-        >
-          <div
-            className="flex min-h-full flex-col items-center justify-center gap-8 px-6"
-            style={{
-              paddingTop: "calc(5rem + env(safe-area-inset-top))",
-              paddingBottom: "calc(2rem + env(safe-area-inset-bottom))",
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {navigationItems.map((item, index) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="hero-mobile-menu-link font-josefin text-2xl font-normal text-[#f7f3ee] transition-all duration-300 hover:opacity-80 hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f7f3ee] py-2"
-                style={{ animationDelay: `${100 + index * 70}ms` }}
-                onClick={closeMenu}
-              >
-                {item.label}
-              </a>
-            ))}
-
-            <button
-              type="button"
-              onClick={closeMenu}
-              className="hero-mobile-menu-link mt-4 font-josefin text-xs uppercase tracking-[0.2em] text-[#f7f3ee]/80 underline underline-offset-4 hover:text-[#f7f3ee] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f7f3ee] py-2 px-4"
-              style={{ animationDelay: `${100 + navigationItems.length * 70}ms` }}
-              aria-label="Close menu"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
-
-      <nav
-        className="hero-nav-enter fixed md:absolute left-0 right-0 z-50 bg-[#750100]/90 backdrop-blur-sm shadow-lg
-          top-0 md:bottom-0 md:top-auto
-          md:bg-[#750100]/90"
-        style={{ paddingTop: "env(safe-area-inset-top)" }}
-        aria-label="Primary navigation"
-      >
-        <div className="max-w-[1120px] mx-auto min-h-[48px] h-[48px] sm:h-[52px] md:h-[52px] lg:h-[56px] px-3 sm:px-4 lg:px-8 xl:px-12">
-          <div className="flex items-center justify-between h-full gap-2 sm:gap-3 md:gap-4">
-            <div className="md:hidden">
-              <MobileMenuButton
-                isOpen={isMobileMenuOpen}
-                onClick={() => setIsMobileMenuOpen((v) => !v)}
-              />
-            </div>
-
-            <div className="hidden md:flex items-center gap-4 sm:gap-6 md:gap-10 lg:gap-14 xl:gap-18">
-              {navigationItems.slice(0, 2).map((item, index) => (
-                <span
-                  key={item.label}
-                  className="hero-nav-item"
-                  style={{ animationDelay: `${800 + index * 90}ms` }}
-                >
-                  <NavLink href={item.href} label={item.label} />
-                </span>
-              ))}
-            </div>
-
-            <div className="hidden md:block flex-1 min-w-0"></div>
-
-            <div className="hidden md:flex items-center gap-4 sm:gap-6 md:gap-10 lg:gap-14 xl:gap-18">
-              {navigationItems.slice(2).map((item, index) => (
-                <span
-                  key={item.label}
-                  className="hero-nav-item"
-                  style={{ animationDelay: `${800 + (index + 2) * 90}ms` }}
-                >
-                  <NavLink href={item.href} label={item.label} />
-                </span>
-              ))}
-            </div>
-
-            <span className="hero-mobile-brand md:hidden font-josefin text-xs font-light text-[#f7f3ee] tracking-[0.2em] uppercase">
-              FRANCESCA
-            </span>
-
-            <div className="md:hidden w-11" aria-hidden="true"></div>
-          </div>
-        </div>
-      </nav>
-    </>
-  );
 };
 
 // -------------------------------------------------------------
@@ -250,30 +69,154 @@ const Word = ({
 
 // -------------------------------------------------------------
 // Hero Background Video
-// Plays through once, holds on last frame.
-// Signals `onReady` once the browser can actually paint frames.
+// Forward: native play(). Reverse: rAF stepping with seek-chaining
+// so we don't skip frames. Loops forever.
+// Signals `onReady` once the browser can paint the first frame.
 // -------------------------------------------------------------
 const HeroBackgroundVideo = ({ onReady }: { onReady: () => void }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
   const hasSignaledRef = useRef(false);
+  const rafRef = useRef<number | null>(null);
+  const reverseActiveRef = useRef(false);
+  const pendingSeekRef = useRef(false);
+  const reverseTargetRef = useRef(0);
 
-  // Wrap the signal so it only ever fires once per mount, no matter
-  // how many events race to call it.
   const signalReady = () => {
     if (hasSignaledRef.current) return;
     hasSignaledRef.current = true;
     onReady();
   };
 
+  const stopRaf = () => {
+    if (rafRef.current != null) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
+  };
+
+  // Native forward playback.
+  const playForward = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    reverseActiveRef.current = false;
+    pendingSeekRef.current = false;
+    stopRaf();
+    video.playbackRate = 1;
+    if (
+      Number.isFinite(video.duration) &&
+      video.currentTime >= video.duration - 0.05
+    ) {
+      video.currentTime = 0;
+    }
+    const p = video.play();
+    if (p && typeof p.catch === "function") {
+      p.catch(() => {
+        // Autoplay blocked — start reverse from current position.
+        startReverse(video.currentTime);
+      });
+    }
+  };
+
+  // Reverse playback via seek-chaining.
+  // We step currentTime backwards in small increments, but only
+  // issue the next seek after the previous one has settled
+  // (via the `seeked` event), so the browser actually decodes and
+  // paints every frame instead of snapping to keyframes.
+  const startReverse = (fromTime?: number) => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    reverseActiveRef.current = true;
+    video.pause();
+
+    const duration = video.duration;
+    if (!Number.isFinite(duration) || duration <= 0) {
+      // Can't reverse without a duration — just restart forward.
+      playForward();
+      return;
+    }
+
+    // Frame step: ~30fps equivalent. Smaller = smoother but more seeks.
+    const FRAME_STEP = 1 / 30;
+
+    // Start from the end if we weren't given a position.
+    if (fromTime == null || fromTime >= duration) {
+      try {
+        video.currentTime = Math.max(0, duration - 0.001);
+      } catch {
+        /* ignore */
+      }
+    }
+
+    reverseTargetRef.current = Math.max(
+      0,
+      (fromTime != null ? fromTime : duration) - FRAME_STEP
+    );
+
+    const issueNextSeek = () => {
+      const v = videoRef.current;
+      if (!v || !reverseActiveRef.current) return;
+
+      const target = reverseTargetRef.current;
+
+      if (target <= 0) {
+        // Reached the start — loop back to forward.
+        try {
+          v.currentTime = 0;
+        } catch {
+          /* ignore */
+        }
+        reverseActiveRef.current = false;
+        playForward();
+        return;
+      }
+
+      pendingSeekRef.current = true;
+      try {
+        v.currentTime = target;
+      } catch {
+        // If seeking fails, bail out and restart forward.
+        reverseActiveRef.current = false;
+        playForward();
+      }
+    };
+
+    // Chain on `seeked` — only step again once the browser confirms
+    // the previous seek has been rendered.
+    const onSeeked = () => {
+      if (!reverseActiveRef.current) return;
+      pendingSeekRef.current = false;
+      // Schedule the next step on the next animation frame so we
+      // give the compositor a chance to present the frame.
+      rafRef.current = requestAnimationFrame(() => {
+        const v = videoRef.current;
+        if (!v || !reverseActiveRef.current) return;
+        reverseTargetRef.current = Math.max(0, v.currentTime - FRAME_STEP);
+        issueNextSeek();
+      });
+    };
+
+    video.addEventListener("seeked", onSeeked);
+
+    // Kick off the first step.
+    issueNextSeek();
+
+    // Store the cleanup on the ref's closure by returning it up
+    // through the effect teardown. We stash it on a ref so the
+    // unmount cleanup can reach it.
+    cleanupSeekedRef.current = () => {
+      video.removeEventListener("seeked", onSeeked);
+    };
+  };
+
+  const cleanupSeekedRef = useRef<(() => void) | null>(null);
+
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
     if (prefersReducedMotion) {
-      // Reduced motion: no playback, so "ready" is metadata + seek
-      // to the final frame. Still must signal, or the hero stays
-      // hidden forever for these users.
       const seekToEnd = () => {
         if (Number.isFinite(video.duration) && video.duration > 0) {
           video.currentTime = Math.max(0, video.duration - 0.001);
@@ -286,9 +229,7 @@ const HeroBackgroundVideo = ({ onReady }: { onReady: () => void }) => {
         seekToEnd();
         return;
       }
-
       video.addEventListener("loadedmetadata", seekToEnd, { once: true });
-      // Safety net in case metadata never arrives.
       const rmTimeout = window.setTimeout(signalReady, 4000);
       video.addEventListener("error", signalReady, { once: true });
 
@@ -299,48 +240,52 @@ const HeroBackgroundVideo = ({ onReady }: { onReady: () => void }) => {
       };
     }
 
-    // Normal path: wait until the browser can actually render frames.
-    if (video.readyState >= 3) {
+    const start = () => {
       signalReady();
-      return;
+      playForward();
+    };
+
+    const handleEnded = () => {
+      startReverse();
+    };
+
+    video.addEventListener("ended", handleEnded);
+
+    if (video.readyState >= 3) {
+      start();
+      return () => {
+        video.removeEventListener("ended", handleEnded);
+        reverseActiveRef.current = false;
+        stopRaf();
+        cleanupSeekedRef.current?.();
+      };
     }
 
-    video.addEventListener("canplay", signalReady, { once: true });
+    video.addEventListener("canplay", start, { once: true });
 
-    // Safety net: if the video stalls or errors, never trap the user
-    // on a blank screen forever.
     const timeout = window.setTimeout(signalReady, 4000);
     video.addEventListener("error", signalReady, { once: true });
 
     return () => {
-      video.removeEventListener("canplay", signalReady);
+      video.removeEventListener("canplay", start);
+      video.removeEventListener("ended", handleEnded);
       video.removeEventListener("error", signalReady);
       window.clearTimeout(timeout);
+      reverseActiveRef.current = false;
+      stopRaf();
+      cleanupSeekedRef.current?.();
     };
-  }, [prefersReducedMotion, onReady]);
-
-  const handleEnded = () => {
-    const video = videoRef.current;
-    if (!video) return;
-    // Some browsers reset to the first frame on 'ended'.
-    // Nudging currentTime to (duration - tiny epsilon) keeps the
-    // last frame rendered.
-    if (Number.isFinite(video.duration) && video.duration > 0) {
-      video.currentTime = Math.max(0, video.duration - 0.001);
-    }
-    video.pause();
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prefersReducedMotion]);
 
   return (
     <div className="absolute inset-0 z-0">
       <video
         ref={videoRef}
         className="h-full w-full object-cover object-center"
-        autoPlay={!prefersReducedMotion}
         muted
         playsInline
         preload="auto"
-        onEnded={handleEnded}
         aria-hidden="true"
       >
         <source src="/Hero/herobg4.mp4" type="video/mp4" />
@@ -377,34 +322,42 @@ export default function Hero() {
           >
             <h1
               id="homecoming-heading"
-              className="font-serif font-light leading-[0.85] md:leading-[0.7] text-[#750000] [text-wrap:balance] tracking-normal [font-stretch:extra-condensed] [transform:scaleX(1.00)]"
+              className="font-serif font-light leading-[0.85] md:leading-[0.7] text-[#750000] tracking-normal [font-stretch:extra-condensed] [transform:scaleX(1.00)] [text-wrap:nowrap] flex flex-col gap-[0.22em] md:gap-[0.28em] text-[clamp(1.75rem,7.5vw,4.2rem)] md:text-[clamp(1.5rem,4.2vw,4.2rem)]"
               style={{
                 textShadow:
                   "0 2px 4px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2)",
               }}
             >
-              <span className="block text-[clamp(1.75rem,7.5vw,4.2rem)] md:text-[clamp(1.5rem,4.2vw,4.2rem)] -mt-1 md:-mt-3">
-                <Word delay={0} variant="script" className="font-script text-[clamp(1.8em,2.0em,2.0em)] leading-none pr-2 md:pr-3">
+              <span className="mt-12 hero-line flex items-end justify-center whitespace-nowrap overflow-visible">
+                <Word delay={0} variant="script" className="font-script text-[clamp(1.8em,2.0em,2.0em)] pr-2 md:pr-3">
                   A
                 </Word>
-                <Word delay={80}>t</Word>{" "}
-                <Word delay={160}>some</Word>{" "}
-                <Word delay={240}>point,</Word>{" "}
-                <Word delay={330}>the</Word>{" "}
+                <Word delay={80}>t</Word>
+                <span className="w-[0.28em] shrink-0" aria-hidden="true" />
+                <Word delay={160}>some</Word>
+                <span className="w-[0.28em] shrink-0" aria-hidden="true" />
+                <Word delay={240}>point,</Word>
+                <span className="w-[0.28em] shrink-0" aria-hidden="true" />
+                <Word delay={330}>the</Word>
+                <span className="w-[0.28em] shrink-0" aria-hidden="true" />
                 <Word delay={420}>life</Word>
               </span>
 
-              <span className="block text-[clamp(1.75rem,7.5vw,4.2rem)] md:text-[clamp(1.5rem,4.2vw,4.2rem)] -mt-1 md:-mt-3">
-                <Word delay={520}>you</Word>{" "}
-                <Word delay={600}>built</Word>{" "}
-                <Word delay={680}>stops</Word>{" "}
+              <span className="hero-line flex items-end justify-center whitespace-nowrap overflow-visible">
+                <Word delay={520}>you</Word>
+                <span className="w-[0.28em] shrink-0" aria-hidden="true" />
+                <Word delay={600}>built</Word>
+                <span className="w-[0.28em] shrink-0" aria-hidden="true" />
+                <Word delay={680}>stops</Word>
+                <span className="w-[0.28em] shrink-0" aria-hidden="true" />
                 <Word delay={770}>feeling</Word>
               </span>
 
-              <span className="block text-[clamp(1.75rem,7.5vw,4.2rem)] md:text-[clamp(1.5rem,4.2vw,4.2rem)] -mt-5 md:-mt-8">
-                <Word delay={880}>like</Word>{" "}
+              <span className="hero-line flex items-end justify-center whitespace-nowrap overflow-visible">
+                <Word delay={880}>like</Word>
+                <span className="w-[0.28em] shrink-0" aria-hidden="true" />
                 <span className="hero-word-group" style={{ animationDelay: "980ms" }}>
-                  <Word delay={980} variant="script" className="font-script align-[0.05em] text-[clamp(0.8em,2.0em,2.0em)] leading-none">
+                  <Word delay={980} variant="script" className="font-script text-[clamp(0.8em,2.0em,2.0em)]">
                     y
                   </Word>
                   <Word delay={1060}>ours</Word>
@@ -412,7 +365,7 @@ export default function Hero() {
               </span>
             </h1>
 
-            <p className="hero-fade-up max-w-[36ch] sm:max-w-xl font-josefin text-[clamp(0.95rem,1.8vw,1.25rem)] text-[#2b1210]/80 sm:text-xl text-center tracking-normal px-1 sm:px-0 leading-relaxed">
+            <p className="mt-10 hero-fade-up max-w-[36ch] sm:max-w-xl font-josefin text-[clamp(0.95rem,1.8vw,1.25rem)] text-[#2b1210]/80 sm:text-xl text-center tracking-normal px-1 sm:px-0 leading-relaxed">
               Not because you chose wrong. You wanted it. You meant it. You
               just grew, and it didn&apos;t grow with you. Aren&apos;t you
               exhausted? I help women let go of what no longer fits, shed the
@@ -466,6 +419,22 @@ export default function Hero() {
           display: inline-block;
           will-change: transform, opacity, filter;
           opacity: 1;
+        }
+
+        .hero-section .hero-line {
+          overflow: visible;
+          height: 0.85em;
+          line-height: 0.85;
+        }
+        @media (min-width: 768px) {
+          .hero-section .hero-line {
+            height: 0.7em;
+            line-height: 0.7;
+          }
+        }
+
+        .hero-section .hero-word--script {
+          overflow: visible;
         }
 
         /* Serif words: rise from below with a soft blur-out. */
@@ -522,7 +491,9 @@ export default function Hero() {
 
         /* "yours" group — animate as one unit, no clip. */
         .hero-word-group {
-          display: inline-block;
+          display: inline-flex;
+          align-items: flex-end;
+          overflow: visible;
           opacity: 0;
           transform: translate3d(0, 0.85em, 0);
           filter: blur(3px);

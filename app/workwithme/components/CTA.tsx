@@ -196,7 +196,7 @@ export default function CTA() {
         variants={containerVariants}
         className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-8 lg:px-12 py-8 md:py-10 lg:py-8 min-h-[220px] md:min-h-[280px] lg:min-h-[325px] flex items-center"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-[48%_52%] gap-6 md:gap-8 lg:gap-12 w-full items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)_minmax(200px,280px)] gap-6 md:gap-8 lg:gap-10 w-full items-center">
           {/* LEFT COLUMN - Headline */}
           <motion.div
             variants={leftVariants}
@@ -204,20 +204,21 @@ export default function CTA() {
           >
             <h2
               className="font-serif font-light text-[#750000] tracking-[-0.02em] [font-stretch:extra-condensed]
-                !text-[26px] sm:!text-[30px] !leading-[1.05]
-                md:!text-[clamp(1.6rem,3.2vw,2.6rem)] md:!leading-[0.75]
-                lg:!text-[clamp(1.8rem,2.8vw,2.6rem)]"
+                !text-[30px] sm:!text-[35px] !leading-[0.9]
+                md:!text-[clamp(37.5px,3.375vw,60px)] md:!leading-[0.8]
+                flex flex-col items-center lg:items-start gap-[0.2em] md:gap-[0.24em]
+                m-0 w-full
+                [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]"
             >
-              <span className="block">
+              <span className="flex items-end justify-center lg:justify-start whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8]">
                 If you&apos;re still reading, you&apos;re
               </span>
-              <span className="block mt-1 md:mt-1 lg:mt-1 whitespace-nowrap max-md:whitespace-normal">
-                probably the{" "}
+              <span className="flex items-end justify-center lg:justify-start whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8]">
+                probably the
+                <span className="w-[0.28em] shrink-0" aria-hidden="true" />
                 <motion.span
                   variants={scriptVariants}
-                  className="cta-script inline-block font-script font-normal tracking-[0.02em] text-[#750000] align-middle -mt-3 md:-mt-4 lg:-mt-5
-                    !text-[2.2em] sm:!text-[2.4em]
-                    md:!text-[clamp(4.2rem,7.5vw,6.2rem)]"
+                  className="cta-script inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#750000] font-normal overflow-visible relative z-[2]"
                   style={{ transformOrigin: "50% 70%" }}
                 >
                   right person.
@@ -226,20 +227,22 @@ export default function CTA() {
             </h2>
           </motion.div>
 
-          {/* RIGHT COLUMN - Copy and Buttons */}
+          {/* MIDDLE COLUMN - Copy and Buttons */}
           <motion.div
             variants={rightVariants}
-            className="flex flex-col items-center lg:items-start text-center lg:text-left"
+            className="flex flex-col items-center lg:items-start text-center lg:text-left lg:pl-4 xl:pl-6"
           >
             <p
               className="font-josefin font-normal text-[#5A0A0A] max-w-[560px]
-                !text-[14px] sm:!text-[15px] !leading-[1.5]
-                md:!text-[clamp(1.2rem,2vw,1.55rem)] md:!leading-[1.6]
-                lg:!text-[clamp(1.3rem,1.6vw,1.65rem)]"
+                !text-[clamp(1.1875rem,2.25vw,1.5625rem)] sm:!text-[25px] !leading-[1.5]
+                md:!text-[clamp(20px,1.5625vw,25px)] md:!leading-[1.5]"
             >
-              Not quite ready? &nbsp;
-              <br className="hidden sm:block" />
-              Take the self-assessment <br className="md:hidden" />and join the list.
+              Not quite ready?
+              <br />
+              Take the self-assessment
+              <br className="md:hidden" />
+              <span className="hidden md:inline"> </span>
+              and join the list.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 mt-4 md:mt-5 lg:mt-6 max-md:w-full">
@@ -278,6 +281,21 @@ export default function CTA() {
               >
                 TAKE A QUIZ
               </motion.a>
+            </div>
+          </motion.div>
+
+          {/* RIGHT COLUMN - Placeholder image */}
+          <motion.div
+            variants={rightVariants}
+            className="flex justify-center lg:justify-end w-full"
+          >
+            <div
+              className="relative w-full max-w-[240px] sm:max-w-[260px] lg:max-w-none aspect-[4/5] rounded-lg overflow-hidden bg-[#750000]/15 border border-[#750000]/20"
+              aria-hidden="true"
+            >
+              <div className="absolute inset-0 flex items-center justify-center font-josefin uppercase tracking-[0.18em] text-[#750000]/45 !text-[11px] sm:!text-[12px]">
+                Image
+              </div>
             </div>
           </motion.div>
         </div>

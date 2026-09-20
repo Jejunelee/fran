@@ -4,7 +4,10 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 const bodyText =
-  "font-josefin !text-[16px] sm:!text-[17px] md:!text-[clamp(14px,1.2vw,18px)] lg:!text-[clamp(16px,1.3vw,20px)] font-normal !leading-[1.55] md:!leading-[1.7] lg:!leading-[1.8] tracking-[0.01em] text-[#5a0a0a] text-center md:text-left m-0 whitespace-normal break-words transition-all duration-700";
+  "font-josefin !text-[clamp(0.95rem,1.8vw,1.25rem)] sm:!text-xl md:!text-[clamp(16px,1.25vw,20px)] font-normal !leading-[1.5] tracking-[0.01em] text-[#5a0a0a] text-center md:text-left m-0 whitespace-normal break-words transition-all duration-700";
+
+const scriptWord =
+  "lion-script-inline inline-block font-script font-normal tracking-[0.01em] text-[#750000] !text-[2.15em] overflow-visible";
 
 export default function Lion() {
   const [isVisible, setIsVisible] = useState(false);
@@ -245,97 +248,47 @@ export default function Lion() {
             >
               <h2
                 className="
-                  font-serif
-                  font-light
-                  text-[#750000]
+                  font-serif font-light text-[#750000]
 
-                  /* MOBILE */
-                  !text-[30px]
-                  sm:!text-[34px]
-                  !leading-[0.78]
+                  !text-[24px]
+                  sm:!text-[28px]
+                  !leading-[0.9]
 
-                  /* DESKTOP - ORIGINAL */
-                  md:!text-[clamp(1.75rem,2.4vw,3.25rem)]
-                  md:!leading-[1.1]
+                  md:!text-[clamp(30px,2.7vw,48px)]
+                  md:!leading-[0.8]
 
                   tracking-[-0.02em]
                   [font-stretch:extra-condensed]
 
                   text-center
                   md:text-left
-
                   m-0
+
+                  flex flex-col items-center gap-[0.2em]
+                  md:block
                 "
               >
-                {/* ================= MOBILE ================= */}
-                <span className="block md:hidden">
-                  I don&rsquo;t give you more{" "}
-                  <span
-                    className="
-                      lion-script-inline
-                      inline-block
-                      font-script
-                      font-normal
-                      tracking-[0.02em]
-                      text-[#750000]
-                      !text-[1.7em]
-                      !leading-[0.6]
-                    "
-                  >
-                    information
-                  </span>
+                <span className="flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:hidden">
+                  I don&rsquo;t give you more
+                  <span className="w-[0.28em] shrink-0" aria-hidden="true" />
+                  <span className={scriptWord}>information</span>
                   .
                 </span>
 
-                <span className="block md:hidden -mt-1">
-                  You&rsquo;ve got{" "}
-                  <span
-                    className="
-                      lion-script-inline
-                      inline-block
-                      font-script
-                      font-normal
-                      tracking-[0.02em]
-                      text-[#750000]
-                      !text-[1.7em]
-                      !leading-[0.6]
-                    "
-                  >
-                    plenty
-                  </span>
+                <span className="flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:hidden">
+                  You&rsquo;ve got
+                  <span className="w-[0.28em] shrink-0" aria-hidden="true" />
+                  <span className={scriptWord}>plenty</span>
                   .
                 </span>
 
-                {/* ================= DESKTOP ================= */}
                 <span className="hidden md:inline">
-                  I don&rsquo;t give you more{" "}
-                  <span
-                    className="
-                      lion-script-inline
-                      inline-block
-                      font-script
-                      font-normal
-                      tracking-[0.02em]
-                      text-[#750000]
-                      text-[2em]
-                    "
-                  >
-                    information
-                  </span>
-                  . You&rsquo;ve got{" "}
-                  <span
-                    className="
-                      lion-script-inline
-                      inline-block
-                      font-script
-                      font-normal
-                      tracking-[0.02em]
-                      text-[#750000]
-                      text-[2em]
-                    "
-                  >
-                    plenty
-                  </span>
+                  I don&rsquo;t give you more
+                  <span className="inline-block w-[0.28em]" aria-hidden="true" />
+                  <span className={scriptWord}>information</span>
+                  . You&rsquo;ve got
+                  <span className="inline-block w-[0.28em]" aria-hidden="true" />
+                  <span className={scriptWord}>plenty</span>
                   .
                 </span>
               </h2>

@@ -3,8 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
 const francescaScriptClass =
-  "font-script leading-[0.5] inline-block tracking-[0.02em] text-[#750000] relative z-[2] font-normal [text-shadow:0_1px_2px_rgba(127,15,15,0.06)] " +
-  "!text-[2.6em] sm:!text-[3em] md:!text-[4.2em]";
+  "font-script !text-[5.05em] inline-block tracking-[0.01em] text-[#750000] relative z-[2] font-normal overflow-visible";
 
 const hiFrancescaCss = String.raw`
   /* ============ "Hi, I'm" — rises and de-blurs ============ */
@@ -28,24 +27,25 @@ const hiFrancescaCss = String.raw`
      to settle where the layout put it. */
   .hi-francesca-script {
     transform-origin: 50% 70%;
+    overflow: visible;
     opacity: 0;
-    transform: translate3d(0, calc(26px + var(--francesca-nudge, 0px)), 0) scale(0.82) rotate(-6deg);
+    transform: translate3d(0, 26px, 0) scale(0.82) rotate(-6deg);
     transition: opacity 1100ms cubic-bezier(0.34, 1.56, 0.64, 1) 280ms,
                 transform 1100ms cubic-bezier(0.34, 1.56, 0.64, 1) 280ms;
     will-change: transform, opacity;
   }
   .hi-francesca-section--visible .hi-francesca-script {
     opacity: 1;
-    transform: translate3d(0, var(--francesca-nudge, 0px), 0) scale(1) rotate(0deg);
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
   }
 
   .hi-francesca-section--visible .hi-francesca-script {
     animation: hiFrancescaBreath 6s ease-in-out 1.6s infinite;
   }
   @keyframes hiFrancescaBreath {
-    0%   { transform: translate3d(0, var(--francesca-nudge, 0px), 0) rotate(0deg) scale(1); }
-    50%  { transform: translate3d(0, calc(var(--francesca-nudge, 0px) - 3px), 0) rotate(-0.5deg) scale(1.008); }
-    100% { transform: translate3d(0, var(--francesca-nudge, 0px), 0) rotate(0deg) scale(1); }
+    0%   { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+    50%  { transform: translate3d(0, -3px, 0) rotate(-0.5deg) scale(1.008); }
+    100% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
   }
 
   /* ============ Paragraph — rises and de-blurs ============ */
@@ -112,7 +112,7 @@ export default function HiImFrancesca() {
   return (
     <section
       ref={sectionRef}
-      className={`hi-francesca-section relative w-full max-md:![min-height:0px] ${
+      className={`hi-francesca-section relative w-full max-md:!min-h-[500px] ${
         isVisible ? "hi-francesca-section--visible" : ""
       }`}
       style={{
@@ -128,32 +128,33 @@ export default function HiImFrancesca() {
       />
 
       {/* Content */}
-      <div className="relative z-10 flex min-h-[inherit] w-full items-center justify-center px-5 py-12 sm:px-6 max-md:py-10">
+      <div className="relative z-10 flex min-h-[inherit] w-full items-center justify-center px-5 py-12 sm:px-6 max-md:py-12">
         <div className="mx-auto flex w-full max-w-[1200px] min-w-0 flex-col items-center text-center">
           {/* Heading */}
           <h1
-            className="font-serif font-normal text-[#750000] tracking-[-0.03em]
-              !text-[28px] sm:!text-[32px] !leading-[0.95]
-              md:!text-[clamp(34px,4vw,62px)] md:!leading-[0.7]"
+            className="font-serif font-light text-[#750000] tracking-[-0.02em] [font-stretch:extra-condensed]
+              !text-[24px] sm:!text-[28px] !leading-[0.9]
+              md:!text-[clamp(30px,2.7vw,48px)] md:!leading-[0.8]
+              flex flex-col items-center gap-[0.2em] md:gap-[0.24em]
+              m-0
+              [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]"
           >
-            <span className="ml-5 hi-francesca-greeting block font-serif translate-y-[1.2em] max-md:translate-y-[1.3em]">
+            <span className="hi-francesca-greeting flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8]
+              !text-[30px] sm:!text-[35px] md:!text-[clamp(37.5px,3.375vw,60px)]
+              -translate-y-3 md:-translate-y-6">
               Hi, I&rsquo;m
             </span>
-            <span className="block max-md:mt-1">
-              <span
-                className={`${francescaScriptClass} hi-francesca-script max-md:!leading-[0.7]`}
-                style={{ ["--francesca-nudge" as any]: "0.1em" }}
-              >
+            <span className="flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8]">
+              <span className={`${francescaScriptClass} hi-francesca-script`}>
                 Francesca
               </span>
             </span>
           </h1>
 
-          {/* Paragraph */}
           <p
             className="hi-francesca-paragraph mx-auto mt-6 md:mt-[38px] w-full max-w-full sm:max-w-[700px] md:max-w-[1100px] font-josefin font-normal text-[#111111]
-              !text-[13px] sm:!text-[14px] !leading-[1.55]
-              md:!text-[clamp(15px,1.6vw,22px)] md:!leading-[1.5]"
+              !text-[clamp(1.14rem,2.16vw,1.5rem)] sm:!text-[24px] !leading-[1.5]
+              md:!text-[clamp(19.2px,1.5vw,24px)] md:!leading-[1.5]"
           >
             Most coaching pages open with credentials. I&rsquo;ll get to mine.
             But credentials aren&rsquo;t why anyone hires a coach. They hire a

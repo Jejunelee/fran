@@ -41,14 +41,17 @@ const SelfAssess: React.FC = () => {
       <div className="flex flex-col items-center text-center w-full md:hidden">
         {/* Heading — centered on mobile */}
         <h2
-          className={`mt-10 font-serif font-light text-[#750000] text-[clamp(1.75rem,5.625vw,5rem)] leading-[0.6] tracking-[-0.02em] [font-stretch:extra-condensed] text-center w-full m-0 transition-all duration-700 ${
+          className={`mt-10 font-serif font-light text-[#750000] !text-[24px] sm:!text-[28px] !leading-[0.9] tracking-[-0.02em] [font-stretch:extra-condensed] flex flex-col items-center gap-[0.2em] text-center w-full m-0 [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)] transition-all duration-700 ${
             isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
           }`}
           style={{ transitionDelay: isVisible ? '0.1s' : '0s' }}
         >
-          <span className="block text-center">Not sure if this is</span>
-          <span className="block text-center -mt-1">
-            <span className="font-script font-normal tracking-[0.02em] text-[#750000] text-[2em] inline-block translate-x-[0.15em]">
+          <span className="flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9]">
+            Not sure if this is
+          </span>
+          <span className="flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9]">
+            <span className="w-[0.28em] shrink-0" aria-hidden="true" />
+            <span className="font-script !text-[2.15em] inline-block tracking-[0.01em] text-[#750000] font-normal overflow-visible">
               your thing?
             </span>
           </span>
@@ -58,7 +61,7 @@ const SelfAssess: React.FC = () => {
         <div className="flex flex-col items-center text-center w-full mt-6">
           {/* Subheading — centered */}
           <h3
-            className={`font-serif font-light text-[#750000] text-[clamp(22px,6vw,30px)] leading-none m-0 [transform:scaleX(0.75)] [transform-origin:center] text-center transition-all duration-700 ${
+            className={`font-serif font-light text-[#750000] !text-[18px] sm:!text-[20px] leading-[1.1] tracking-[-0.02em] m-0 [font-stretch:extra-condensed] text-center transition-all duration-700 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
             style={{ transitionDelay: isVisible ? '0.3s' : '0s' }}
@@ -68,7 +71,7 @@ const SelfAssess: React.FC = () => {
 
           {/* Body copy — centered */}
           <p
-            className={`font-josefin text-[10px] leading-[1.5] tracking-[0.01em] text-[#5a0a0a] m-0 mt-2 max-w-[340px] text-center transition-all duration-700 ${
+            className={`font-josefin !text-[clamp(0.95rem,1.8vw,1.25rem)] sm:!text-xl !leading-[1.5] tracking-[0.01em] text-[#5a0a0a] m-0 mt-2 max-w-[340px] text-center transition-all duration-700 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
             style={{ transitionDelay: isVisible ? '0.35s' : '0s' }}
@@ -89,14 +92,23 @@ const SelfAssess: React.FC = () => {
       </div>
 
       {/* ==================== DESKTOP LAYOUT ==================== */}
-      <section className="hidden md:flex items-center justify-center w-full h-full md:-mr-8 lg:-mr-12">
+      <section className="hidden md:flex items-center justify-center w-full h-full md:-mr-8 lg:-mr-12 md:-translate-x-6 lg:-translate-x-10">
         <div className="flex flex-col items-start gap-0.5 md:items-start text-center md:text-left">
-          <h1 className="flex flex-col items-center md:items-start gap-0 m-0 leading-[0.5]">
-            <span className={`font-serif font-light text-[#750000] text-[clamp(28px,5vw,56px)] md:text-[clamp(40px,4.5vw,64px)] lg:text-[clamp(48px,5vw,80px)] leading-[1.1] inline-block [transform:scaleX(0.75)] [transform-origin:left_center] md:[transform-origin:left_center] transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`} style={{ transitionDelay: isVisible ? '0.1s' : '0s' }}>
+          <h1 className="flex flex-col items-center md:items-start gap-[0.2em] md:gap-[0.24em] m-0 font-serif font-light text-[#750000] md:!text-[clamp(52.5px,5vw,80px)] md:!leading-[0.8] tracking-[-0.02em] [font-stretch:extra-condensed] [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]">
+            <span
+              className={`flex items-end justify-center md:justify-start whitespace-nowrap overflow-visible h-[0.8em] leading-[0.8] transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}
+              style={{ transitionDelay: isVisible ? '0.1s' : '0s' }}
+            >
               Not sure if this is
             </span>
-            <span className={`font-script font-normal tracking-[0.04em] text-[#750000] text-[clamp(52px,12vw,100px)] md:text-[clamp(82px,10vw,140px)] lg:text-[clamp(98px,12vw,170px)] leading-[0.5] block -mt-4 md:-mt-10 lg:-mt-[2.5rem] transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`} style={{ transitionDelay: isVisible ? '0.2s' : '0s' }}>
-              your thing?
+            <span
+              className={`flex items-end justify-center md:justify-start whitespace-nowrap overflow-visible h-[0.8em] leading-[0.8] transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}
+              style={{ transitionDelay: isVisible ? '0.2s' : '0s' }}
+            >
+              <span className="w-[0.28em] shrink-0" aria-hidden="true" />
+              <span className="font-script !text-[2.15em] inline-block tracking-[0.01em] text-[#750000] font-normal overflow-visible">
+                your thing?
+              </span>
             </span>
           </h1>
         </div>
@@ -104,11 +116,11 @@ const SelfAssess: React.FC = () => {
 
       <section className="hidden md:flex flex-col justify-center w-full h-full md:-ml-8 lg:-ml-12">
         <div className="flex flex-col gap-3 max-w-[680px] items-center md:items-start text-center md:text-left">
-          <h2 className={`font-serif font-light text-[#750000] text-[clamp(22px,4vw,32px)] md:text-[clamp(24px,2.5vw,38px)] lg:text-[clamp(28px,3vw,48px)] leading-[1.1] m-0 inline-block [transform:scaleX(0.75)] [transform-origin:left_center] md:[transform-origin:left_center] transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`} style={{ transitionDelay: isVisible ? '0.1s' : '0s' }}>
+          <h2 className={`font-serif font-light text-[#750000] md:!text-[clamp(30px,2.7vw,48px)] md:!leading-[0.8] tracking-[-0.02em] m-0 [font-stretch:extra-condensed] [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)] transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`} style={{ transitionDelay: isVisible ? '0.1s' : '0s' }}>
             Find out in 2 minutes
           </h2>
 
-          <p className={`font-josefin text-[clamp(14px,1.2vw,16px)] md:text-[clamp(14px,1.2vw,18px)] lg:text-[clamp(16px,1.3vw,20px)] font-normal leading-[1.7] md:leading-[1.8] tracking-[0.01em] text-[#5a0a0a] m-0 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: isVisible ? '0.2s' : '0s' }}>
+          <p className={`font-josefin md:!text-[clamp(16px,1.25vw,20px)] font-normal !leading-[1.5] tracking-[0.01em] text-[#5a0a0a] m-0 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: isVisible ? '0.2s' : '0s' }}>
             <span className="hidden md:inline">
               Here are twelve questions. They show you which of four patterns you&apos;re most stuck in, and where the work actually starts for you. You get your result the second you finish, plus a breakdown that&apos;s specific to you.
             </span>

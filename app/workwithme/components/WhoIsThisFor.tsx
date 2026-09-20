@@ -65,14 +65,14 @@ const WhoIsThisFor = () => {
   //  - clamp() appears ONLY inside md:, never in the base
   const titleClass = [
     "font-josefin font-semibold text-[#F8F2E7]",
-    "!text-[15px] sm:!text-[16px] !leading-[1.3]",
-    "md:!text-[clamp(1rem,1.1vw,1.2rem)] md:!leading-[1.3]",
+    "!text-[18px] sm:!text-[20px] !leading-[1.3]",
+    "md:!text-[clamp(18px,1.5vw,22px)] md:!leading-[1.3]",
   ].join(" ");
 
   const descClass = [
     "font-josefin font-normal text-[#F8F2E7]/90 mt-1",
-    "!text-[12px] sm:!text-[13px] !leading-[1.5]",
-    "md:!text-[clamp(0.9rem,1vw,1.05rem)] md:!leading-[1.4]",
+    "!text-[clamp(0.95rem,1.8vw,1.25rem)] sm:!text-xl !leading-[1.5]",
+    "md:!text-[clamp(16px,1.25vw,20px)] md:!leading-[1.5]",
   ].join(" ");
 
   return (
@@ -94,17 +94,19 @@ const WhoIsThisFor = () => {
         {/* Heading */}
         <div className="text-center mb-12 md:mb-14 lg:mb-16 max-md:mb-10">
           <h2
-            className="who-heading font-serif font-light text-[#F8F2E7] text-[clamp(3rem,6vw,4.5rem)] leading-[1.0] tracking-[-0.02em] [font-stretch:extra-condensed]
-            max-md:text-[clamp(2rem,9vw,3rem)]"
+            className="who-heading font-serif font-light text-[#F8F2E7]
+              !text-[48px] sm:!text-[56px] !leading-[0.9]
+              md:!text-[clamp(60px,5.4vw,96px)] md:!leading-[0.8]
+              tracking-[-0.02em] [font-stretch:extra-condensed]
+              flex items-end justify-center whitespace-nowrap overflow-visible
+              h-[0.9em] md:h-[0.8em]
+              [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]
+              m-0"
           >
-            <span
-              className="who-heading-script inline-block font-script font-normal tracking-[0.02em] text-[#F8F2E7] text-[1.6em]
-              max-md:text-[1.5em]"
-            >
+            <span className="who-heading-script inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#F8F2E7] font-normal overflow-visible relative z-[2]">
               W
             </span>
             <span className="font-serif font-light tracking-[-0.02em] [font-stretch:extra-condensed]">
-              {" "}
               ho this is for
             </span>
           </h2>
@@ -193,6 +195,7 @@ const WhoIsThisFor = () => {
         /* The script "W" gently settles in after the heading line. */
         .who-heading-script {
           transform-origin: 50% 70%;
+          overflow: visible;
           opacity: 0;
           transform: translate3d(0, 14px, 0) rotate(-6deg) scale(0.85);
           transition: opacity 900ms cubic-bezier(0.34, 1.56, 0.64, 1) 260ms,

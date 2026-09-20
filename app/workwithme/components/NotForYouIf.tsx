@@ -43,19 +43,24 @@ const NotForYouIf = () => {
       }}
     >
       <div className="max-w-5xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-16 lg:gap-x-20 xl:gap-x-24 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-16 lg:gap-x-20 xl:gap-x-24 items-start">
           {/* Left Column - Heading */}
           <div className="mb-8 lg:mb-0 max-md:mb-6">
-            <h2 className="font-serif font-light text-[#7D0808] text-[clamp(2.75rem,5.625vw,5rem)] leading-[0.95] lg:leading-[1.0] tracking-[-0.02em] [font-stretch:extra-condensed]
-              max-md:text-[clamp(2rem,9vw,3rem)] max-md:leading-[1]">
-              <span className="not-for-you-line block">
-                This is{" "}
-                <span className="not-for-you-script inline-block font-script font-normal tracking-[0.02em] text-[#7D0808] text-[2em]
-                  max-md:text-[1.8em]">
+            <h2 className="font-serif font-light text-[#7D0808]
+              !text-[48px] sm:!text-[56px] !leading-[0.9]
+              md:!text-[clamp(60px,5.4vw,96px)] md:!leading-[0.8]
+              tracking-[-0.02em] [font-stretch:extra-condensed]
+              flex flex-col items-start gap-[0.2em] md:gap-[0.24em]
+              m-0
+              [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]">
+              <span className="not-for-you-line flex items-end justify-start whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8]">
+                This is
+                <span className="w-[0.28em] shrink-0" aria-hidden="true" />
+                <span className="not-for-you-script inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#7D0808] font-normal overflow-visible relative z-[2]">
                   not
                 </span>
               </span>
-              <span className="not-for-you-line block -mt-1 md:-mt-2 lg:-mt-3">
+              <span className="not-for-you-line flex items-end justify-start whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8]">
                 for you if:
               </span>
             </h2>
@@ -67,11 +72,12 @@ const NotForYouIf = () => {
               {bulletPoints.map((point, index) => (
                 <li
                   key={index}
-                  className="not-for-you-item font-josefin text-[#1A1A1A] text-[clamp(1rem,1.2vw,1.35rem)] font-medium leading-[1.7] tracking-[0.01em] flex items-start gap-3
-                    max-md:leading-[1.6]"
+                  className="not-for-you-item font-josefin text-[#7D0808] font-medium tracking-[0.01em] flex items-start gap-3
+                    !text-[clamp(1.05rem,2vw,1.35rem)] sm:!text-[22px] !leading-[1.5]
+                    md:!text-[clamp(18px,1.4vw,22px)]"
                   style={{ animationDelay: `${index * 120}ms` }}
                 >
-                  <span className="not-for-you-bullet text-[#000000] text-xl sm:text-2xl flex-shrink-0 -mt-0.5">
+                  <span className="not-for-you-bullet text-[#7D0808] text-xl sm:text-2xl flex-shrink-0 -mt-0.5">
                     •
                   </span>
                   <span>{point}</span>
@@ -108,6 +114,7 @@ const NotForYouIf = () => {
         /* Script "not" — elastic overshoot, pivot near baseline. */
         .not-for-you-script {
           transform-origin: 50% 70%;
+          overflow: visible;
           opacity: 0;
           transform: translate3d(0, 18px, 0) scale(0.82) rotate(-6deg);
           transition: opacity 1000ms cubic-bezier(0.34, 1.56, 0.64, 1) 380ms,

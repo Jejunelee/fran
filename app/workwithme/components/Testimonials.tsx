@@ -30,6 +30,7 @@ const testimonialsCss = String.raw`
   /* Script clients — elastic settle. transform-origin near baseline. No clip-path. */
   .testimonials-script {
     transform-origin: 50% 70%;
+    overflow: visible;
     opacity: 0;
     transform: translate3d(0, 18px, 0) scale(0.82) rotate(-6deg);
     animation: testimonialsScript 1000ms cubic-bezier(0.34, 1.56, 0.64, 1) 320ms both;
@@ -139,15 +140,17 @@ export default function Testimonials() {
   ];
 
   const desktopTextClass =
-    "font-josefin font-medium leading-[1.5] tracking-[0.01em] text-[#5a0a0a] m-0 text-left " +
-    "!text-[clamp(0.95rem,1vw,1.15rem)]";
+    "font-josefin font-medium tracking-[0.01em] text-[#5a0a0a] m-0 text-left " +
+    "!text-[clamp(0.95rem,1.8vw,1.25rem)] sm:!text-xl !leading-[1.5] " +
+    "md:!text-[clamp(16px,1.25vw,20px)] md:!leading-[1.5]";
 
   const desktopAuthorClass =
-    "font-serif font-medium leading-[1.3] tracking-[0.02em] text-[#750000] mt-3 md:mt-4 lg:mt-5 m-0 text-left " +
-    "!text-[clamp(2.4rem,2.6vw,3rem)]";
+    "font-serif font-medium tracking-[-0.02em] [font-stretch:extra-condensed] text-[#750000] mt-3 md:mt-4 lg:mt-5 m-0 text-left " +
+    "!text-[24px] sm:!text-[28px] !leading-[1.3] " +
+    "md:!text-[clamp(28px,2.4vw,40px)] md:!leading-[1.2]";
 
   return (
-    <section className="testimonials-section relative w-full overflow-hidden py-8 md:py-10 lg:py-12">
+    <section className="testimonials-section relative w-full overflow-x-clip py-8 md:py-10 lg:py-12">
       {/* Background */}
       <div
         className="testimonials-bg absolute inset-0 bg-cover bg-[#F6F2E7] bg-center bg-no-repeat"
@@ -158,21 +161,40 @@ export default function Testimonials() {
       <div className="relative z-10 max-w-[1504px] mx-auto px-6 md:px-12 lg:px-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-10 max-w-8xl mx-auto">
           {/* Heading — sizes reduced a bit. */}
-          <div className="md:col-span-3 mb-2 md:mb-3 lg:mb-4">
+          <div className="md:col-span-3 mb-2 md:mb-3 lg:mb-4 min-w-0">
             <h2
-              className="testimonials-heading font-serif font-light text-[#750000] tracking-[-0.02em] [font-stretch:extra-condensed] text-center md:text-left
-                !text-[27px] sm:!text-[34px] !leading-[0.95]
-                md:!text-[clamp(2.3rem,4.7vw,4.2rem)] md:!leading-[0.8]"
+              className="testimonials-heading font-serif font-light text-[#750000] tracking-[-0.02em] [font-stretch:extra-condensed]
+                !text-[36px] sm:!text-[42px] !leading-[0.9]
+                flex md:hidden flex-col items-center gap-[0.2em]
+                m-0 w-full
+                [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]"
             >
-              <span className="testimonials-heading-line block">
-                What{" "}
-                <span
-                  className="testimonials-script inline-block font-script font-normal tracking-[0.02em] text-[#750000]
-                    !text-[1.65em] sm:!text-[1.75em]
-                    md:!text-[1.85em]"
-                >
+              <span className="testimonials-heading-line flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9]">
+                What
+                <span className="w-[0.28em] shrink-0" aria-hidden="true" />
+                <span className="testimonials-script inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#750000] font-normal overflow-visible relative z-[2]">
                   clients
-                </span>{" "}
+                </span>
+              </span>
+              <span className="testimonials-heading-line flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9]">
+                actually say
+              </span>
+            </h2>
+
+            <h2
+              className="testimonials-heading font-serif font-light text-[#750000] tracking-[-0.02em] [font-stretch:extra-condensed] text-left
+                hidden md:flex items-end justify-start whitespace-nowrap overflow-visible
+                md:!text-[clamp(45px,4.05vw,72px)] md:!leading-[0.8]
+                h-[0.8em] m-0
+                [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]"
+            >
+              <span className="testimonials-heading-line flex items-end justify-start whitespace-nowrap overflow-visible">
+                What
+                <span className="w-[0.28em] shrink-0" aria-hidden="true" />
+                <span className="testimonials-script inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#750000] font-normal overflow-visible relative z-[2]">
+                  clients
+                </span>
+                <span className="w-[0.28em] shrink-0" aria-hidden="true" />
                 actually say
               </span>
             </h2>
@@ -228,18 +250,19 @@ export default function Testimonials() {
 
           {/* Mobile: 1 testimonial at a time */}
           <div className="flex flex-col items-center w-full md:hidden">
-            <div className="flex flex-col items-center w-full max-w-[600px] flex-1 justify-center min-h-[220px]">
+            <div className="flex flex-col items-center w-full max-w-[600px] flex-1 justify-center min-h-[220px] px-1 min-w-0">
               <p
                 key={`text-${currentIndex}`}
                 className="testimonials-mobile-text font-josefin font-medium tracking-[0.01em] text-[#5a0a0a] m-0 text-center
-                  !text-[14px] sm:!text-[15px] !leading-[1.6]"
+                  !text-[clamp(0.95rem,1.8vw,1.25rem)] sm:!text-xl !leading-[1.5]
+                  whitespace-normal break-words w-full"
               >
                 {testimonials[currentIndex].text}
               </p>
               <p
                 key={`author-${currentIndex}`}
-                className="testimonials-mobile-author font-serif font-medium tracking-[0.02em] text-[#750000] mt-3 m-0 text-center
-                  !text-[28px] sm:!text-[32px] !leading-[1.3]"
+                className="testimonials-mobile-author font-serif font-medium tracking-[-0.02em] [font-stretch:extra-condensed] text-[#750000] mt-3 m-0 text-center
+                  !text-[24px] sm:!text-[28px] !leading-[1.3]"
               >
                 {testimonials[currentIndex].author}
               </p>

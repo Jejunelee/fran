@@ -43,14 +43,14 @@ const faqData: FAQItem[] = [
 //  - `!` prefix forces each size
 const questionClass = [
   "font-josefin text-[#8B0000] font-normal",
-  "!text-[14px] sm:!text-[15px] !leading-[1.5]",
-  "md:!text-[clamp(1rem,1.1vw,1.125rem)] md:!leading-[1.6]",
+  "!text-[18px] sm:!text-[20px] !leading-[1.3]",
+  "md:!text-[clamp(18px,1.5vw,22px)] md:!leading-[1.3]",
 ].join(" ");
 
 const answerClass = [
   "font-josefin text-[#8B0000] font-light",
-  "!text-[13px] sm:!text-[14px] !leading-[1.6]",
-  "md:!text-[clamp(0.875rem,1vw,1rem)] md:!leading-[1.65]",
+  "!text-[clamp(0.95rem,1.8vw,1.25rem)] sm:!text-xl !leading-[1.5]",
+  "md:!text-[clamp(16px,1.25vw,20px)] md:!leading-[1.5]",
 ].join(" ");
 
 const faqCss = String.raw`
@@ -186,9 +186,11 @@ const FAQ = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header — mobile-first sizes, clamp only inside md: */}
         <h1
-          className="faq-heading font-serif text-[#8B0000] font-normal
-            !text-[32px] sm:!text-[40px] !leading-[1.1]
-            md:!text-[clamp(2.5rem,5vw,3.75rem)] md:!leading-[1.05]"
+          className="faq-heading font-serif font-light text-[#8B0000] tracking-[-0.02em] [font-stretch:extra-condensed]
+            !text-[48px] sm:!text-[56px] !leading-[0.9]
+            md:!text-[clamp(60px,5.4vw,96px)] md:!leading-[0.8]
+            m-0
+            [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]"
         >
           FAQs
         </h1>

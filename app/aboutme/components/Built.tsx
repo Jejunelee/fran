@@ -47,7 +47,7 @@ export default function TheLifeIBuilt() {
             className="life-built-book-img relative z-[1] h-auto w-full object-contain"
           />
           <img
-            src="/AboutMe/Built/picture.png"
+            src="/AboutMe/Built/pic.png"
             alt=""
             aria-hidden="true"
             className="life-built-picture absolute left-[30%] top-[18%] z-[2] w-[54%] h-auto object-contain"

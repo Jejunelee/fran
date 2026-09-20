@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
 const worksScriptClass =
-  "font-script leading-[0.5] mx-[0.04em] translate-y-[0.02em] inline-block tracking-[0.02em] text-[#8F4A4A] relative z-[2] font-normal";
+  "font-script !text-[2.15em] inline-block tracking-[0.01em] text-[#8F4A4A] relative z-[2] font-normal overflow-visible";
 
 export default function HowItWorks() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -62,34 +62,32 @@ export default function HowItWorks() {
                 Script "works" is scaled with `em` relative to the heading,
                 so it flows automatically. */}
             <h2
-              className="how-heading font-serif font-normal text-[#8F4A4A] leading-[0.95] tracking-[-0.04em]
-                !text-[30px]
-                sm:!text-[34px]
-                !leading-[0.95]
-                md:!text-[clamp(34px,3.7vw,58px)]
-                md:!leading-[0.92]"
+              className="how-heading font-serif font-light text-[#8F4A4A] tracking-[-0.02em] [font-stretch:extra-condensed]
+                !text-[36px] sm:!text-[42px] !leading-[0.9]
+                md:!text-[clamp(45px,4.05vw,72px)] md:!leading-[0.8]
+                flex flex-col items-start gap-[0.2em] md:gap-[0.24em]
+                m-0
+                [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]"
             >
-              <span className="how-heading-line block">
-                <span className="font-serif">How it </span>
-                <span className={`${worksScriptClass} how-heading-script !text-[2.4em]`}>
+              <span className="how-heading-line flex items-end justify-start whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8]">
+                <span className="font-serif">How it</span>
+                <span className="w-[0.28em] shrink-0" aria-hidden="true" />
+                <span className={`${worksScriptClass} how-heading-script`}>
                   works
                 </span>
               </span>
-              <span className="how-heading-line block font-serif">
+              <span className="how-heading-line flex items-end justify-start whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8] font-serif">
                 1:1 Coaching Container:
               </span>
-              <span className="how-heading-line block font-serif">
+              <span className="how-heading-line flex items-end justify-center md:justify-start whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8] font-serif font-semibold mt-9 md:mt-12 w-full">
                 &ldquo;Homecoming&rdquo;
               </span>
             </h2>
 
-            {/* Bullet list — sizes follow the Explain pattern:
-                base = mobile (plain px), md: = clamp() for desktop.
-                Mobile sizes reduced a lot vs. original. */}
             <ul
               className="mt-7 md:mt-[40px] list-disc list-outside pl-6 md:pl-8 space-y-6 md:space-y-[30px] font-josefin font-normal text-[#750100] tracking-[0.01em]
-                !text-[13px] sm:!text-[14px] !leading-[1.5]
-                md:!text-[clamp(16px,1.5vw,24px)] md:!leading-[1.15]"
+                !text-[clamp(0.95rem,1.8vw,1.25rem)] sm:!text-xl !leading-[1.5]
+                md:!text-[clamp(16px,1.25vw,20px)] md:!leading-[1.5]"
             >
               <li className="how-bullet" style={{ animationDelay: "360ms" }}>
                 Minimum 8 sessions, up to 12 weeks
@@ -117,22 +115,22 @@ export default function HowItWorks() {
             <div className="how-investment bg-[#750100] px-5 py-6 sm:px-8 sm:py-8 md:px-10 md:py-8 lg:px-11 lg:py-7">
               <p
                 className="font-josefin font-bold tracking-[0.01em] text-[#F8F1E7] uppercase
-                  !text-[14px] sm:!text-[15px]
-                  md:!text-[clamp(16px,1.3vw,20px)]"
+                  !text-[18px] sm:!text-[20px]
+                  md:!text-[clamp(18px,1.5vw,22px)]"
               >
                 Investment
               </p>
               <p
-                className="mt-2 font-serif font-normal text-[#F8F1E7] leading-[1.05]
+                className="mt-2 font-serif font-light text-[#F8F1E7] tracking-[-0.02em] [font-stretch:extra-condensed] leading-[1.05]
                   !text-[24px] sm:!text-[28px]
-                  md:!text-[clamp(28px,3vw,46px)]"
+                  md:!text-[clamp(30px,2.7vw,48px)]"
               >
                 USD $120 per session
               </p>
               <p
                 className="mt-3 font-josefin font-normal text-[#F8F1E7]
-                  !text-[13px] sm:!text-[14px] !leading-[1.5]
-                  md:!text-[clamp(15px,1.4vw,20px)] md:!leading-[1.35]"
+                  !text-[clamp(0.95rem,1.8vw,1.25rem)] sm:!text-xl !leading-[1.5]
+                  md:!text-[clamp(16px,1.25vw,20px)] md:!leading-[1.5]"
               >
                 8-session minimum, payable per session or as a full container.
               </p>
@@ -141,8 +139,8 @@ export default function HowItWorks() {
             {/* Right body paragraph — sizes follow the Explain pattern. */}
             <p
               className="how-right-copy mt-6 md:mt-[30px] font-josefin font-normal text-[#750100] tracking-[0.01em]
-                !text-[13px] sm:!text-[14px] !leading-[1.5]
-                md:!text-[clamp(16px,1.5vw,23px)] md:!leading-[1.15]"
+                !text-[clamp(0.95rem,1.8vw,1.25rem)] sm:!text-xl !leading-[1.5]
+                md:!text-[clamp(16px,1.25vw,20px)] md:!leading-[1.5]"
             >
               Eight sessions isn&rsquo;t arbitrary. Real pattern change takes
               time, and most of the meaningful shifts I see happen between
@@ -191,6 +189,7 @@ export default function HowItWorks() {
            stays aligned. NO clip-path. */
         .how-heading-script {
           transform-origin: 50% 70%;
+          overflow: visible;
           opacity: 0;
           transform: translate3d(0, 20px, 0) scale(0.82) rotate(-6deg);
           transition: opacity 1050ms cubic-bezier(0.34, 1.56, 0.64, 1) 420ms,

@@ -186,35 +186,35 @@ export default function Explain() {
           <motion.h1
             variants={itemVariants}
             className="
-              font-serif font-normal
+              font-serif font-light
 
-              /* MOBILE */
-              !text-[28px]
-              sm:!text-[32px]
-              !leading-[0.75]
+              /* MOBILE — a step under the home hero */
+              !text-[24px]
+              sm:!text-[28px]
+              !leading-[0.9]
 
-              /* DESKTOP - UNCHANGED */
-              md:!text-[clamp(26px,2.7vw,44px)]
-              md:!leading-[0.55]
+              /* DESKTOP — secondary to hero (~67px) */
+              md:!text-[clamp(30px,2.7vw,48px)]
+              md:!leading-[0.8]
 
-              tracking-[-0.03em]
+              tracking-[-0.02em]
               text-[#7f0f0f]
-              uppercase-none
               mb-4 sm:mb-3 md:mb-3
               relative
               flex flex-col
               items-center
+              gap-[0.2em]
+              md:gap-[0.24em]
               text-center
               w-full
               [font-stretch:extra-condensed]
-              [transform:scaleX(1.00)]
               [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]
             "
           >
             <motion.span
               custom={0}
               variants={headlineLineVariants}
-              className="block !leading-[0.75] md:!leading-[0.55] mt-[0.1em] first:mt-0"
+              className="explain-line flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8]"
             >
               You already know
             </motion.span>
@@ -222,18 +222,19 @@ export default function Explain() {
             <motion.span
               custom={1}
               variants={headlineLineVariants}
-              className="block !leading-[0.75] md:!leading-[0.55] mt-[0.05em]"
+              className="explain-line flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8]"
             >
-              what&apos;s not{" "}
+              what&apos;s not
+              <span className="w-[0.28em] shrink-0" aria-hidden="true" />
               <motion.span
                 variants={scriptWordVariants}
                 className="
                   inline-block
                   font-script
-                  !text-[2em]
-                  !leading-[0.6]
-                  tracking-[0.02em]
-                  text-[#6d0e0e]
+                  !text-[2.15em]
+                  tracking-[0.01em]
+                  text-[#7f0f0f]
+                  overflow-visible
                 "
                 style={{ transformOrigin: "50% 70%" }}
               >
@@ -244,7 +245,7 @@ export default function Explain() {
             <motion.span
               custom={2}
               variants={headlineLineVariants}
-              className="block !leading-[0.75] md:!leading-[0.55] mt-[0.3em]"
+              className="explain-line flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8]"
             >
               You&apos;ve known for years
             </motion.span>
@@ -252,18 +253,19 @@ export default function Explain() {
             <motion.span
               custom={3}
               variants={headlineLineVariants}
-              className="block !leading-[0.75] md:!leading-[0.55] mt-[0.01em]"
+              className="explain-line flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8]"
             >
-              That&apos;s the part that&apos;s{" "}
+              That&apos;s the part that&apos;s
+              <span className="w-[0.28em] shrink-0" aria-hidden="true" />
               <motion.span
                 variants={scriptWordVariants}
                 className="
                   inline-block
                   font-script
-                  !text-[2em]
-                  !leading-[0.6]
-                  tracking-[0.02em]
-                  text-[#6d0e0e]
+                  !text-[2.15em]
+                  tracking-[0.01em]
+                  text-[#7f0f0f]
+                  overflow-visible
                 "
                 style={{ transformOrigin: "50% 70%" }}
               >
@@ -278,13 +280,13 @@ export default function Explain() {
             className="
               font-josefin
 
-              /* MOBILE */
-              !text-[17px]
-              sm:!text-[18px]
+              /* MOBILE — match home hero subcopy */
+              !text-[clamp(0.95rem,1.8vw,1.25rem)]
+              sm:!text-xl
               !leading-[1.5]
 
               /* DESKTOP - UNCHANGED */
-              md:!text-[clamp(12px,0.9vw,15px)]
+              md:!text-[clamp(16px,1.25vw,20px)]
               md:!leading-[1.5]
 
               font-normal
@@ -386,16 +388,16 @@ export default function Explain() {
         <motion.h2
           variants={itemVariants}
           className="
-            font-serif font-normal
+            font-serif font-light
 
             /* MOBILE */
-            !text-[28px]
-            sm:!text-[32px]
-            !leading-[0.75]
+            !text-[24px]
+            sm:!text-[28px]
+            !leading-[0.9]
 
-            /* DESKTOP - UNCHANGED */
-            md:!text-[clamp(26px,2.2vw,38px)]
-            md:!leading-[0.55]
+            /* DESKTOP */
+            md:!text-[clamp(30px,2.7vw,48px)]
+            md:!leading-[0.8]
 
             tracking-[-0.02em]
             text-[#7f0f0f]
@@ -415,13 +417,13 @@ export default function Explain() {
           className="
             font-josefin
 
-            /* MOBILE */
-            !text-[17px]
-            sm:!text-[18px]
+            /* MOBILE — match home hero subcopy */
+            !text-[clamp(0.95rem,1.8vw,1.25rem)]
+            sm:!text-xl
             !leading-[1.5]
 
             /* DESKTOP - UNCHANGED */
-            md:!text-[clamp(12px,0.95vw,15px)]
+            md:!text-[clamp(16px,1.3vw,20px)]
             md:!leading-[1.5]
 
             font-normal
@@ -467,13 +469,13 @@ export default function Explain() {
 
                 font-josefin
 
-                /* MOBILE */
-                !text-[17px]
-                sm:!text-[18px]
+                /* MOBILE — match home hero subcopy */
+                !text-[clamp(0.95rem,1.8vw,1.25rem)]
+                sm:!text-xl
                 !leading-[1.5]
 
                 /* DESKTOP - UNCHANGED */
-                md:!text-[clamp(12px,0.9vw,15px)]
+                md:!text-[clamp(16px,1.25vw,20px)]
                 md:!leading-[1.4]
 
                 font-normal

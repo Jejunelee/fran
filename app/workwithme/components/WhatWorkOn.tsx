@@ -81,17 +81,14 @@ const WhatWorkOn = () => {
   // reads as a clear heading above the description.
   const topicTitleClass = [
     "font-josefin text-white font-normal",
-    "!text-[15px] sm:!text-[16px] !leading-[1.3]",
-    "md:!text-[clamp(1rem,1.2vw,1.15rem)] md:!leading-[1.15]",
+    "!text-[18px] sm:!text-[20px] !leading-[1.3]",
+    "md:!text-[clamp(18px,1.5vw,22px)] md:!leading-[1.3]",
   ].join(" ");
 
-  // Description: weight fixed (300 -> 400) and opacity restored
-  // (white/80 -> white) so the thin Josefin strokes stay legible
-  // against the burgundy background.
   const topicDescClass = [
     "font-josefin text-white font-normal mt-1",
-    "!text-[12px] sm:!text-[13px] !leading-[1.5]",
-    "md:!text-[clamp(0.85rem,1vw,0.95rem)] md:!leading-[1.15]",
+    "!text-[clamp(0.95rem,1.8vw,1.25rem)] sm:!text-xl !leading-[1.5]",
+    "md:!text-[clamp(16px,1.25vw,20px)] md:!leading-[1.5]",
   ].join(" ");
 
   return (
@@ -103,43 +100,62 @@ const WhatWorkOn = () => {
     >
       {/* White Header Area with Floral Background */}
       <div
-        className="w-full bg-cover bg-center bg-no-repeat flex flex-col items-center justify-center px-6 sm:px-10 md:px-16 lg:px-24"
+        className="w-full bg-cover bg-center bg-no-repeat flex flex-col items-center justify-center px-6 sm:px-10 md:px-16 lg:px-24 overflow-x-clip"
         style={{
           backgroundImage: "url('/WorkWithMe/WhatWorkOn/bg.png')",
           minHeight: "275px",
           height: "auto",
         }}
       >
-        <div className="max-w-4xl mx-auto text-center py-8 md:py-10 lg:py-12 max-md:py-7">
-          {/* Main Heading — sizes reduced a bit. */}
+        <div className="max-w-4xl mx-auto text-center py-8 md:py-10 lg:py-12 max-md:py-7 max-md:px-1 w-full min-w-0">
           <h2
             className="what-heading font-serif font-light text-[#5B0706] tracking-[-0.02em] [font-stretch:extra-condensed]
-              !text-[24px] sm:!text-[28px] !leading-[1.1]
-              md:!text-[clamp(2.1rem,4.6vw,3.4rem)] md:!leading-[1.0]"
+              !text-[40px] sm:!text-[47px] !leading-[0.9]
+              md:!text-[clamp(50px,4.5vw,80px)] md:!leading-[0.8]
+              flex md:hidden flex-col items-center gap-[0.2em]
+              m-0 w-full
+              [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]"
           >
-            What we&apos;ll{" "}
-            <span
-              className="what-heading-script inline-block font-script font-normal tracking-[0.02em] text-[#5B0706]
-                !text-[1.6em] sm:!text-[1.65em]
-                md:!text-[1.7em]"
-            >
-              actually
+            <span className="flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9]">
+              What we&apos;ll
             </span>
-            <span className="font-serif font-light tracking-[-0.02em] [font-stretch:extra-condensed]">
-              {" "}
+            <span className="flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9]">
+              <span className="what-heading-script inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#5B0706] font-normal overflow-visible relative z-[2]">
+                actually
+              </span>
+            </span>
+            <span className="flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9]">
               work on
             </span>
           </h2>
 
-          {/* Subtitle - Very Close to Heading */}
-          <div className="mt-1 md:mt-1.5">
+          <h2
+            className="what-heading font-serif font-light text-[#5B0706] tracking-[-0.02em] [font-stretch:extra-condensed]
+              hidden md:flex items-end justify-center whitespace-nowrap overflow-visible
+              md:!text-[clamp(50px,4.5vw,80px)] md:!leading-[0.8]
+              h-[0.8em] m-0
+              [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]"
+          >
+            What we&apos;ll
+            <span className="w-[0.28em] shrink-0" aria-hidden="true" />
+            <span className="what-heading-script inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#5B0706] font-normal overflow-visible relative z-[2]">
+              actually
+            </span>
+            <span className="w-[0.28em] shrink-0" aria-hidden="true" />
+            <span className="font-serif font-light tracking-[-0.02em] [font-stretch:extra-condensed]">
+              work on
+            </span>
+          </h2>
+
+          <div className="mt-4 md:mt-1.5 w-full min-w-0 px-1">
             <p
               className="what-subtitle font-josefin text-[#5B0706] font-normal
-                !text-[13px] sm:!text-[14px] !leading-[1.5]
-                md:!text-[clamp(0.9rem,1.1vw,1.05rem)] md:!leading-[1.3]"
+                !text-[clamp(1.6rem,3vw,2.1rem)] sm:!text-[34px] !leading-[1.5]
+                md:!text-[clamp(27px,2.1vw,34px)] md:!leading-[1.5]
+                whitespace-normal break-words max-w-[22ch] sm:max-w-none mx-auto"
             >
               Every container is different, because every person is.
-              <br className="hidden sm:block" />
+              <br />
               The themes that come up most:
             </p>
           </div>
@@ -227,6 +243,7 @@ const WhatWorkOn = () => {
            stays aligned. No clip-path. */
         .what-heading-script {
           transform-origin: 50% 70%;
+          overflow: visible;
           opacity: 0;
           transform: translate3d(0, 16px, 0) scale(0.82) rotate(-6deg);
           transition: opacity 1000ms cubic-bezier(0.34, 1.56, 0.64, 1) 320ms,
