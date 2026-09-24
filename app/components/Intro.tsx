@@ -42,7 +42,7 @@ export default function Intro() {
   return (
     <main
       ref={sectionRef}
-      className={`intro-panel cms-section grid grid-cols-1 md:grid-cols-[40%_60%] lg:grid-cols-[38%_62%] gap-6 md:gap-10 lg:gap-16 max-w-[1600px] min-h-[80vh] md:min-h-[70vh] mx-auto px-6 md:px-12 lg:px-16 py-8 md:py-10 lg:py-12 bg-cover bg-center bg-no-repeat shadow-[0_8px_32px_rgba(80,40,20,0.08)] items-center w-full ${
+      className={`intro-panel cms-section grid grid-cols-1 md:grid-cols-[40%_60%] lg:grid-cols-[38%_62%] gap-6 md:gap-10 lg:gap-16 min-h-[80vh] md:min-h-[70vh] mx-auto px-6 md:px-12 lg:px-16 xl:px-20 2xl:px-24 py-8 md:py-10 lg:py-12 bg-cover bg-center bg-no-repeat shadow-[0_8px_32px_rgba(80,40,20,0.08)] items-center w-full ${
         isVisible ? "intro-panel--visible" : ""
       }`}
       style={{
@@ -55,13 +55,13 @@ export default function Intro() {
           ========================================================= */}
 
       <section className="intro-image-section flex items-center justify-center w-full h-full order-1 md:order-none">
-        <div className="flex items-center justify-center w-full max-w-[200px] xs:max-w-[240px] sm:max-w-[280px] md:max-w-[380px] lg:max-w-[480px] max-h-[240px] xs:max-h-[280px] sm:max-h-[320px] md:max-h-[500px] lg:max-h-[600px]">
+        <div className="flex items-center justify-center w-full max-w-[200px] xs:max-w-[240px] sm:max-w-[280px] md:max-w-[380px] lg:max-w-[480px] xl:max-w-[560px] 2xl:max-w-[640px] max-h-[240px] xs:max-h-[280px] sm:max-h-[320px] md:max-h-[500px] lg:max-h-[600px] xl:max-h-[720px]">
           <CmsImage
             src={c.image}
             alt={c.imageAlt}
             width={400}
             height={488}
-            className="intro-image w-full h-auto max-h-[240px] xs:max-h-[280px] sm:max-h-[320px] md:max-h-[500px] lg:max-h-[600px] aspect-[0.82/1] object-contain block drop-shadow-[0_4px_16px_rgba(60,30,10,0.12)]"
+            className="intro-image w-full h-auto max-h-[240px] xs:max-h-[280px] sm:max-h-[320px] md:max-h-[500px] lg:max-h-[600px] xl:max-h-[720px] aspect-[0.82/1] object-contain block drop-shadow-[0_4px_16px_rgba(60,30,10,0.12)]"
             priority
           />
         </div>
@@ -72,7 +72,7 @@ export default function Intro() {
           ========================================================= */}
 
       <section className="flex flex-col justify-center w-full h-full order-2 md:order-none">
-        <div className="flex flex-col gap-3 xs:gap-4 md:gap-4 lg:gap-[1.2rem] max-w-full md:max-w-[520px] lg:max-w-[680px] items-center md:items-start">
+        <div className="flex flex-col gap-3 xs:gap-4 md:gap-4 lg:gap-[1.2rem] max-w-full md:max-w-none items-center md:items-start">
 
           {/* =====================================================
               HEADING

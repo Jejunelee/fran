@@ -210,9 +210,9 @@ export default function CTA() {
         initial="hidden"
         animate={isVisible ? "visible" : "hidden"}
         variants={containerVariants}
-        className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-8 lg:px-12 py-8 md:py-10 lg:py-8 min-h-[220px] md:min-h-[280px] lg:min-h-[325px] flex items-center"
+        className="relative z-10 w-full px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-24 py-8 md:py-10 lg:py-8 min-h-[220px] md:min-h-[280px] lg:min-h-[325px] flex items-center"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)_minmax(200px,280px)] gap-6 md:gap-8 lg:gap-10 w-full items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)_minmax(220px,22vw)] gap-6 md:gap-8 lg:gap-10 w-full items-center">
           {/* LEFT COLUMN - Headline */}
           <motion.div
             variants={leftVariants}

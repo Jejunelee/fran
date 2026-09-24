@@ -172,8 +172,8 @@ export default function Explain() {
       variants={containerVariants}
       className="
         cms-section
-        w-full max-w-[1504px] mx-auto
-        px-4 sm:px-6 md:px-8 lg:px-12
+        w-full
+        px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-24
         py-6 sm:py-8 md:py-8 lg:py-10
         grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]
         gap-8 sm:gap-10 md:gap-6 lg:gap-10

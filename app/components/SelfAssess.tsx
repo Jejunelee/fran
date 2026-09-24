@@ -46,8 +46,8 @@ const SelfAssess: React.FC = () => {
   return (
     <main
       ref={sectionRef}
-      className="cms-section relative max-w-[1600px] mx-auto w-full overflow-visible
-        grid grid-cols-1 md:grid-cols-2 min-h-[80dvh] px-6 md:px-12 lg:px-16 py-8 md:py-12 bg-cover bg-center bg-no-repeat shadow-[0_8px_32px_rgba(80,40,20,0.08)] items-center"
+      className="cms-section relative w-full overflow-visible
+        grid grid-cols-1 md:grid-cols-2 min-h-[80dvh] px-6 md:px-12 lg:px-16 xl:px-20 2xl:px-24 py-8 md:py-12 bg-cover bg-center bg-no-repeat shadow-[0_8px_32px_rgba(80,40,20,0.08)] items-center"
       style={{ ...cmsBg(c.background), ...cmsStyleVars(c.styles) }}
     >
       {/* ==================== MOBILE LAYOUT ==================== */}
@@ -129,7 +129,7 @@ const SelfAssess: React.FC = () => {
       </section>
 
       <section className="hidden md:flex flex-col justify-center w-full h-full md:-ml-8 lg:-ml-12">
-        <div className="flex flex-col gap-3 max-w-[680px] items-center md:items-start text-center md:text-left">
+        <div className="flex flex-col gap-3 max-w-[680px] xl:max-w-none items-center md:items-start text-center md:text-left">
           <h2 className={`font-serif font-light text-[#750000] md:!text-[clamp(30px,2.7vw,48px)] md:!leading-[0.8] tracking-[-0.02em] m-0 [font-stretch:extra-condensed] [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)] transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`} style={{ transitionDelay: isVisible ? '0.1s' : '0s' }}>
             <span data-cms="heading">{c.subheading}</span>
           </h2>

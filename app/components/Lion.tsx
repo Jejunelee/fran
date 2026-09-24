@@ -55,9 +55,9 @@ export default function Lion() {
       className="
         cms-section
         relative z-10
-        w-full max-w-[1504px] mx-auto
+        w-full
 
-        px-4 sm:px-6 md:px-8 lg:px-12
+        px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-24
 
         /* MOBILE */
         pt-5 sm:pt-7
@@ -130,6 +130,8 @@ export default function Lion() {
                 max-w-[240px]
                 md:max-w-[280px]
                 lg:max-w-[360px]
+                xl:max-w-[28vw]
+                2xl:max-w-[480px]
                 h-auto
                 aspect-[0.82/1]
                 object-contain
