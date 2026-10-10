@@ -6,7 +6,7 @@ import type { SectionStyles } from "@/lib/content/types";
 
 const scriptSpanClass =
   "font-script leading-[0.5] mx-[0.04em] md:mx-[0.08em] translate-y-[0.02em] md:translate-y-[0em] inline-block tracking-[0.02em] text-[#750000] relative z-[2] font-normal [text-shadow:0_1px_2px_rgba(127,15,15,0.06)] " +
-  "!text-[1.4em] sm:!text-[1.5em] md:!text-[1.85em]";
+  "!text-[1.85em] sm:!text-[2em] md:!text-[2.35em]";
 
 const credentialsCss = String.raw`
   /* ============ Heading — soft rise + de-blur ============ */

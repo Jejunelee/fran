@@ -153,15 +153,15 @@ export default function Hero() {
           visible video frame — no more racing animations behind a
           hidden curtain. */}
       {videoReady && (
-        <div className="relative z-10 mx-auto max-w-[1680px] px-5 sm:px-12 lg:px-16 xl:px-24 min-h-screen flex items-start md:items-center
+        <div className="hero-frame relative z-10 mx-auto max-w-[1680px] px-5 sm:px-12 lg:px-16 xl:px-24 min-h-screen flex items-start md:items-center
           pt-[68px] sm:pt-[76px] md:pt-0">
-          <div className="flex w-full max-w-2xl md:max-w-3xl lg:max-w-4xl flex-col items-center md:items-start gap-6 sm:gap-8 text-center md:text-left mx-auto md:mx-0 md:ml-10 lg:ml-16 xl:ml-24
+          <div className="hero-copy flex w-full max-w-2xl md:max-w-3xl lg:max-w-4xl flex-col items-center md:items-start gap-6 sm:gap-8 text-center md:text-left mx-auto md:mx-0 md:ml-10 lg:ml-16 xl:ml-24
             pt-8 sm:pt-12 md:pt-16 lg:pt-0
             pb-16 sm:pb-20 md:pb-24 lg:pb-28
             max-md:w-full max-md:px-0">
             <h1
               id="homecoming-heading"
-              className="font-serif font-light text-[#750000] tracking-normal [font-stretch:extra-condensed] m-0 relative flex flex-col items-center md:items-start gap-[0.22em] md:gap-[0.28em] text-center md:text-left w-full text-[clamp(2.45rem,10.5vw,5.88rem)] md:text-[clamp(2.1rem,5.88vw,5.88rem)] leading-[0.85] md:leading-[0.7]"
+              className="font-serif font-light text-[#750000] tracking-normal [font-stretch:extra-condensed] m-0 relative flex flex-col items-center md:items-start gap-[0.22em] md:gap-[0.28em] text-center md:text-left w-full text-[clamp(1.75rem,8.5vw,2.6rem)] md:text-[clamp(2.1rem,5.88vw,5.88rem)] leading-[0.85] md:leading-[0.7]"
               style={{
                 textShadow: "0 2px 4px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2)",
               }}
@@ -199,7 +199,7 @@ export default function Hero() {
               md:!text-[clamp(24px,1.875vw,30px)] md:!leading-[1.5]
               text-[#2b1210]/80 text-center md:text-left
               px-1 sm:px-0
-              ml-3 md:ml-6 lg:ml-8"
+              md:ml-6 lg:ml-8"
               data-cms="body">
               {c.body}
             </p>
@@ -292,6 +292,38 @@ export default function Hero() {
           100% {
             opacity: 1;
             transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+          }
+        }
+
+        /* Phone: heading and body sit in the middle of the first screen,
+           the same way the homepage hero does. Desktop stays put. */
+        @media (max-width: 767px) {
+          .hero-section {
+            height: 100svh;
+            min-height: 100svh;
+            max-height: 100svh;
+            overflow: hidden;
+          }
+          .hero-frame {
+            height: 100%;
+            min-height: 0 !important;
+            padding-top: calc(48px + env(safe-area-inset-top, 0px)) !important;
+            box-sizing: border-box;
+          }
+          .hero-copy {
+            height: 100%;
+            min-height: 0;
+            justify-content: center;
+            gap: 0.7rem !important;
+            padding-top: 0.25rem !important;
+            padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px)) !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+          }
+          .hero-subtitle {
+            margin-top: 0.25rem !important;
+            margin-left: 0 !important;
+            text-align: center !important;
           }
         }
 

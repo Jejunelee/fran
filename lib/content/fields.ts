@@ -44,6 +44,63 @@ const KEY_LABELS: Record<string, string> = {
   image: "Image",
   headingMid: "Heading line 2",
   headingScript: "Script word",
+  a: "Answer A",
+  b: "Answer B",
+  c: "Answer C",
+  d: "Answer D",
+  prompt: "Question",
+  partLabel: "Part label",
+  eyebrow: "Small heading",
+  note: "Supporting line",
+  begin: "Start button",
+  corePattern: "Core pattern",
+  strengths: "Strengths",
+  weaknesses: "Weaknesses",
+  watch: "What to watch",
+  growth: "Growth edge",
+  coreHeading: "Core pattern label",
+  strengthsHeading: "Strengths label",
+  weaknessesHeading: "Weaknesses label",
+  watchHeading: "What to watch label",
+  growthHeading: "Growth edge label",
+  sectionLabel: "Section heading",
+  changeAnswer: "Change an answer",
+  startOver: "Start over",
+  seeResult: "See my result",
+  back: "Back",
+  continue: "Continue",
+  headline: "Heading",
+  cta: "Button",
+  href: "Link",
+  resourcesCta: "Resources button",
+  resourcesHref: "Resources link",
+  callCta: "Call button",
+  callHref: "Call link",
+};
+
+const INDEXED_GROUP_TITLES: Record<string, readonly string[]> = {
+  "assessment.personaQuestions.questions": [
+    "Question 1",
+    "Question 2",
+    "Question 3",
+    "Question 4",
+    "Question 5",
+    "Question 6",
+    "Question 7",
+  ],
+  "assessment.readinessQuestions.questions": [
+    "Question 9",
+    "Question 10",
+    "Question 11",
+    "Question 12",
+  ],
+  "assessment.personas.items": [
+    "A · The Curious",
+    "B · The Compromiser",
+    "C · The Autopilot",
+    "D · The Stranger",
+  ],
+  "assessment.stickingPoints.items": ["Answer A", "Answer B", "Answer C", "Answer D"],
 };
 
 const FRAME_LABELS: Record<string, string[]> = {
@@ -65,6 +122,16 @@ function labelFromKey(key: string) {
 }
 
 function groupFromPath(path: string): string {
+  const indexed = path.match(/^(.*)\.(questions|items)\.(\d+)(?:\.|$)/);
+  if (indexed) {
+    const title = INDEXED_GROUP_TITLES[`${indexed[1]}.${indexed[2]}`]?.[Number(indexed[3])];
+    if (title) return title;
+  }
+  if (/\.nextStep\.ready(?:\.|$)/.test(path)) return "Ready";
+  if (/\.nextStep\.close(?:\.|$)/.test(path)) return "Close";
+  if (/\.nextStep\.notYet(?:\.|$)/.test(path)) return "Not yet";
+  if (path.includes("assessment.personas") && /Heading|sectionLabel/.test(path)) return "Headings";
+
   const match = path.match(
     /\.(items|insights|paragraphs|steps|bullets|images)\.(\d+)/,
   );

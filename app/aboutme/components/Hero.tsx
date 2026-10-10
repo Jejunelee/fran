@@ -54,6 +54,10 @@ const heroCss = String.raw`
     animation: heroWordScriptReveal 1050ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
   }
 
+  .hero-section .hero-copy {
+    transform: translate3d(0, -2.75rem, 0);
+  }
+
   .hero-section .hero-line {
     overflow: visible;
     height: 0.85em;
@@ -61,6 +65,10 @@ const heroCss = String.raw`
   }
 
   @media (min-width: 768px) {
+    .hero-section .hero-copy {
+      transform: none;
+    }
+
     .hero-section .hero-line {
       height: 0.7em;
       line-height: 0.7;
@@ -245,7 +253,7 @@ export default function Hero() {
 
       <div className="relative z-10 mx-auto max-w-[1680px] px-5 sm:px-12 lg:px-16 xl:px-24 min-h-[100dvh] flex items-center justify-center
         pt-[68px] sm:pt-[76px] md:pt-0">
-        <div className="mx-auto w-full max-w-[900px] text-center min-w-0 overflow-x-clip">
+        <div className="hero-copy mx-auto w-full max-w-[900px] text-center min-w-0 overflow-x-clip">
           {/* MOBILE — wrap so lines fit */}
           <h1
             id="about-heading"
@@ -271,8 +279,6 @@ export default function Hero() {
             </span>
             <span className="hero-line flex items-end justify-center whitespace-nowrap overflow-visible">
               <Word delay={820}><span data-cms="heading">{c.line2Before}</span></Word>
-              <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-              <Word delay={910}>I</Word>
               <span className="w-[0.28em] shrink-0" aria-hidden="true" />
               <Word delay={1020} variant="script" className={scriptWordClass}>
                 <span data-cms="script">{c.line2Script}</span>
@@ -317,8 +323,6 @@ export default function Hero() {
             {/* Line 2 */}
             <span className="hero-line flex items-end justify-center whitespace-nowrap overflow-visible">
               <Word delay={820}><span data-cms="heading">{c.line2Before}</span></Word>
-              <span className="w-[0.28em] shrink-0" aria-hidden="true" />
-              <Word delay={910}>I</Word>
               <span className="w-[0.28em] shrink-0" aria-hidden="true" />
               <Word delay={1020} variant="script" className={scriptWordClass}>
                 <span data-cms="script">{c.line2Script}</span>

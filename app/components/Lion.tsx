@@ -6,7 +6,7 @@ import { cmsBg, cmsStyleVars, useSection } from "@/lib/content/context";
 import type { SectionStyles } from "@/lib/content/types";
 
 const bodyText =
-  "font-josefin !text-[clamp(0.95rem,1.8vw,1.25rem)] sm:!text-xl md:!text-[clamp(16px,1.25vw,20px)] font-normal !leading-[1.5] tracking-[0.01em] text-[#5a0a0a] text-center md:text-left m-0 whitespace-normal break-words transition-all duration-700";
+  "font-josefin !text-[0.9rem] !leading-[1.4] md:!text-[clamp(16px,1.25vw,20px)] md:!leading-[1.5] font-normal tracking-[0.01em] text-[#5a0a0a] text-center md:text-left m-0 whitespace-normal break-words transition-all duration-700";
 
 const scriptWord =
   "lion-script-inline inline-block font-script font-normal tracking-[0.01em] text-[#750000] !text-[2.15em] overflow-visible";
@@ -244,9 +244,8 @@ export default function Lion() {
                 className="
                   font-serif font-light text-[#750000]
 
-                  !text-[24px]
-                  sm:!text-[28px]
-                  !leading-[0.9]
+                  !text-[clamp(1.15rem,6.5vw,4.2rem)]
+                  !leading-[0.85]
 
                   md:!text-[clamp(30px,2.7vw,48px)]
                   md:!leading-[0.8]

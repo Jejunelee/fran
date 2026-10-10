@@ -200,10 +200,9 @@ export default function Explain() {
             className="
               font-serif font-light
 
-              /* MOBILE — a step under the home hero */
-              !text-[24px]
-              sm:!text-[28px]
-              !leading-[0.9]
+              /* MOBILE — hero scale, eased so the longest line stays on screen */
+              !text-[clamp(1.15rem,7vw,4.2rem)]
+              !leading-[0.85]
 
               /* DESKTOP — secondary to hero (~67px) */
               md:!text-[clamp(30px,2.7vw,48px)]
@@ -295,9 +294,8 @@ export default function Explain() {
               font-josefin
 
               /* MOBILE — match home hero subcopy */
-              !text-[clamp(0.95rem,1.8vw,1.25rem)]
-              sm:!text-xl
-              !leading-[1.5]
+              !text-[0.9rem]
+              !leading-[1.4]
 
               /* DESKTOP - UNCHANGED */
               md:!text-[clamp(16px,1.25vw,20px)]
@@ -402,10 +400,9 @@ export default function Explain() {
           className="
             font-serif font-light
 
-            /* MOBILE */
-            !text-[24px]
-            sm:!text-[28px]
-            !leading-[0.9]
+            /* MOBILE — same size as the home hero */
+            !text-[clamp(1.15rem,7.5vw,4.2rem)]
+            !leading-[0.85]
 
             /* DESKTOP */
             md:!text-[clamp(30px,2.7vw,48px)]
@@ -430,9 +427,8 @@ export default function Explain() {
             font-josefin
 
             /* MOBILE — match home hero subcopy */
-            !text-[clamp(0.95rem,1.8vw,1.25rem)]
-            sm:!text-xl
-            !leading-[1.5]
+            !text-[0.9rem]
+            !leading-[1.4]
 
             /* DESKTOP - UNCHANGED */
             md:!text-[clamp(16px,1.3vw,20px)]
@@ -482,9 +478,8 @@ export default function Explain() {
                 font-josefin
 
                 /* MOBILE — match home hero subcopy */
-                !text-[clamp(0.95rem,1.8vw,1.25rem)]
-                sm:!text-xl
-                !leading-[1.5]
+                !text-[0.9rem]
+                !leading-[1.4]
 
                 /* DESKTOP - UNCHANGED */
                 md:!text-[clamp(16px,1.25vw,20px)]

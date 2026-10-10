@@ -75,7 +75,7 @@ const WhoIsThisFor = () => {
         <div className="text-center mb-12 md:mb-14 lg:mb-16 max-md:mb-10">
           <h2
             className="who-heading font-serif font-light text-[#F8F2E7]
-              !text-[48px] sm:!text-[56px] !leading-[0.9]
+              !text-[clamp(1.35rem,8vw,2rem)] !leading-[0.9]
               md:!text-[clamp(60px,5.4vw,96px)] md:!leading-[0.8]
               tracking-[-0.02em] [font-stretch:extra-condensed]
               flex items-end justify-center whitespace-nowrap overflow-visible

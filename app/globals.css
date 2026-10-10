@@ -34,6 +34,13 @@ html {
   font-size: 16px;
 }
 
+/* The phone nav is fixed to the top. Keep in-page jumps below it. */
+@media (max-width: 767px) {
+  html {
+    scroll-padding-top: calc(3.5rem + env(safe-area-inset-top, 0px));
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -57,6 +64,18 @@ body {
 }
 .cms-section [data-cms="body"]:not(button):not(a) {
   color: var(--cms-body) !important;
+}
+
+/* Mobile descriptions match Lion.tsx body: 0.9rem / 1.4. Desktop stays.
+   This lives in the utilities layer so it beats forced text-[…] sizes. */
+@layer utilities {
+  @media (max-width: 767px) {
+    .cms-section [data-cms="body"]:not(button):not(a):not(.hero-fade-up),
+    .cms-section :is(.what-subtitle, .what-topic-desc, .not-for-you-item, .how-investment-note) {
+      font-size: 0.9rem !important;
+      line-height: 1.4 !important;
+    }
+  }
 }
 .cms-section [data-cms="script"]:not(button):not(a) {
   color: var(--cms-script) !important;
@@ -88,6 +107,11 @@ body {
 
 .cms-section a.hero-cta-item.border {
   color: #5b0706 !important;
+}
+
+.cms-section a.hero-cta-item.border:hover,
+.cms-section a.hero-cta-item.border:focus-visible {
+  color: #fdd1db !important;
 }
 
 .cms-section .cta-button--primary {

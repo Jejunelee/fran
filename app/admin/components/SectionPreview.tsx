@@ -38,6 +38,31 @@ const WorkCta = dynamic(() => import("@/app/workwithme/components/CTA"));
 
 const ContactMain = dynamic(() => import("@/app/contact/components/contact"));
 
+const AssessmentIntro = dynamic(() =>
+  import("@/app/assessment/admin-preview").then((mod) => mod.AssessmentIntroPreview),
+);
+const AssessmentLabels = dynamic(() =>
+  import("@/app/assessment/admin-preview").then((mod) => mod.AssessmentLabelsPreview),
+);
+const AssessmentPersonaQuestions = dynamic(() =>
+  import("@/app/assessment/admin-preview").then((mod) => mod.AssessmentPersonaQuestionsPreview),
+);
+const AssessmentStickingQuestion = dynamic(() =>
+  import("@/app/assessment/admin-preview").then((mod) => mod.AssessmentStickingQuestionPreview),
+);
+const AssessmentReadinessQuestions = dynamic(() =>
+  import("@/app/assessment/admin-preview").then((mod) => mod.AssessmentReadinessQuestionsPreview),
+);
+const AssessmentPersonas = dynamic(() =>
+  import("@/app/assessment/admin-preview").then((mod) => mod.AssessmentPersonasPreview),
+);
+const AssessmentStickingPoints = dynamic(() =>
+  import("@/app/assessment/admin-preview").then((mod) => mod.AssessmentStickingPointsPreview),
+);
+const AssessmentNextStep = dynamic(() =>
+  import("@/app/assessment/admin-preview").then((mod) => mod.AssessmentNextStepPreview),
+);
+
 const PREVIEW_COMPONENTS: Record<PageKey, Record<string, React.ComponentType>> = {
   home: {
     hero: HomeHero,
@@ -74,6 +99,16 @@ const PREVIEW_COMPONENTS: Record<PageKey, Record<string, React.ComponentType>> =
   },
   contact: {
     main: ContactMain,
+  },
+  assessment: {
+    intro: AssessmentIntro,
+    labels: AssessmentLabels,
+    personaQuestions: AssessmentPersonaQuestions,
+    stickingQuestion: AssessmentStickingQuestion,
+    readinessQuestions: AssessmentReadinessQuestions,
+    personas: AssessmentPersonas,
+    stickingPoints: AssessmentStickingPoints,
+    nextStep: AssessmentNextStep,
   },
 };
 

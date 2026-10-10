@@ -78,12 +78,12 @@ export default function Intro() {
               HEADING
               ===================================================== */}
 
-          <h2 className="intro-heading font-serif font-light text-[#750000] text-[clamp(2.75rem,5.625vw,5rem)] leading-[0.6] tracking-[-0.02em] [font-stretch:extra-condensed] text-center md:text-left m-0">
-            <span className="block">
-              <span className="intro-greeting inline-block md:translate-y-[0.3em] text-[0.7em]" data-cms="heading">
+          <h2 className="intro-heading font-serif font-light text-[#750000] text-[clamp(2.75rem,5.625vw,5rem)] leading-[0.72] tracking-[-0.02em] [font-stretch:extra-condensed] text-center md:text-left m-0">
+            <span className="block whitespace-nowrap">
+              <span className="intro-greeting inline-block text-[0.7em]" data-cms="heading">
                 {c.greeting}
               </span>{" "}
-              <span className="intro-script inline-block font-script font-normal tracking-[0.02em] text-[#750000] text-[3em] md:translate-x-[0.21em]" data-cms="script">
+              <span className="intro-script inline-block font-script font-normal tracking-[0.02em] text-[#750000] text-[2.28em] md:text-[1.92em] md:-ml-[0.06em]" data-cms="script">
                 {c.name}
               </span>
             </span>
@@ -178,7 +178,7 @@ export default function Intro() {
 
         .intro-panel--visible .intro-greeting {
           opacity: 1;
-          transform: translate3d(0, 0, 0);
+          transform: translate3d(0, -1.25em, 0);
           filter: blur(0);
         }
 
@@ -211,14 +211,14 @@ export default function Intro() {
         @media (min-width: 768px) {
           .intro-script {
             transform:
-              translate3d(0.21em, 22px, 0)
+              translate3d(0, 22px, 0)
               scale(0.85)
               rotate(-4deg);
           }
 
           .intro-panel--visible .intro-script {
             transform:
-              translate3d(0.21em, 0, 0)
+              translate3d(0, 0, 0)
               scale(1)
               rotate(0deg);
           }
@@ -226,21 +226,21 @@ export default function Intro() {
           @keyframes introScriptBreath {
             0% {
               transform:
-                translate3d(0.21em, 0, 0)
+                translate3d(0, 0, 0)
                 rotate(0deg)
                 scale(1);
             }
 
             50% {
               transform:
-                translate3d(0.21em, -2px, 0)
+                translate3d(0, -2px, 0)
                 rotate(-0.5deg)
                 scale(1.008);
             }
 
             100% {
               transform:
-                translate3d(0.21em, 0, 0)
+                translate3d(0, 0, 0)
                 rotate(0deg)
                 scale(1);
             }
@@ -442,8 +442,8 @@ export default function Intro() {
           .intro-heading {
             width: 100%;
 
-            font-size: 48px !important;
-            line-height: 0.62 !important;
+            font-size: clamp(1.15rem, 7.5vw, 4.2rem) !important;
+            line-height: 0.85 !important;
 
             letter-spacing: -0.02em;
 
@@ -476,7 +476,7 @@ export default function Intro() {
           .intro-script {
             display: inline-block;
 
-            font-size: 2.1em !important;
+            font-size: 2.28em !important;
 
             letter-spacing: 0.02em;
 
@@ -527,8 +527,8 @@ export default function Intro() {
             width: 100%;
             max-width: 90%;
 
-            font-size: 15px !important;
-            line-height: 1.6 !important;
+            font-size: 0.9rem !important;
+            line-height: 1.4 !important;
 
             text-align: center;
           }
@@ -541,8 +541,8 @@ export default function Intro() {
             width: 100%;
             max-width: 90%;
 
-            font-size: 12px !important;
-            line-height: 1.5;
+            font-size: 0.9rem !important;
+            line-height: 1.4;
 
             text-align: center;
 
@@ -554,7 +554,7 @@ export default function Intro() {
              ----------------------------------------------------- */
 
           .intro-cta {
-            font-size: 15px !important;
+            font-size: 0.8125rem !important;
 
             min-width: 180px;
 
@@ -592,24 +592,12 @@ export default function Intro() {
             max-width: 230px;
           }
 
-          .intro-heading {
-            font-size: 44px !important;
-          }
-
-          .intro-script {
-            font-size: 2.05em !important;
-          }
-
           .intro-bio {
             max-width: 92%;
-
-            font-size: 14px !important;
           }
 
           .intro-credentials {
             max-width: 92%;
-
-            font-size: 11px !important;
           }
         }
 
@@ -618,14 +606,6 @@ export default function Intro() {
            ======================================================= */
 
         @media (max-width: 360px) {
-
-          .intro-heading {
-            font-size: 41px !important;
-          }
-
-          .intro-script {
-            font-size: 2em !important;
-          }
 
           .intro-image-section > div {
             max-width: 215px;

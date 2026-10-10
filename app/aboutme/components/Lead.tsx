@@ -224,28 +224,25 @@ export default function Lead() {
               </span>
             </h1>
 
-            <p
-              className="font-josefin font-normal leading-[1.5] tracking-[0.01em] text-[#5a0a0a] text-center m-0
-                !text-[12px] sm:!text-[13px]
-                md:!text-[clamp(14px,1.2vw,18px)]"
-            >
-            </p>
-
-            <div className="lead-cta-row flex gap-3 md:gap-4 flex-wrap mt-1 justify-center">
-              <button
-                className="lead-cta lead-cta--primary font-josefin font-bold tracking-[0.05em] text-[#750100] bg-[#F5B7C4] border-none px-6 md:px-8 lg:px-10 py-2.5 md:py-3 lg:py-[0.9rem] rounded cursor-pointer transition-all duration-300 ease-in-out uppercase shadow-[0_4px_14px_-4px_rgba(91,7,6,0.55)] hover:bg-[#ecb4b8] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_-4px_rgba(91,7,6,0.65)]
-                  !text-[11px] sm:!text-[12px]
-                  md:!text-[clamp(14px,1vw,18px)]"
+            <div className="lead-cta-row flex w-full flex-col items-center gap-3 md:w-auto md:flex-row md:gap-4 md:flex-wrap mt-1 justify-center">
+              <a
+                href="https://calendly.com/francescaatendido/60min"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="lead-cta lead-cta--primary inline-flex w-full max-w-[320px] items-center justify-center no-underline text-center font-josefin font-bold tracking-[0.04em] text-[#750100] bg-[#F5B7C4] border-none px-6 md:w-auto md:max-w-none md:px-8 lg:px-10 py-2.5 md:py-3 lg:py-[0.9rem] md:tracking-[0.05em] rounded cursor-pointer transition-all duration-300 ease-in-out uppercase shadow-[0_4px_14px_-4px_rgba(91,7,6,0.55)] hover:bg-[#ecb4b8] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_-4px_rgba(91,7,6,0.65)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5B0706]
+                  !text-[14px]
+                  md:!text-[clamp(14px,1vw,18px)] min-h-12 md:min-h-0"
               >
                 {c.ctaPrimary}
-              </button>
-              <button
-                className="lead-cta lead-cta--secondary font-josefin font-semibold tracking-[0.05em] text-white bg-[#5B0706] border border-[#5B0706] px-6 md:px-8 lg:px-10 py-2.5 md:py-3 lg:py-[0.9rem] rounded cursor-pointer transition-all duration-300 ease-in-out uppercase hover:bg-[#5B0706] hover:text-[#fdd1db] hover:-translate-y-0.5 hover:shadow-[0_4px_14px_-4px_rgba(91,7,6,0.3)]
-                  !text-[11px] sm:!text-[12px]
-                  md:!text-[clamp(14px,1vw,18px)]"
+              </a>
+              <a
+                href="/assessment"
+                className="lead-cta lead-cta--secondary inline-flex w-full max-w-[320px] items-center justify-center no-underline text-center font-josefin font-semibold tracking-[0.04em] text-white bg-[#5B0706] border border-[#5B0706] px-6 md:w-auto md:max-w-none md:px-8 lg:px-10 py-2.5 md:py-3 lg:py-[0.9rem] md:tracking-[0.05em] rounded cursor-pointer transition-all duration-300 ease-in-out uppercase hover:bg-[#5B0706] hover:text-[#fdd1db] hover:-translate-y-0.5 hover:shadow-[0_4px_14px_-4px_rgba(91,7,6,0.3)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f7f1e7]
+                  !text-[14px]
+                  md:!text-[clamp(14px,1vw,18px)] min-h-12 md:min-h-0"
               >
                 {c.ctaSecondary}
-              </button>
+              </a>
             </div>
           </div>
         </section>

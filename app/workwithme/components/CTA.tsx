@@ -256,7 +256,9 @@ export default function CTA() {
             >
               <span data-cms="body">{c.notReady}</span>
               <br />
-              <span data-cms="body">{c.selfAssess}</span>
+              <a href="/assessment" className="underline decoration-[#5A0A0A]/35 underline-offset-4 hover:decoration-[#5A0A0A]">
+                <span data-cms="body">{c.selfAssess}</span>
+              </a>
               <br className="md:hidden" />
               <span className="hidden md:inline"> </span>
               <span data-cms="body">{c.joinList}</span>
@@ -264,7 +266,9 @@ export default function CTA() {
 
             <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 mt-4 md:mt-5 lg:mt-6 max-md:w-full">
               <motion.a
-                href="#book-a-call"
+                href="https://calendly.com/francescaatendido/60min"
+                target="_blank"
+                rel="noopener noreferrer"
                 custom={0}
                 variants={buttonVariants}
                 whileHover={{
@@ -274,15 +278,15 @@ export default function CTA() {
                 }}
                 whileTap={{ scale: 0.98 }}
                 className="cta-button cta-button--primary font-josefin font-semibold uppercase tracking-[0.05em] text-[#750000] bg-[#F8F3EE] px-6 md:px-7 lg:px-9 py-3 md:py-3.5 lg:py-4 min-w-[150px] md:min-w-[160px] lg:min-w-[176px] text-center transition-all duration-300 ease-in-out shadow-[0_4px_14px_-4px_rgba(91,7,6,0.15)] hover:bg-[#f0e8df] hover:shadow-[0_6px_20px_-4px_rgba(91,7,6,0.25)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#750000]
-                  !text-[12px] sm:!text-[13px]
+                  !text-[14px]
                   md:!text-[clamp(0.85rem,1vw,1rem)]
-                  max-md:w-full max-md:max-w-[280px] max-md:min-h-[48px]"
+                  max-md:w-full max-md:max-w-[320px] max-md:min-h-[48px] max-md:tracking-[0.04em] max-md:text-center"
               >
                 {c.ctaPrimary}
               </motion.a>
 
               <motion.a
-                href="#take-quiz"
+                href="/assessment"
                 custom={1}
                 variants={buttonVariants}
                 whileHover={{
@@ -292,9 +296,9 @@ export default function CTA() {
                 }}
                 whileTap={{ scale: 0.98 }}
                 className="cta-button cta-button--secondary font-josefin font-semibold uppercase tracking-[0.05em] text-[#F8F3EE] bg-[#750000] px-6 md:px-7 lg:px-9 py-3 md:py-3.5 lg:py-4 min-w-[140px] md:min-w-[150px] lg:min-w-[166px] text-center transition-all duration-300 ease-in-out shadow-[0_4px_14px_-4px_rgba(91,7,6,0.25)] hover:bg-[#8a0a0a] hover:shadow-[0_6px_20px_-4px_rgba(91,7,6,0.4)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F8F3EE]
-                  !text-[12px] sm:!text-[13px]
+                  !text-[14px]
                   md:!text-[clamp(0.85rem,1vw,1rem)]
-                  max-md:w-full max-md:max-w-[280px] max-md:min-h-[48px]"
+                  max-md:w-full max-md:max-w-[320px] max-md:min-h-[48px] max-md:tracking-[0.04em] max-md:text-center"
               >
                 {c.ctaSecondary}
               </motion.a>

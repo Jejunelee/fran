@@ -70,7 +70,7 @@ export default function HowItWorks() {
       />
 
       {/* CONTENT — extra bottom padding on mobile so the pinned cat doesn't overlap */}
-      <div className="relative z-[2] mx-auto w-full max-w-[1504px] px-6 py-12 sm:px-8 md:py-16 lg:px-12 lg:py-20
+      <div className="how-layout relative z-[2] mx-auto w-full max-w-[1504px] px-6 py-12 sm:px-8 md:py-16 lg:px-12 lg:py-20
         max-md:py-10 max-md:px-5 max-md:pb-[220px]">
         {/* Desktop two-column composition */}
         <div className="grid grid-cols-1 gap-10 md:grid-cols-[1fr_auto] md:gap-8 lg:gap-12
@@ -83,23 +83,23 @@ export default function HowItWorks() {
                 so it flows automatically. */}
             <h2
               className="how-heading font-serif font-light text-[#8F4A4A] tracking-[-0.02em] [font-stretch:extra-condensed]
-                !text-[36px] sm:!text-[42px] !leading-[0.9]
+                !text-[clamp(1.35rem,8vw,2rem)] !leading-[0.9]
                 md:!text-[clamp(45px,4.05vw,72px)] md:!leading-[0.8]
-                flex flex-col items-start gap-[0.2em] md:gap-[0.24em]
+                flex flex-col items-center md:items-start gap-[0.2em] md:gap-[0.24em]
                 m-0
                 [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]"
             >
-              <span className="how-heading-line flex items-end justify-start whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8]">
+              <span className="how-heading-line flex items-end justify-center md:justify-start whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8]">
                 <span className="font-serif" data-cms="heading">{c.heading}</span>
                 <span className="w-[0.28em] shrink-0" aria-hidden="true" />
                 <span className={`${worksScriptClass} how-heading-script`} data-cms="script">
                   {c.headingScript}
                 </span>
               </span>
-              <span className="how-heading-line flex items-end justify-start whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8] font-serif" data-cms="heading">
+              <span className="how-heading-line flex items-end justify-center md:justify-start whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8] font-serif" data-cms="heading">
                 {c.containerLabel}
               </span>
-              <span className="how-heading-line flex items-end justify-center md:justify-start whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8] font-serif font-semibold mt-9 md:mt-12 w-full" data-cms="heading">
+              <span className="how-heading-line flex items-end justify-center md:justify-start whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9] md:h-[0.8em] md:leading-[0.8] font-serif font-semibold mt-2 md:mt-4 w-full" data-cms="heading">
                 {c.containerName}
               </span>
             </h2>
@@ -139,8 +139,7 @@ export default function HowItWorks() {
                 {c.investmentPrice}
               </p>
               <p
-                className="mt-3 font-josefin font-normal
-                  !text-[clamp(0.95rem,1.8vw,1.25rem)] sm:!text-xl !leading-[1.5]
+                className="how-investment-note mt-3 font-josefin font-normal
                   md:!text-[clamp(16px,1.25vw,20px)] md:!leading-[1.5]"
               >
                 {c.investmentNote}
@@ -172,6 +171,16 @@ export default function HowItWorks() {
 
       {/* ---------------- Animation layer (scoped to this section) ---------------- */}
       <style>{`
+        /* Wide screens center a 1504px block, which leaves a larger
+           pink margin on the left than beside the cat on the right. */
+        @media (min-width: 1600px) {
+          .how-layout {
+            margin-left: clamp(4rem, 6vw, 7rem);
+            margin-right: auto;
+            padding-left: 1.5rem;
+          }
+        }
+
         /* ============ Heading lines — editorial cascade ============
            Each line rises with a soft de-blur, staggered so the
            three-line heading reveals line-by-line. */

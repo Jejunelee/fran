@@ -46,15 +46,16 @@ const SelfAssess: React.FC = () => {
   return (
     <main
       ref={sectionRef}
+      id="self-assessment"
       className="cms-section relative w-full overflow-visible
-        grid grid-cols-1 md:grid-cols-2 min-h-[80dvh] px-6 md:px-12 lg:px-16 xl:px-20 2xl:px-24 py-8 md:py-12 bg-cover bg-center bg-no-repeat shadow-[0_8px_32px_rgba(80,40,20,0.08)] items-center"
+        grid grid-cols-1 md:grid-cols-2 min-h-0 md:min-h-[80dvh] px-6 md:px-12 lg:px-16 xl:px-20 2xl:px-24 py-20 md:py-12 bg-cover bg-center bg-no-repeat shadow-[0_8px_32px_rgba(80,40,20,0.08)] items-center"
       style={{ ...cmsBg(c.background), ...cmsStyleVars(c.styles) }}
     >
       {/* ==================== MOBILE LAYOUT ==================== */}
       <div className="flex flex-col items-center text-center w-full md:hidden">
         {/* Heading — centered on mobile */}
         <h2
-          className={`mt-10 font-serif font-light text-[#750000] !text-[24px] sm:!text-[28px] !leading-[0.9] tracking-[-0.02em] [font-stretch:extra-condensed] flex flex-col items-center gap-[0.2em] text-center w-full m-0 [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)] transition-all duration-700 ${
+          className={`mt-10 font-serif font-light text-[#750000] !text-[clamp(1.15rem,7.5vw,4.2rem)] !leading-[0.85] tracking-[-0.02em] [font-stretch:extra-condensed] flex flex-col items-center gap-[0.2em] text-center w-full m-0 [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)] transition-all duration-700 ${
             isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
           }`}
           style={{ transitionDelay: isVisible ? '0.1s' : '0s' }}
@@ -74,7 +75,7 @@ const SelfAssess: React.FC = () => {
         <div className="flex flex-col items-center text-center w-full mt-6">
           {/* Subheading — centered */}
           <h3
-            className={`font-serif font-light text-[#750000] !text-[18px] sm:!text-[20px] leading-[1.1] tracking-[-0.02em] m-0 [font-stretch:extra-condensed] text-center transition-all duration-700 ${
+            className={`font-serif font-light text-[#750000] !text-[clamp(1.15rem,7.5vw,4.2rem)] !leading-[0.85] tracking-[-0.02em] m-0 [font-stretch:extra-condensed] text-center transition-all duration-700 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
             style={{ transitionDelay: isVisible ? '0.3s' : '0s' }}
@@ -84,7 +85,7 @@ const SelfAssess: React.FC = () => {
 
           {/* Body copy — centered */}
           <p
-            className={`font-josefin !text-[clamp(0.95rem,1.8vw,1.25rem)] sm:!text-xl !leading-[1.5] tracking-[0.01em] text-[#5a0a0a] m-0 mt-2 max-w-[340px] text-center transition-all duration-700 ${
+            className={`font-josefin !text-[0.9rem] !leading-[1.4] tracking-[0.01em] text-[#5a0a0a] m-0 mt-2 max-w-[340px] text-center transition-all duration-700 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
             style={{ transitionDelay: isVisible ? '0.35s' : '0s' }}
@@ -94,14 +95,15 @@ const SelfAssess: React.FC = () => {
           </p>
 
           {/* CTA button — centered */}
-          <button
-            className={`font-josefin text-[14px] font-semibold text-white bg-[#5a0a0a] px-6 py-3 min-h-[48px] w-full max-w-[320px] mx-auto border-none cursor-pointer transition-all duration-300 ease-in-out tracking-[0.04em] mt-4 hover:bg-[#750000] hover:scale-[1.02] active:scale-[0.98] text-center ${
+          <a
+            href="/assessment"
+            className={`font-josefin text-[0.8125rem] font-semibold text-white bg-[#5a0a0a] px-6 py-3 min-h-[48px] w-full max-w-[320px] mx-auto border-none cursor-pointer transition-all duration-300 ease-in-out tracking-[0.04em] mt-4 hover:bg-[#750000] hover:scale-[1.02] active:scale-[0.98] text-center inline-flex items-center justify-center no-underline ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
             style={{ transitionDelay: isVisible ? '0.4s' : '0s' }}
           >
             {c.cta}
-          </button>
+          </a>
         </div>
       </div>
 
@@ -140,9 +142,9 @@ const SelfAssess: React.FC = () => {
             </span>
           </p>
 
-          <button className={`font-josefin text-[clamp(12px,1vw,16px)] md:text-[clamp(14px,1vw,16px)] lg:text-[clamp(16px,1.1vw,18px)] font-semibold text-white bg-[#5a0a0a] px-5 md:px-8 lg:px-10 py-2.5 md:py-3 border-none cursor-pointer transition-all duration-300 ease-in-out tracking-[0.04em] mt-1 hover:bg-[#750000] hover:scale-[1.02] active:scale-[0.98] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: isVisible ? '0.3s' : '0s' }}>
+          <a href="/assessment" className={`font-josefin text-[clamp(12px,1vw,16px)] md:text-[clamp(14px,1vw,16px)] lg:text-[clamp(16px,1.1vw,18px)] font-semibold text-white bg-[#5a0a0a] px-5 md:px-8 lg:px-10 py-2.5 md:py-3 border-none cursor-pointer transition-all duration-300 ease-in-out tracking-[0.04em] mt-1 hover:bg-[#750000] hover:scale-[1.02] active:scale-[0.98] inline-flex items-center justify-center no-underline ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: isVisible ? '0.3s' : '0s' }}>
             {c.cta}
-          </button>
+          </a>
         </div>
       </section>
 

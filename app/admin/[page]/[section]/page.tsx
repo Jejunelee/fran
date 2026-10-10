@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { AssessmentBuilder } from "../../components/assessment-builder";
 import { getSiteContent } from "@/lib/content/get-site-content";
 import { PAGE_LABELS, SECTION_LABELS, type PageKey } from "@/lib/content/types";
 import { SectionEditor } from "../../components/SectionEditor";
@@ -15,6 +16,10 @@ export default async function AdminSectionPage({
   if (!label) notFound();
 
   const content = await getSiteContent();
+
+  if (pageKey === "assessment") {
+    return <AssessmentBuilder initial={content} />;
+  }
 
   return (
     <SectionEditor

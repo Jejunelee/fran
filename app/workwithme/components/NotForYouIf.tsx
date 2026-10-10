@@ -53,7 +53,7 @@ const NotForYouIf = () => {
           {/* Left Column - Heading */}
           <div className="mb-8 lg:mb-0 max-md:mb-6">
             <h2 className="font-serif font-light text-[#7D0808]
-              !text-[48px] sm:!text-[56px] !leading-[0.9]
+              !text-[clamp(1.35rem,8vw,2rem)] !leading-[0.9]
               md:!text-[clamp(60px,5.4vw,96px)] md:!leading-[0.8]
               tracking-[-0.02em] [font-stretch:extra-condensed]
               flex flex-col items-start gap-[0.2em] md:gap-[0.24em]
@@ -79,11 +79,10 @@ const NotForYouIf = () => {
                 <li
                   key={index}
                   className="not-for-you-item font-josefin text-[#7D0808] font-medium tracking-[0.01em] flex items-start gap-3
-                    !text-[clamp(1.05rem,2vw,1.35rem)] sm:!text-[22px] !leading-[1.5]
                     md:!text-[clamp(18px,1.4vw,22px)]"
                   style={{ animationDelay: `${index * 120}ms` }}
                 >
-                  <span className="not-for-you-bullet text-[#7D0808] text-xl sm:text-2xl flex-shrink-0 -mt-0.5">
+                  <span className="not-for-you-bullet text-[#7D0808] text-[1em] md:text-2xl flex-shrink-0 -mt-0.5">
                     •
                   </span>
                   <span>{point}</span>

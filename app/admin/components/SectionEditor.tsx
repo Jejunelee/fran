@@ -7,6 +7,25 @@ import { saveSiteContent } from "../actions";
 import { clusterByGroup, collectFields, groupFields, type EditableField } from "@/lib/content/fields";
 import { getPath, setPath } from "@/lib/content/merge";
 import { PAGE_LABELS, PAGE_PREVIEWS, type PageKey, type SiteContent } from "@/lib/content/types";
+
+const SECTION_NOTES: Partial<Record<PageKey, Record<string, string>>> = {
+  assessment: {
+    intro:
+      "These words are the start of the quiz. The colors here apply across the whole assessment.",
+    labels: "These labels are the buttons used while someone is answering and on the result.",
+    personaQuestions:
+      "Questions 1–7. Keep the answers in order: A, then B, then C, then D. Changing the words does not change which letter was chosen.",
+    stickingQuestion:
+      "Question 8. Answer A maps to the first sticking-point result, B to the second, C to the third, and D to the fourth.",
+    readinessQuestions:
+      "Questions 9–12. Editing the wording does not change which letters count toward Ready, Close, or Not yet.",
+    personas:
+      "Results stay in letter order: A, B, C, D. Separate paragraphs with a blank line.",
+    stickingPoints: "Results stay in the same order as question 8: A, B, C, D.",
+    nextStep:
+      "Ready is 4 viable answers, Close is 2 or 3, and Not yet is 0 or 1. A link can be a site path such as /contact, or a full web address.",
+  },
+};
 import { contrastOn } from "@/lib/content/style";
 import { createBrowserSupabase } from "@/lib/supabase/client";
 import { SectionPreview } from "./SectionPreview";
@@ -104,6 +123,11 @@ export function SectionEditor({
           <h1 className="mt-1 font-serif text-4xl font-light tracking-[-0.03em] text-[#5B0706]">
             {sectionLabel}
           </h1>
+          {SECTION_NOTES[page]?.[section] ? (
+            <p className="mt-2 max-w-xl font-josefin text-sm leading-relaxed text-[#5a0a0a]/70">
+              {SECTION_NOTES[page]?.[section]}
+            </p>
+          ) : null}
         </div>
         <a
           href={PAGE_PREVIEWS[page]}

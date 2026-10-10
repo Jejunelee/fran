@@ -27,7 +27,7 @@ const NavLink = ({ href, label }: { href: string; label: string }) => (
     href={href}
     className="relative font-josefin font-normal text-[#f7f3ee] whitespace-nowrap transition-all duration-300 ease-in-out hover:opacity-80 hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f7f3ee] after:content-[''] after:absolute after:left-0 after:bottom-[-2px] after:w-0 after:h-[1px] sm:after:h-[1.5px] after:bg-[#f7f3ee] after:transition-all after:duration-300 hover:after:w-full [text-shadow:0_1px_3px_rgba(0,0,0,0.25)]
       !text-[9px] sm:!text-[11px]
-      md:!text-[clamp(0.5rem,1.2vw,1rem)]"
+      md:!text-[clamp(0.875rem,1.2vw,1rem)]"
   >
     {label}
   </a>
@@ -73,7 +73,12 @@ const MobileMenuButton = ({
 
 /* ---------------- Navigation ---------------- */
 
-export const Navigation = (): React.ReactElement => {
+export const Navigation = ({
+  placement = "hero",
+}: {
+  /** Hero pages pin the bar to the bottom of the fold. Interior pages keep it at the top. */
+  placement?: "hero" | "top";
+} = {}): React.ReactElement => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const menuPanelRef = useRef<HTMLDivElement>(null);
@@ -175,8 +180,8 @@ export const Navigation = (): React.ReactElement => {
             <button
               type="button"
               onClick={closeMenu}
-              className="hero-mobile-menu-link mt-4 font-josefin uppercase tracking-[0.2em] text-[#f7f3ee]/80 underline underline-offset-4 hover:text-[#f7f3ee] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f7f3ee] py-2 px-4
-                !text-[11px] sm:!text-[12px]"
+              className="hero-mobile-menu-link mt-4 inline-flex min-h-11 items-center font-josefin uppercase tracking-[0.2em] text-[#f7f3ee]/80 underline underline-offset-4 hover:text-[#f7f3ee] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f7f3ee] py-2 px-4
+                !text-[12px]"
               style={{ animationDelay: `${120 + mobileNavigationItems.length * 70}ms` }}
               aria-label="Close menu"
             >
@@ -187,8 +192,11 @@ export const Navigation = (): React.ReactElement => {
       )}
 
       <nav
-        className="hero-nav-enter fixed md:absolute left-0 right-0 z-50 bg-[#750100]/90 backdrop-blur-sm shadow-lg
-          top-0 md:bottom-0 md:top-auto"
+        className={`z-50 bg-[#750100]/90 backdrop-blur-sm shadow-lg ${
+          placement === "top"
+            ? "fixed top-0 left-0 right-0"
+            : "hero-nav-enter fixed md:absolute left-0 right-0 top-0 md:bottom-0 md:top-auto"
+        }`}
         style={{ paddingTop: "env(safe-area-inset-top)" }}
         aria-label="Primary navigation"
       >

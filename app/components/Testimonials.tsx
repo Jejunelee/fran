@@ -39,7 +39,7 @@ export default function Testimonials() {
 
   return (
     <section
-      className="testimonials-section cms-section relative w-full overflow-hidden py-16 md:py-20 lg:py-24"
+      className="testimonials-section cms-section relative w-full overflow-hidden py-10 md:py-20 lg:py-24"
       style={cmsStyleVars(c.styles)}
     >
       {/* =========================================================
@@ -115,7 +115,6 @@ export default function Testimonials() {
 
           <div
             className="testimonials-mobile flex flex-col items-center w-full md:hidden"
-            style={{ minHeight: "320px" }}
           >
             <div className="flex flex-col items-center w-full max-w-[600px] flex-1 justify-center">
 
@@ -204,8 +203,8 @@ export default function Testimonials() {
           .testimonials-section .testimonials-heading {
             width: 100% !important;
 
-            font-size: 42px !important;
-            line-height: 0.7 !important;
+            font-size: clamp(1.15rem, 7.5vw, 4.2rem) !important;
+            line-height: 0.85 !important;
 
             text-align: center !important;
 
@@ -238,7 +237,7 @@ export default function Testimonials() {
           .testimonials-section
             .testimonials-heading
             .testimonials-script {
-            font-size: 1.75em !important;
+            font-size: 2em !important;
 
             line-height: 0.5 !important;
 
@@ -252,11 +251,11 @@ export default function Testimonials() {
           .testimonials-section .testimonials-mobile {
             width: 100% !important;
 
-            min-height: 330px !important;
+            min-height: 0 !important;
 
-            justify-content: space-between !important;
+            justify-content: flex-start !important;
 
-            margin-top: 24px !important;
+            margin-top: 20px !important;
           }
 
           /*
@@ -267,9 +266,9 @@ export default function Testimonials() {
             width: 100% !important;
             max-width: 92% !important;
 
-            font-size: 16px !important;
+            font-size: 0.9rem !important;
 
-            line-height: 1.6 !important;
+            line-height: 1.4 !important;
 
             text-align: center !important;
           }
@@ -279,7 +278,7 @@ export default function Testimonials() {
            */
 
           .testimonials-section .testimonials-mobile-author {
-            font-size: 36px !important;
+            font-size: clamp(1.15rem, 7.5vw, 4.2rem) !important;
 
             line-height: 1.3 !important;
 
@@ -304,8 +303,8 @@ export default function Testimonials() {
         @media (max-width: 430px) {
 
           .testimonials-section {
-            padding-top: 48px !important;
-            padding-bottom: 64px !important;
+            padding-top: 36px !important;
+            padding-bottom: 40px !important;
           }
 
           /*
@@ -313,9 +312,7 @@ export default function Testimonials() {
            */
 
           .testimonials-section .testimonials-heading {
-            font-size: 34px !important;
-
-            line-height: 0.76 !important;
+            line-height: 0.85 !important;
           }
 
           /*
@@ -327,7 +324,7 @@ export default function Testimonials() {
           .testimonials-section
             .testimonials-heading
             .testimonials-script {
-            font-size: 1.7em !important;
+            font-size: 2em !important;
           }
 
           /*
@@ -345,9 +342,9 @@ export default function Testimonials() {
            */
 
           .testimonials-section .testimonials-mobile {
-            min-height: 320px !important;
+            min-height: 0 !important;
 
-            margin-top: 20px !important;
+            margin-top: 16px !important;
           }
 
           /*
@@ -357,9 +354,9 @@ export default function Testimonials() {
           .testimonials-section .testimonials-mobile-text {
             max-width: 94% !important;
 
-            font-size: 15px !important;
+            font-size: 0.9rem !important;
 
-            line-height: 1.6 !important;
+            line-height: 1.4 !important;
           }
 
           /*
@@ -367,7 +364,7 @@ export default function Testimonials() {
            */
 
           .testimonials-section .testimonials-mobile-author {
-            font-size: 34px !important;
+            font-size: clamp(1.15rem, 7.5vw, 4.2rem) !important;
 
             margin-top: 18px !important;
           }
@@ -395,9 +392,7 @@ export default function Testimonials() {
            */
 
           .testimonials-section .testimonials-heading {
-            font-size: 30px !important;
-
-            line-height: 0.78 !important;
+            line-height: 0.85 !important;
           }
 
           /*
@@ -407,7 +402,7 @@ export default function Testimonials() {
           .testimonials-section
             .testimonials-heading
             .testimonials-script {
-            font-size: 1.65em !important;
+            font-size: 2em !important;
           }
 
           /*
@@ -417,7 +412,7 @@ export default function Testimonials() {
           .testimonials-section .testimonials-mobile-text {
             max-width: 95% !important;
 
-            font-size: 14px !important;
+            font-size: 0.9rem !important;
           }
 
           /*
@@ -425,7 +420,7 @@ export default function Testimonials() {
            */
 
           .testimonials-section .testimonials-mobile-author {
-            font-size: 32px !important;
+            font-size: clamp(1.15rem, 7.5vw, 4.2rem) !important;
           }
         }
 

@@ -161,7 +161,7 @@ const FAQ = () => {
         {/* Header — mobile-first sizes, clamp only inside md: */}
         <h1
           className="faq-heading font-serif font-light text-[#8B0000] tracking-[-0.02em] [font-stretch:extra-condensed]
-            !text-[48px] sm:!text-[56px] !leading-[0.9]
+            !text-[clamp(1.35rem,8vw,2rem)] !leading-[0.9]
             md:!text-[clamp(60px,5.4vw,96px)] md:!leading-[0.8]
             m-0
             [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]"
@@ -185,7 +185,7 @@ const FAQ = () => {
               >
                 <button
                   type="button"
-                  className="faq-toggle w-full text-left flex justify-between items-start gap-4 group max-md:gap-3 max-md:min-h-[44px]"
+                  className="faq-toggle w-full text-left flex justify-between items-start gap-4 group max-md:gap-3 max-md:min-h-[44px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8B0000]"
                   onClick={() => toggleAccordion(index)}
                   aria-expanded={openIndex === index}
                 >
@@ -205,6 +205,7 @@ const FAQ = () => {
                       ? "max-h-96 opacity-100 mt-3"
                       : "max-h-0 opacity-0"
                   }`}
+                  aria-hidden={openIndex !== index}
                 >
                   <p className={answerClass} data-cms="body">{item.answer}</p>
                 </div>
@@ -225,7 +226,7 @@ const FAQ = () => {
                 >
                   <button
                     type="button"
-                    className="faq-toggle w-full text-left flex justify-between items-start gap-4 group max-md:gap-3 max-md:min-h-[44px]"
+                    className="faq-toggle w-full text-left flex justify-between items-start gap-4 group max-md:gap-3 max-md:min-h-[44px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8B0000]"
                     onClick={() => toggleAccordion(actualIndex)}
                     aria-expanded={openIndex === actualIndex}
                   >
@@ -245,6 +246,7 @@ const FAQ = () => {
                         ? "max-h-96 opacity-100 mt-3"
                         : "max-h-0 opacity-0"
                     }`}
+                    aria-hidden={openIndex !== actualIndex}
                   >
                     <p className={answerClass} data-cms="body">{item.answer}</p>
                   </div>

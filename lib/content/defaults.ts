@@ -1,3 +1,4 @@
+import { defaultAssessmentContent } from "@/lib/assessment/cms";
 import type { SectionStyles, SiteContent } from "./types";
 
 const burgundy: SectionStyles = {
@@ -33,9 +34,9 @@ export const defaultSiteContent: SiteContent = {
       line3After: "ours",
       body: "Not because you chose wrong. You wanted it. You meant it. You just grew, and it didn’t grow with you. Aren’t you exhausted? I help women let go of what no longer fits, shed the roles they’ve outgrown, and come back to the one thing that’s been there the whole time.",
       ctaPrimary: "Take the 2-minute self-assessment",
-      ctaPrimaryHref: "#self-assessment",
-      ctaSecondary: "Book a call",
-      ctaSecondaryHref: "#book-a-call",
+      ctaPrimaryHref: "/assessment",
+      ctaSecondary: "Book Your Vibe Check",
+      ctaSecondaryHref: "https://calendly.com/francescaatendido/60min",
       comingHome: "Coming home",
     },
     explain: {
@@ -144,7 +145,7 @@ export const defaultSiteContent: SiteContent = {
       heading: "Ready to stop choosing",
       scriptWords: "comfort over truth?",
       body: "We start with a free 20-minute call to see if it's a fit.\nNot ready yet? Take the quiz instead.",
-      ctaPrimary: "BOOK A CALL",
+      ctaPrimary: "Book Your Vibe Check",
       ctaSecondary: "TAKE A QUIZ",
     },
   },
@@ -270,7 +271,7 @@ export const defaultSiteContent: SiteContent = {
       headingScript: "resonated",
       headingEndDesktop: "we should probably work.",
       headingEndMobile: "we should probably talk.",
-      ctaPrimary: "BOOK A CALL",
+      ctaPrimary: "Book Your Vibe Check",
       ctaSecondary: "TAKE A QUIZ",
     },
   },
@@ -505,7 +506,7 @@ export const defaultSiteContent: SiteContent = {
       notReady: "Not quite ready?",
       selfAssess: "Take the self-assessment",
       joinList: "and join the list.",
-      ctaPrimary: "BOOK A CALL",
+      ctaPrimary: "Book Your Vibe Check",
       ctaSecondary: "TAKE A QUIZ",
     },
   },
@@ -520,7 +521,7 @@ export const defaultSiteContent: SiteContent = {
       option1Title: "Option 1: Book a free 20-minute call",
       option1Body:
         "This is a conversation, not a sales call. We talk. I listen. I ask questions. You ask questions. By the end of 20 minutes, we both know whether to move forward.",
-      option1Cta: "Book a call →",
+      option1Cta: "Book Your Vibe Check →",
       option2Title: "Option 2: Send me a message",
       option2Body:
         "For a specific question, group offerings, supper club invitations, or corporate work.",
@@ -529,4 +530,5 @@ export const defaultSiteContent: SiteContent = {
       findMe: "find me",
     },
   },
+  assessment: defaultAssessmentContent,
 };

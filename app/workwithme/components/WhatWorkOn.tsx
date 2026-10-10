@@ -55,8 +55,7 @@ const WhatWorkOn = () => {
   ].join(" ");
 
   const topicDescClass = [
-    "font-josefin text-white font-normal mt-1",
-    "!text-[clamp(0.95rem,1.8vw,1.25rem)] sm:!text-xl !leading-[1.5]",
+    "what-topic-desc font-josefin text-white font-normal mt-1",
     "md:!text-[clamp(16px,1.25vw,20px)] md:!leading-[1.5]",
   ].join(" ");
 
@@ -80,30 +79,10 @@ const WhatWorkOn = () => {
         <div className="max-w-4xl mx-auto text-center py-8 md:py-10 lg:py-12 max-md:py-7 max-md:px-1 w-full min-w-0">
           <h2
             className="what-heading font-serif font-light text-[#5B0706] tracking-[-0.02em] [font-stretch:extra-condensed]
-              !text-[40px] sm:!text-[47px] !leading-[0.9]
+              flex items-end justify-center whitespace-nowrap overflow-visible
+              !text-[clamp(1.15rem,7.2vw,1.85rem)] !leading-[0.9]
               md:!text-[clamp(50px,4.5vw,80px)] md:!leading-[0.8]
-              flex md:hidden flex-col items-center gap-[0.2em]
-              m-0 w-full
-              [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]"
-          >
-            <span className="flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9]" data-cms="heading">
-              {c.headingLine1}
-            </span>
-            <span className="flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9]">
-              <span className="what-heading-script inline-block font-script !text-[2.15em] tracking-[0.01em] text-[#5B0706] font-normal overflow-visible relative z-[2]" data-cms="script">
-                {c.headingScript}
-              </span>
-            </span>
-            <span className="flex items-end justify-center whitespace-nowrap overflow-visible h-[0.9em] leading-[0.9]" data-cms="heading">
-              {c.headingLine3}
-            </span>
-          </h2>
-
-          <h2
-            className="what-heading font-serif font-light text-[#5B0706] tracking-[-0.02em] [font-stretch:extra-condensed]
-              hidden md:flex items-end justify-center whitespace-nowrap overflow-visible
-              md:!text-[clamp(50px,4.5vw,80px)] md:!leading-[0.8]
-              h-[0.8em] m-0
+              h-[0.9em] md:h-[0.8em] m-0
               [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]"
           >
             {c.headingLine1}
@@ -120,7 +99,6 @@ const WhatWorkOn = () => {
           <div className="mt-4 md:mt-1.5 w-full min-w-0 px-1">
             <p
               className="what-subtitle font-josefin text-[#5B0706] font-normal
-                !text-[clamp(1.6rem,3vw,2.1rem)] sm:!text-[34px] !leading-[1.5]
                 md:!text-[clamp(27px,2.1vw,34px)] md:!leading-[1.5]
                 whitespace-normal break-words max-w-[22ch] sm:max-w-none mx-auto"
             >

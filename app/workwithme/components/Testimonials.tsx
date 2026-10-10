@@ -148,7 +148,7 @@ export default function Testimonials() {
 
   return (
     <section
-      className="testimonials-section cms-section relative w-full overflow-x-clip py-8 md:py-10 lg:py-12"
+      className="testimonials-section cms-section relative w-full overflow-x-clip py-6 md:py-10 lg:py-12"
       style={cmsStyleVars(c.styles)}
     >
       {/* Background */}
@@ -164,7 +164,7 @@ export default function Testimonials() {
           <div className="md:col-span-3 mb-2 md:mb-3 lg:mb-4 min-w-0">
             <h2
               className="testimonials-heading font-serif font-light text-[#750000] tracking-[-0.02em] [font-stretch:extra-condensed]
-                !text-[36px] sm:!text-[42px] !leading-[0.9]
+                !text-[clamp(1.35rem,8vw,2rem)] !leading-[0.9]
                 flex md:hidden flex-col items-center gap-[0.2em]
                 m-0 w-full
                 [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]"
@@ -219,11 +219,11 @@ export default function Testimonials() {
 
           {/* Mobile: 1 testimonial at a time */}
           <div className="flex flex-col items-center w-full md:hidden">
-            <div className="flex flex-col items-center w-full max-w-[600px] flex-1 justify-center min-h-[220px] px-1 min-w-0">
+            <div className="flex flex-col items-center w-full max-w-[600px] px-1 min-w-0">
               <p
                 key={`text-${currentIndex}`}
                 className="testimonials-mobile-text font-josefin font-medium tracking-[0.01em] text-[#5a0a0a] m-0 text-center
-                  !text-[clamp(0.95rem,1.8vw,1.25rem)] sm:!text-xl !leading-[1.5]
+                  !text-[0.9rem] !leading-[1.4]
                   whitespace-normal break-words w-full"
               >
                 {testimonials[currentIndex].text}

@@ -106,7 +106,7 @@ export default function Lead() {
                 MOBILE HEADING
                 =================================================== */}
 
-            <h1 className="pt-10 lead-mobile-heading font-serif font-light !text-[24px] sm:!text-[28px] leading-[0.85] tracking-[-0.02em] text-[#750000] m-0 relative flex md:hidden flex-col items-center gap-[0.2em] text-center w-full [font-stretch:extra-condensed] [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]">
+            <h1 className="pt-10 lead-mobile-heading font-serif font-light !text-[clamp(1.15rem,7.5vw,4.2rem)] leading-[0.85] tracking-[-0.02em] text-[#750000] m-0 relative flex md:hidden flex-col items-center gap-[0.2em] text-center w-full [font-stretch:extra-condensed] [text-shadow:0_2px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.05)]">
 
               <span className="lead-line lead-line--mobile flex items-end justify-center whitespace-nowrap overflow-visible h-[0.85em] leading-[0.85]" data-cms="heading">
                 {c.heading}
@@ -135,7 +135,7 @@ export default function Lead() {
                 SUPPORTING COPY
                 =================================================== */}
 
-            <p className="lead-copy font-josefin !text-[clamp(0.95rem,1.8vw,1.25rem)] sm:!text-xl md:!text-[clamp(16px,1.25vw,20px)] font-normal !leading-[1.5] tracking-[0.01em] text-[#5a0a0a] text-left mt-10 md:mt-12 md:text-left text-center" data-cms="body">
+            <p className="lead-copy font-josefin !text-[0.9rem] !leading-[1.4] md:!text-[clamp(16px,1.25vw,20px)] md:!leading-[1.5] font-normal tracking-[0.01em] text-[#5a0a0a] text-left mt-10 md:mt-12 md:text-left text-center" data-cms="body">
               {bodyLines.map((line, i) => (
                 <React.Fragment key={i}>
                   {line}
@@ -150,13 +150,13 @@ export default function Lead() {
 
             <div className="lead-buttons flex gap-3 md:gap-4 flex-wrap mt-1 md:justify-start justify-center">
 
-              <button className="lead-cta lead-cta--primary font-josefin text-[clamp(12px,0.8vw,13px)] md:text-[clamp(14px,1vw,18px)] font-bold tracking-[0.05em] text-[#750100] bg-[#F5B7C4] border-none px-6 md:px-8 lg:px-10 py-2.5 md:py-3 lg:py-[0.9rem] rounded cursor-pointer transition-all duration-300 ease-in-out uppercase shadow-[0_4px_14px_-4px_rgba(91,7,6,0.55)] hover:bg-[#ecb4b8] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_-4px_rgba(91,7,6,0.65)]">
+              <a href="https://calendly.com/francescaatendido/60min" target="_blank" rel="noopener noreferrer" className="lead-cta lead-cta--primary inline-flex items-center justify-center no-underline font-josefin text-[14px] md:text-[clamp(14px,1vw,18px)] font-bold tracking-[0.05em] text-[#750100] bg-[#F5B7C4] border-none px-6 md:px-8 lg:px-10 py-2.5 md:py-3 lg:py-[0.9rem] min-h-12 md:min-h-0 rounded cursor-pointer transition-all duration-300 ease-in-out uppercase shadow-[0_4px_14px_-4px_rgba(91,7,6,0.55)] hover:bg-[#ecb4b8] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_-4px_rgba(91,7,6,0.65)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#5B0706]">
                 {c.ctaPrimary}
-              </button>
+              </a>
 
-              <button className="lead-cta lead-cta--secondary font-josefin text-[clamp(12px,0.8vw,13px)] md:text-[clamp(14px,1vw,18px)] font-semibold tracking-[0.05em] text-white bg-[#5B0706] border border-[#5B0706] px-6 md:px-8 lg:px-10 py-2.5 md:py-3 lg:py-[0.9rem] rounded cursor-pointer transition-all duration-300 ease-in-out uppercase hover:bg-[#5B0706] hover:text-[#fdd1db] hover:-translate-y-0.5 hover:shadow-[0_4px_14px_-4px_rgba(91,7,6,0.3)]">
+              <a href="/assessment" className="lead-cta lead-cta--secondary inline-flex items-center justify-center no-underline font-josefin text-[14px] md:text-[clamp(14px,1vw,18px)] font-semibold tracking-[0.05em] text-white bg-[#5B0706] border border-[#5B0706] px-6 md:px-8 lg:px-10 py-2.5 md:py-3 lg:py-[0.9rem] min-h-12 md:min-h-0 rounded cursor-pointer transition-all duration-300 ease-in-out uppercase hover:bg-[#5B0706] hover:text-[#fdd1db] hover:-translate-y-0.5 hover:shadow-[0_4px_14px_-4px_rgba(91,7,6,0.3)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f7f1e7]">
                 {c.ctaSecondary}
-              </button>
+              </a>
 
             </div>
           </div>
@@ -299,14 +299,8 @@ export default function Lead() {
             max-width: 92% !important;
             text-align: center !important;
             margin: 32px 0 0 0 !important;
-            font-size: clamp(0.95rem, 1.8vw, 1.25rem) !important;
-            line-height: 1.5 !important;
-          }
-
-          @media (min-width: 640px) {
-            .lead-copy {
-              font-size: 1.25rem !important;
-            }
+            font-size: 0.9rem !important;
+            line-height: 1.4 !important;
           }
 
           /*
@@ -326,11 +320,15 @@ export default function Lead() {
             margin-top: 2px !important;
           }
 
-          .lead-buttons button {
-            width: auto !important;
-            min-width: 180px !important;
+          .lead-buttons .lead-cta {
+            width: 100% !important;
+            max-width: 320px !important;
+            min-width: 0 !important;
 
-            font-size: 13px !important;
+            font-size: 0.8125rem !important;
+            letter-spacing: 0.04em !important;
+            line-height: 1.2 !important;
+            text-wrap: balance;
 
             padding:
               0.75rem
@@ -378,8 +376,8 @@ export default function Lead() {
             padding-right: 18px;
           }
 
-          .lead-buttons button {
-            min-width: 170px !important;
+          .lead-buttons .lead-cta {
+            max-width: 100% !important;
           }
         }
 

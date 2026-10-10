@@ -19,6 +19,7 @@ export type SiteContent = {
   about: Record<string, ContentValue>;
   work: Record<string, ContentValue>;
   contact: Record<string, ContentValue>;
+  assessment: Record<string, ContentValue>;
 };
 
 export const PAGE_LABELS = {
@@ -26,6 +27,7 @@ export const PAGE_LABELS = {
   about: "About me",
   work: "Work with me",
   contact: "Contact",
+  assessment: "Self-assessment",
 } as const;
 
 export type PageKey = keyof typeof PAGE_LABELS;
@@ -35,6 +37,7 @@ export const PAGE_PREVIEWS: Record<PageKey, string> = {
   about: "/aboutme",
   work: "/workwithme",
   contact: "/contact",
+  assessment: "/assessment",
 };
 
 export const SECTION_LABELS: Record<PageKey, Record<string, string>> = {
@@ -74,5 +77,8 @@ export const SECTION_LABELS: Record<PageKey, Record<string, string>> = {
   },
   contact: {
     main: "Contact",
+  },
+  assessment: {
+    builder: "Assessment builder",
   },
 };

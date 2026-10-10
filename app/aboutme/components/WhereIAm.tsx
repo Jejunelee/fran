@@ -208,10 +208,7 @@ export default function WhereIAmNow() {
         }
 
         /* ============ Script "now" — elastic settle ============
-           Preserves translate-y-[0.02em] on mobile by baking the
-           offset into the final transform, and overrides to 0 at
-           md+ so the baseline lands pixel-identical to its static
-           position at every breakpoint. No clip-path. */
+           Final position sits a little above the baseline. No clip-path. */
         .where-i-am-script {
           transform-origin: 50% 70%;
           opacity: 0;
@@ -221,11 +218,11 @@ export default function WhereIAmNow() {
         }
         .where-i-am-section--visible .where-i-am-script {
           opacity: 1;
-          transform: translate3d(0, 0.02em, 0) scale(1) rotate(0deg);
+          transform: translate3d(0, -0.08em, 0) scale(1) rotate(0deg);
         }
         @media (min-width: 768px) {
           .where-i-am-section--visible .where-i-am-script {
-            transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+            transform: translate3d(0, -0.1em, 0) scale(1) rotate(0deg);
           }
         }
 

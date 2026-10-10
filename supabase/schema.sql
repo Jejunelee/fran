@@ -30,6 +30,8 @@ create policy "Authenticated users can update site content"
   using (true)
   with check (true);
 
+-- Quiz copy is stored on this row at data.assessment.
+-- The app merges that object with the code defaults.
 insert into public.site_content (id, data)
 values ('default', '{}'::jsonb)
 on conflict (id) do nothing;

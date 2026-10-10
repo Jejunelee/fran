@@ -304,8 +304,19 @@ export default function Hero() {
     comingHome: string;
   }>("home", "hero");
   const heroActions = [
-    { label: c.ctaPrimary, href: c.ctaPrimaryHref, variant: "primary" as const },
-    { label: c.ctaSecondary, href: c.ctaSecondaryHref, variant: "secondary" as const },
+    {
+      label: c.ctaPrimary,
+      href: c.ctaPrimaryHref === "#self-assessment" ? "/assessment" : c.ctaPrimaryHref,
+      variant: "primary" as const,
+    },
+    {
+      label: c.ctaSecondary,
+      href:
+        c.ctaSecondaryHref === "#book-a-call"
+          ? "https://calendly.com/francescaatendido/60min"
+          : c.ctaSecondaryHref,
+      variant: "secondary" as const,
+    },
   ];
 
   return (
@@ -321,11 +332,11 @@ export default function Hero() {
           first visible video frame. */}
       {videoReady && (
         <div
-          className="relative z-10 mx-auto max-w-[1680px] px-5 sm:px-12 lg:px-16 xl:px-24 min-h-screen flex items-start
+          className="hero-frame relative z-10 mx-auto max-w-[1680px] px-5 sm:px-12 lg:px-16 xl:px-24 min-h-screen flex items-start
             pt-[68px] sm:pt-[76px] md:pt-0"
         >
           <div
-            className="flex w-full max-w-3xl flex-col items-center gap-6 sm:gap-8 text-center mx-auto lg:mx-0 lg:ml-[-0.5rem] xl:ml-[-1rem]
+            className="hero-copy flex w-full max-w-3xl flex-col items-center gap-6 sm:gap-8 text-center mx-auto lg:mx-0 lg:ml-[-0.5rem] xl:ml-[-1rem]
               pb-16 sm:pb-20 md:pb-24 lg:pb-28
               pt-8 sm:pt-12 md:pt-16 lg:pt-24"
           >
@@ -337,7 +348,7 @@ export default function Hero() {
                   "0 2px 4px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2)",
               }}
             >
-              <span className="mt-12 hero-line flex items-end justify-center whitespace-nowrap overflow-visible">
+              <span className="hero-line-first mt-12 hero-line flex items-end justify-center whitespace-nowrap overflow-visible">
                 {c.line1.split(/\s+/).map((word, i) => (
                   <React.Fragment key={`l1-${i}`}>
                     {i > 0 && <span className="w-[0.28em] shrink-0" aria-hidden="true" />}
@@ -386,6 +397,9 @@ export default function Hero() {
                 <a
                   key={action.label}
                   href={action.href}
+                  {...(action.href.startsWith("http")
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
                   className={`hero-cta-item ${buttonVariants[action.variant]} w-full sm:w-auto text-[clamp(0.7rem,0.9vw,0.875rem)] px-5 sm:px-7 min-h-[48px] h-[48px] sm:h-[52px] lg:h-[58px]`}
                   style={{ animationDelay: `${1500 + index * 130}ms` }}
                 >
@@ -522,6 +536,70 @@ export default function Hero() {
           opacity: 0;
           transform: translate3d(0, 12px, 0);
           animation: heroFadeUp 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        /* Phones stack the CTAs. The shared clamp bottoms out near 11px
+           there, which makes the long assessment label hard to read.
+           Tablet and desktop keep the existing size. */
+        @media (max-width: 639px) {
+          .hero-cta-item {
+            font-size: 0.8125rem !important;
+            letter-spacing: 0.03em !important;
+            padding-left: 0.75rem !important;
+            padding-right: 0.75rem !important;
+            height: auto !important;
+            min-height: 48px;
+            white-space: normal !important;
+            line-height: 1.25 !important;
+            text-wrap: balance;
+          }
+        }
+
+        /* Phone: the whole hero (heading, body, both buttons) stays
+           inside the first screen, including when the browser chrome
+           is showing. Tablet and desktop keep the existing spacing. */
+        @media (max-width: 767px) {
+          .hero-section {
+            height: 100svh;
+            min-height: 100svh;
+            max-height: 100svh;
+            overflow: hidden;
+          }
+          .hero-frame {
+            height: 100%;
+            min-height: 0 !important;
+            padding-top: calc(48px + env(safe-area-inset-top, 0px)) !important;
+            box-sizing: border-box;
+          }
+          .hero-copy {
+            height: 100%;
+            min-height: 0;
+            justify-content: center;
+            gap: 0.7rem !important;
+            padding-top: 0.25rem !important;
+            padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px)) !important;
+          }
+          .hero-line-first {
+            margin-top: 0 !important;
+          }
+          .hero-section .hero-fade-up {
+            margin-top: 0.25rem !important;
+            font-size: 0.9rem !important;
+            line-height: 1.4 !important;
+          }
+          .hero-cta-row {
+            padding-top: 0.15rem !important;
+            gap: 0.5rem !important;
+          }
+        }
+        @media (max-width: 767px) and (max-height: 640px) {
+          .hero-copy > h1 {
+            font-size: clamp(1.4rem, 6.2vw, 1.75rem) !important;
+          }
+          .hero-section .hero-fade-up {
+            font-size: 0.8125rem !important;
+            line-height: 1.35 !important;
+          }
         }
 
         /* ============ Nav entrance ============ */
