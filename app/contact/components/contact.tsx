@@ -112,7 +112,7 @@ export default function Contact() {
             {/* Heading */}
             <h1 className="contact-heading mt-3 font-serif text-[clamp(52px,6vw,92px)] font-normal leading-[0.85] tracking-[-0.04em] text-[#750100] md:mt-4">
               <span data-cms="heading">{c.headingScript}</span>{" "}
-              <span className="contact-heading-script inline-block font-script font-normal tracking-[0.01em]" data-cms="script">
+              <span className="contact-heading-script ml-[0.08em] inline-block font-script !text-[1.5em] font-normal tracking-[0.01em] md:!text-[1em]" data-cms="script">
                 {c.headingEnd}
               </span>
             </h1>
