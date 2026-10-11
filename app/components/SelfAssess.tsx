@@ -48,7 +48,7 @@ const SelfAssess: React.FC = () => {
       ref={sectionRef}
       id="self-assessment"
       className="cms-section relative w-full overflow-visible
-        grid grid-cols-1 md:grid-cols-2 min-h-0 md:min-h-[80dvh] px-6 md:px-12 lg:px-16 xl:px-20 2xl:px-24 py-20 md:py-12 bg-cover bg-center bg-no-repeat shadow-[0_8px_32px_rgba(80,40,20,0.08)] items-center"
+        grid grid-cols-1 md:grid-cols-2 min-h-[580px] md:min-h-[80dvh] px-6 md:px-12 lg:px-16 xl:px-20 2xl:px-24 py-20 md:py-12 bg-cover bg-center bg-no-repeat shadow-[0_8px_32px_rgba(80,40,20,0.08)] items-center"
       style={{ ...cmsBg(c.background), ...cmsStyleVars(c.styles) }}
     >
       {/* ==================== MOBILE LAYOUT ==================== */}

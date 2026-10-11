@@ -130,6 +130,14 @@ export default function Credentials() {
   const items = c.items ?? [];
   const listItems = items.length > 4 ? items.slice(0, -1) : items;
   const description = items.length > 4 ? items[items.length - 1] : "";
+  const mobileWords = `${(c.headingMid ?? "").replace(/^\s*,\s*/, "")} ${c.headingEnd ?? ""}`
+    .replace(/\s+/g, " ")
+    .trim()
+    .split(" ")
+    .filter(Boolean);
+  const mobileSplit = Math.ceil(mobileWords.length / 2);
+  const mobileLineA = mobileWords.slice(0, mobileSplit).join(" ");
+  const mobileLineB = mobileWords.slice(mobileSplit).join(" ");
 
   useEffect(() => {
     const node = sectionRef.current;
@@ -178,9 +186,12 @@ export default function Credentials() {
             <span className={`${scriptSpanClass} credentials-script`} data-cms="script">
               {c.headingScript}
             </span>
-            <span className="font-serif" data-cms="heading">{c.headingMid}</span>
-            <br />
-            <span className="font-serif" data-cms="heading">{c.headingEnd}</span>
+            <span className="hidden font-serif md:inline" data-cms="heading">{c.headingMid}</span>
+            <br className="hidden md:block" />
+            <span className="hidden font-serif md:inline" data-cms="heading">{c.headingEnd}</span>
+            <span className="font-serif md:hidden">,</span>
+            <span className="mt-[0.45em] block font-serif leading-[1.15] md:hidden" data-cms="heading">{mobileLineA}</span>
+            <span className="block font-serif leading-[1.15] md:hidden" data-cms="heading">{mobileLineB}</span>
           </h2>
 
           {/* Credentials list */}
