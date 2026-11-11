@@ -106,22 +106,28 @@ export const defaultSiteContent: SiteContent = {
       headingScript2: "sees you",
       items: [
         {
-          text: "I thought I needed more motivation. What I actually needed was clarity. Coaching helped me make decisions with more confidence and less second-guessing.",
+          text: "Thoughtful support, honest growth, and a compassionate voice walking alongside you. I left each session feeling more centered and aware.",
           desktopLines:
-            "I thought I needed more motivation.\nWhat I actually needed was clarity.\nCoaching helped me make decisions\nwith more confidence and less\nsecond-guessing.",
-          author: "BEA T.",
+            "Thoughtful support, honest\ngrowth, and a compassionate\nvoice walking alongside you.\nI left each session feeling\nmore centered and aware.",
+          author: "Sam T.",
         },
         {
-          text: "Working with Francesca helped me gain clarity and confidence in both my personal and professional life. I finally feel like I'm moving forward with purpose",
+          text: "She made me feel safe enough to be vulnerable. I didn't think I was enough. By the end, I knew, loved, and appreciated myself more.",
           desktopLines:
-            "Working with Francesca helped\nme gain clarity and confidence in\nboth my personal and professional\nlife. I finally feel like I'm moving\nforward with purpose",
-          author: "LIZA C.",
+            "She made me feel safe\nenough to be vulnerable.\nI didn't think I was enough.\nBy the end, I knew, loved,\nand appreciated myself more.",
+          author: "Kate S.",
         },
         {
-          text: "The sessions gave me practical tools to manage stress, set boundaries, and stay focused on my goals. I've seen real growth in just a few months",
+          text: "After my sessions with Cheska, I finally understood what a life coach does. She's like a walking journal prompt, asking the questions I was too busy surviving life to ask myself.",
           desktopLines:
-            "The sessions gave me practical\ntools to manage stress, set\nboundaries, and stay focused on my\ngoals. I've seen real growth in just a\nfew months",
-          author: "THEA D.",
+            "After my sessions with Cheska,\nI finally understood what a\nlife coach does. She's like a\nwalking journal prompt, asking\nthe questions I was too busy\nsurviving life to ask myself.",
+          author: "Clarisse A.",
+        },
+        {
+          text: "Working with her has been a worthwhile investment. She's structured and prepared, and every session feels purposeful.",
+          desktopLines:
+            "Working with her has been\na worthwhile investment.\nShe's structured and prepared,\nand every session feels\npurposeful.",
+          author: "Bridget H.",
         },
       ],
     },
@@ -414,22 +420,28 @@ export const defaultSiteContent: SiteContent = {
       headingScript: "actually say",
       items: [
         {
-          text: "I thought I needed more motivation. What I actually needed was clarity. Coaching helped me make decisions with more confidence and less second-guessing.",
+          text: "Thoughtful support, honest growth, and a compassionate voice walking alongside you. I left each session feeling more centered and aware.",
           desktopLines:
-            "I thought I needed more motivation.\nWhat I actually needed was clarity.\nCoaching helped me make decisions\nwith more confidence and less\nsecond-guessing.",
-          author: "BEA T.",
+            "Thoughtful support, honest\ngrowth, and a compassionate\nvoice walking alongside you.\nI left each session feeling\nmore centered and aware.",
+          author: "Sam T.",
         },
         {
-          text: "Working with my Francesca helped me gain clarity and confidence in both my personal and professional life. I finally feel like I'm moving forward with purpose",
+          text: "She made me feel safe enough to be vulnerable. I didn't think I was enough. By the end, I knew, loved, and appreciated myself more.",
           desktopLines:
-            "Working with my Francesca helped\nme gain clarity and confidence in\nboth my personal and professional\nlife. I finally feel like I'm moving\nforward with purpose",
-          author: "LIZA C.",
+            "She made me feel safe\nenough to be vulnerable.\nI didn't think I was enough.\nBy the end, I knew, loved,\nand appreciated myself more.",
+          author: "Kate S.",
         },
         {
-          text: "The sessions gave me practical tools to manage stress, set boundaries, and stay focused on my goals. I've seen real growth in just a few months",
+          text: "After my sessions with Cheska, I finally understood what a life coach does. She's like a walking journal prompt, asking the questions I was too busy surviving life to ask myself.",
           desktopLines:
-            "The sessions gave me practical\ntools to manage stress, set\nboundaries, and stay focused on my\ngoals. I've seen real growth in just a\nfew months",
-          author: "THEA D.",
+            "After my sessions with Cheska,\nI finally understood what a\nlife coach does. She's like a\nwalking journal prompt, asking\nthe questions I was too busy\nsurviving life to ask myself.",
+          author: "Clarisse A.",
+        },
+        {
+          text: "Working with her has been a worthwhile investment. She's structured and prepared, and every session feels purposeful.",
+          desktopLines:
+            "Working with her has been\na worthwhile investment.\nShe's structured and prepared,\nand every session feels\npurposeful.",
+          author: "Bridget H.",
         },
       ],
     },

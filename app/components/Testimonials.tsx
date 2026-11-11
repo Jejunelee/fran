@@ -56,13 +56,13 @@ export default function Testimonials() {
           ========================================================= */}
 
       <div className="relative z-10 max-w-[1504px] mx-auto px-6 md:px-12 lg:px-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-10 max-w-8xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 lg:gap-10 max-w-8xl mx-auto">
 
           {/* =====================================================
               HEADING
               ===================================================== */}
 
-          <div className="md:col-span-3 mb-6 md:mb-8 lg:mb-10">
+          <div className="md:col-span-2 mb-6 md:mb-8 lg:mb-10">
             <h2 className="testimonials-heading font-serif font-light text-[#750000] text-[clamp(2.75rem,5.625vw,5rem)] leading-[0.6] tracking-[-0.02em] [font-stretch:extra-condensed] text-left">
 
               <span className="block testimonials-headline-line">
@@ -84,7 +84,7 @@ export default function Testimonials() {
           </div>
 
           {/* =====================================================
-              DESKTOP — ALL 3 TESTIMONIALS
+              DESKTOP — ALL TESTIMONIALS
               ===================================================== */}
 
           <div className="hidden md:contents">
@@ -184,7 +184,7 @@ export default function Testimonials() {
            * Heading wrapper
            */
 
-          .testimonials-section .md\\:col-span-3 {
+          .testimonials-section .md\\:col-span-2 {
             width: 100% !important;
             max-width: 600px !important;
 
@@ -571,6 +571,10 @@ export default function Testimonials() {
 
         .testimonials-card:nth-child(3) {
           animation-delay: 500ms;
+        }
+
+        .testimonials-card:nth-child(4) {
+          animation-delay: 620ms;
         }
 
         @keyframes testimonialsCardIn {

@@ -71,6 +71,7 @@ const testimonialsCss = String.raw`
   .testimonials-card:nth-child(1) { animation-delay: 460ms; }
   .testimonials-card:nth-child(2) { animation-delay: 580ms; }
   .testimonials-card:nth-child(3) { animation-delay: 700ms; }
+  .testimonials-card:nth-child(4) { animation-delay: 820ms; }
 
   @keyframes testimonialsCardIn {
     0% {
@@ -159,9 +160,9 @@ export default function Testimonials() {
 
       {/* Content */}
       <div className="relative z-10 max-w-[1504px] mx-auto px-6 md:px-12 lg:px-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-10 max-w-8xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 lg:gap-10 max-w-8xl mx-auto">
           {/* Heading — sizes reduced a bit. */}
-          <div className="md:col-span-3 mb-2 md:mb-3 lg:mb-4 min-w-0">
+          <div className="md:col-span-2 mb-2 md:mb-3 lg:mb-4 min-w-0">
             <h2
               className="testimonials-heading font-serif font-light text-[#750000] tracking-[-0.02em] [font-stretch:extra-condensed]
                 !text-[clamp(1.35rem,8vw,2rem)] !leading-[0.9]
@@ -200,7 +201,7 @@ export default function Testimonials() {
             </h2>
           </div>
 
-          {/* Desktop: 3 testimonials */}
+          {/* Desktop: all testimonials */}
           <div className="hidden md:contents">
             {testimonials.map((item, i) => (
             <div key={i} className="testimonials-card flex flex-col">
