@@ -18,9 +18,23 @@ function isLegacyTestimonialList(section: ContentValue | undefined) {
   });
 }
 
+function asRecord(section: ContentValue | undefined): Record<string, ContentValue> | undefined {
+  if (!section || typeof section !== "object" || Array.isArray(section) || !("items" in section)) {
+    return undefined;
+  }
+  return section;
+}
+
+function withApprovedItems(page: Record<string, ContentValue>, items: ContentValue | undefined) {
+  const current = asRecord(page.testimonials) ?? {};
+  if (!items) return page;
+  return {
+    ...page,
+    testimonials: { ...current, items },
+  };
+}
+
 function withApprovedTestimonials(content: SiteContent): SiteContent {
-  const homeItems = (defaultSiteContent.home.testimonials as { items?: ContentValue }).items;
-  const workItems = (defaultSiteContent.work.testimonials as { items?: ContentValue }).items;
   const homeLegacy = isLegacyTestimonialList(content.home.testimonials);
   const workLegacy = isLegacyTestimonialList(content.work.testimonials);
   if (!homeLegacy && !workLegacy) return content;
@@ -28,22 +42,10 @@ function withApprovedTestimonials(content: SiteContent): SiteContent {
   return {
     ...content,
     home: homeLegacy
-      ? {
-          ...content.home,
-          testimonials: {
-            ...(content.home.testimonials as object),
-            items: homeItems,
-          },
-        }
+      ? withApprovedItems(content.home, asRecord(defaultSiteContent.home.testimonials)?.items)
       : content.home,
     work: workLegacy
-      ? {
-          ...content.work,
-          testimonials: {
-            ...(content.work.testimonials as object),
-            items: workItems,
-          },
-        }
+      ? withApprovedItems(content.work, asRecord(defaultSiteContent.work.testimonials)?.items)
       : content.work,
   };
 }
