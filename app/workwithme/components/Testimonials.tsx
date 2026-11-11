@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import TestimonialChevron from "@/app/components/TestimonialChevron";
 import { cmsBg, cmsStyleVars, useSection } from "@/lib/content/context";
 import type { SectionStyles } from "@/lib/content/types";
 
@@ -71,7 +72,6 @@ const testimonialsCss = String.raw`
   .testimonials-card:nth-child(1) { animation-delay: 460ms; }
   .testimonials-card:nth-child(2) { animation-delay: 580ms; }
   .testimonials-card:nth-child(3) { animation-delay: 700ms; }
-  .testimonials-card:nth-child(4) { animation-delay: 820ms; }
 
   @keyframes testimonialsCardIn {
     0% {
@@ -126,6 +126,7 @@ const testimonialsCss = String.raw`
 
 export default function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [desktopStart, setDesktopStart] = useState(0);
   const c = useSection<{
     styles: SectionStyles;
     background: string;
@@ -135,7 +136,10 @@ export default function Testimonials() {
     items: { text: string; desktopLines: string; author: string }[];
   }>("work", "testimonials");
   const testimonials = c.items ?? [];
-  const desktopLines = testimonials.map((item) => item.desktopLines.split("\n"));
+  const desktopVisibleCount = 3;
+  const desktopOverflow = testimonials.length > desktopVisibleCount;
+  const maxDesktopStart = Math.max(0, testimonials.length - desktopVisibleCount);
+  const desktopTestimonials = testimonials.slice(desktopStart, desktopStart + desktopVisibleCount);
 
   const desktopTextClass =
     "font-josefin font-medium tracking-[0.01em] text-[#5a0a0a] m-0 text-left " +
@@ -160,9 +164,9 @@ export default function Testimonials() {
 
       {/* Content */}
       <div className="relative z-10 max-w-[1504px] mx-auto px-6 md:px-12 lg:px-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 lg:gap-10 max-w-8xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-10 max-w-8xl mx-auto">
           {/* Heading — sizes reduced a bit. */}
-          <div className="md:col-span-2 mb-2 md:mb-3 lg:mb-4 min-w-0">
+          <div className="md:col-span-3 mb-2 md:mb-3 lg:mb-4 min-w-0">
             <h2
               className="testimonials-heading font-serif font-light text-[#750000] tracking-[-0.02em] [font-stretch:extra-condensed]
                 !text-[clamp(1.35rem,8vw,2rem)] !leading-[0.9]
@@ -201,22 +205,62 @@ export default function Testimonials() {
             </h2>
           </div>
 
-          {/* Desktop: all testimonials */}
-          <div className="hidden md:contents">
-            {testimonials.map((item, i) => (
-            <div key={i} className="testimonials-card flex flex-col">
-              <p className={desktopTextClass}>
-                {desktopLines[i]?.map((line, j) => (
-                  <React.Fragment key={j}>
-                    <span data-cms="body">{line}</span>
-                    {j < (desktopLines[i]?.length ?? 0) - 1 && <br />}
-                  </React.Fragment>
-                ))}
-              </p>
-              <p className={desktopAuthorClass} data-cms="heading">{item.author}</p>
+          {/* Desktop: 3 testimonials, with chevrons when more are stored */}
+          {desktopOverflow ? (
+            <div className="relative hidden md:col-span-3 md:block">
+              <div className="grid grid-cols-3 gap-6 md:gap-8 lg:gap-10">
+                {desktopTestimonials.map((item, i) => {
+                  const lines = item.desktopLines.split("\n");
+                  return (
+                    <div key={`${desktopStart}-${i}`} className="testimonials-card flex flex-col">
+                      <p className={desktopTextClass}>
+                        {lines.map((line, j) => (
+                          <React.Fragment key={j}>
+                            <span data-cms="body">{line}</span>
+                            {j < lines.length - 1 && <br />}
+                          </React.Fragment>
+                        ))}
+                      </p>
+                      <p className={desktopAuthorClass} data-cms="heading">{item.author}</p>
+                    </div>
+                  );
+                })}
+              </div>
+              <TestimonialChevron
+                direction="left"
+                label="Previous testimonials"
+                disabled={desktopStart === 0}
+                onClick={() => setDesktopStart((index) => Math.max(0, index - 1))}
+                className="-left-11 lg:-left-14"
+              />
+              <TestimonialChevron
+                direction="right"
+                label="Next testimonials"
+                disabled={desktopStart >= maxDesktopStart}
+                onClick={() => setDesktopStart((index) => Math.min(maxDesktopStart, index + 1))}
+                className="-right-11 lg:-right-14"
+              />
             </div>
-            ))}
-          </div>
+          ) : (
+            <div className="hidden md:contents">
+              {testimonials.map((item, i) => {
+                const lines = item.desktopLines.split("\n");
+                return (
+                  <div key={i} className="testimonials-card flex flex-col">
+                    <p className={desktopTextClass}>
+                      {lines.map((line, j) => (
+                        <React.Fragment key={j}>
+                          <span data-cms="body">{line}</span>
+                          {j < lines.length - 1 && <br />}
+                        </React.Fragment>
+                      ))}
+                    </p>
+                    <p className={desktopAuthorClass} data-cms="heading">{item.author}</p>
+                  </div>
+                );
+              })}
+            </div>
+          )}
 
           {/* Mobile: 1 testimonial at a time */}
           <div className="flex flex-col items-center w-full md:hidden">
